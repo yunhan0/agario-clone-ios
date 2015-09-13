@@ -7,50 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A0D65D81BA5513D0087176B /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0D65D71BA5513D0087176B /* Ball.swift */; };
-		3AB374991B8B373E00BF4CD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB374981B8B373E00BF4CD0 /* AppDelegate.swift */; };
-		3AB3749B1B8B373E00BF4CD0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3AB3749A1B8B373E00BF4CD0 /* GameScene.sks */; };
-		3AB3749D1B8B373E00BF4CD0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3749C1B8B373E00BF4CD0 /* GameScene.swift */; };
-		3AB3749F1B8B373E00BF4CD0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB3749E1B8B373E00BF4CD0 /* GameViewController.swift */; };
-		3AB374A41B8B373E00BF4CD0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AB374A31B8B373E00BF4CD0 /* Images.xcassets */; };
-		3AB374A71B8B373E00BF4CD0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AB374A51B8B373E00BF4CD0 /* LaunchScreen.xib */; };
-		3AB374B31B8B373E00BF4CD0 /* agar_cloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB374B21B8B373E00BF4CD0 /* agar_cloneTests.swift */; };
+		3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */; };
+		3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */; };
+		3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */; };
+		3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */; };
+		3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */; };
+		3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */; };
+		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3AB374AD1B8B373E00BF4CD0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3AB3748B1B8B373E00BF4CD0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3AB374921B8B373E00BF4CD0;
-			remoteInfo = "agar-clone";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		3A0D65D71BA5513D0087176B /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
-		3AB374931B8B373E00BF4CD0 /* agario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agario.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AB374971B8B373E00BF4CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AB374981B8B373E00BF4CD0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3AB3749A1B8B373E00BF4CD0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		3AB3749C1B8B373E00BF4CD0 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		3AB3749E1B8B373E00BF4CD0 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		3AB374A31B8B373E00BF4CD0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3AB374A61B8B373E00BF4CD0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		3AB374AC1B8B373E00BF4CD0 /* agarioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = agarioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AB374B11B8B373E00BF4CD0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AB374B21B8B373E00BF4CD0 /* agar_cloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = agar_cloneTests.swift; sourceTree = "<group>"; };
+		3A6A6EAF1BA59D9200FC75A1 /* agario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agario.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A6A6EB31BA59D9200FC75A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3A6A6EC21BA59D9200FC75A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3AB374901B8B373E00BF4CD0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AB374A91B8B373E00BF4CD0 /* Frameworks */ = {
+		3A6A6EAC1BA59D9200FC75A1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -60,60 +39,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3AB3748A1B8B373E00BF4CD0 = {
+		3A6A6EA61BA59D9200FC75A1 = {
 			isa = PBXGroup;
 			children = (
-				3AB374951B8B373E00BF4CD0 /* agar-clone */,
-				3AB374AF1B8B373E00BF4CD0 /* agar-cloneTests */,
-				3AB374941B8B373E00BF4CD0 /* Products */,
+				3A6A6EB11BA59D9200FC75A1 /* agario */,
+				3A6A6EB01BA59D9200FC75A1 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		3AB374941B8B373E00BF4CD0 /* Products */ = {
+		3A6A6EB01BA59D9200FC75A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3AB374931B8B373E00BF4CD0 /* agario.app */,
-				3AB374AC1B8B373E00BF4CD0 /* agarioTests.xctest */,
+				3A6A6EAF1BA59D9200FC75A1 /* agario.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3AB374951B8B373E00BF4CD0 /* agar-clone */ = {
+		3A6A6EB11BA59D9200FC75A1 /* agario */ = {
 			isa = PBXGroup;
 			children = (
-				3AB374981B8B373E00BF4CD0 /* AppDelegate.swift */,
-				3AB3749A1B8B373E00BF4CD0 /* GameScene.sks */,
-				3AB3749C1B8B373E00BF4CD0 /* GameScene.swift */,
-				3AB3749E1B8B373E00BF4CD0 /* GameViewController.swift */,
-				3A0D65D71BA5513D0087176B /* Ball.swift */,
-				3AB374A31B8B373E00BF4CD0 /* Images.xcassets */,
-				3AB374A51B8B373E00BF4CD0 /* LaunchScreen.xib */,
-				3AB374961B8B373E00BF4CD0 /* Supporting Files */,
+				3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */,
+				3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */,
+				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
+				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
+				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
+				3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */,
+				3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */,
+				3A6A6EB21BA59D9200FC75A1 /* Supporting Files */,
 			);
-			path = "agar-clone";
+			path = agario;
 			sourceTree = "<group>";
 		};
-		3AB374961B8B373E00BF4CD0 /* Supporting Files */ = {
+		3A6A6EB21BA59D9200FC75A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3AB374971B8B373E00BF4CD0 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3AB374AF1B8B373E00BF4CD0 /* agar-cloneTests */ = {
-			isa = PBXGroup;
-			children = (
-				3AB374B21B8B373E00BF4CD0 /* agar_cloneTests.swift */,
-				3AB374B01B8B373E00BF4CD0 /* Supporting Files */,
-			);
-			path = "agar-cloneTests";
-			sourceTree = "<group>";
-		};
-		3AB374B01B8B373E00BF4CD0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3AB374B11B8B373E00BF4CD0 /* Info.plist */,
+				3A6A6EB31BA59D9200FC75A1 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -121,59 +81,37 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3AB374921B8B373E00BF4CD0 /* agario */ = {
+		3A6A6EAE1BA59D9200FC75A1 /* agario */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3AB374B61B8B373E00BF4CD0 /* Build configuration list for PBXNativeTarget "agario" */;
+			buildConfigurationList = 3A6A6ED21BA59D9200FC75A1 /* Build configuration list for PBXNativeTarget "agario" */;
 			buildPhases = (
-				3AB3748F1B8B373E00BF4CD0 /* Sources */,
-				3AB374901B8B373E00BF4CD0 /* Frameworks */,
-				3AB374911B8B373E00BF4CD0 /* Resources */,
+				3A6A6EAB1BA59D9200FC75A1 /* Sources */,
+				3A6A6EAC1BA59D9200FC75A1 /* Frameworks */,
+				3A6A6EAD1BA59D9200FC75A1 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = agario;
-			productName = "agar-clone";
-			productReference = 3AB374931B8B373E00BF4CD0 /* agario.app */;
+			productName = agario;
+			productReference = 3A6A6EAF1BA59D9200FC75A1 /* agario.app */;
 			productType = "com.apple.product-type.application";
-		};
-		3AB374AB1B8B373E00BF4CD0 /* agarioTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3AB374B91B8B373E00BF4CD0 /* Build configuration list for PBXNativeTarget "agarioTests" */;
-			buildPhases = (
-				3AB374A81B8B373E00BF4CD0 /* Sources */,
-				3AB374A91B8B373E00BF4CD0 /* Frameworks */,
-				3AB374AA1B8B373E00BF4CD0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3AB374AE1B8B373E00BF4CD0 /* PBXTargetDependency */,
-			);
-			name = agarioTests;
-			productName = "agar-cloneTests";
-			productReference = 3AB374AC1B8B373E00BF4CD0 /* agarioTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		3AB3748B1B8B373E00BF4CD0 /* Project object */ = {
+		3A6A6EA71BA59D9200FC75A1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0640;
 				TargetAttributes = {
-					3AB374921B8B373E00BF4CD0 = {
+					3A6A6EAE1BA59D9200FC75A1 = {
 						CreatedOnToolsVersion = 6.4;
-					};
-					3AB374AB1B8B373E00BF4CD0 = {
-						CreatedOnToolsVersion = 6.4;
-						TestTargetID = 3AB374921B8B373E00BF4CD0;
 					};
 				};
 			};
-			buildConfigurationList = 3AB3748E1B8B373E00BF4CD0 /* Build configuration list for PBXProject "agario" */;
+			buildConfigurationList = 3A6A6EAA1BA59D9200FC75A1 /* Build configuration list for PBXProject "agario" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -181,72 +119,48 @@
 				en,
 				Base,
 			);
-			mainGroup = 3AB3748A1B8B373E00BF4CD0;
-			productRefGroup = 3AB374941B8B373E00BF4CD0 /* Products */;
+			mainGroup = 3A6A6EA61BA59D9200FC75A1;
+			productRefGroup = 3A6A6EB01BA59D9200FC75A1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3AB374921B8B373E00BF4CD0 /* agario */,
-				3AB374AB1B8B373E00BF4CD0 /* agarioTests */,
+				3A6A6EAE1BA59D9200FC75A1 /* agario */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3AB374911B8B373E00BF4CD0 /* Resources */ = {
+		3A6A6EAD1BA59D9200FC75A1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AB374A71B8B373E00BF4CD0 /* LaunchScreen.xib in Resources */,
-				3AB374A41B8B373E00BF4CD0 /* Images.xcassets in Resources */,
-				3AB3749B1B8B373E00BF4CD0 /* GameScene.sks in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AB374AA1B8B373E00BF4CD0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */,
+				3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */,
+				3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3AB3748F1B8B373E00BF4CD0 /* Sources */ = {
+		3A6A6EAB1BA59D9200FC75A1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A0D65D81BA5513D0087176B /* Ball.swift in Sources */,
-				3AB3749D1B8B373E00BF4CD0 /* GameScene.swift in Sources */,
-				3AB3749F1B8B373E00BF4CD0 /* GameViewController.swift in Sources */,
-				3AB374991B8B373E00BF4CD0 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AB374A81B8B373E00BF4CD0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3AB374B31B8B373E00BF4CD0 /* agar_cloneTests.swift in Sources */,
+				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
+				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
+				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,
+				3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		3AB374AE1B8B373E00BF4CD0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3AB374921B8B373E00BF4CD0 /* agario */;
-			targetProxy = 3AB374AD1B8B373E00BF4CD0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		3AB374A51B8B373E00BF4CD0 /* LaunchScreen.xib */ = {
+		3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3AB374A61B8B373E00BF4CD0 /* Base */,
+				3A6A6EC21BA59D9200FC75A1 /* Base */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -254,7 +168,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		3AB374B41B8B373E00BF4CD0 /* Debug */ = {
+		3A6A6ED01BA59D9200FC75A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -299,7 +213,7 @@
 			};
 			name = Debug;
 		};
-		3AB374B51B8B373E00BF4CD0 /* Release */ = {
+		3A6A6ED11BA59D9200FC75A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -337,91 +251,48 @@
 			};
 			name = Release;
 		};
-		3AB374B71B8B373E00BF4CD0 /* Debug */ = {
+		3A6A6ED31BA59D9200FC75A1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "agar-clone/Info.plist";
+				INFOPLIST_FILE = agario/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = agario;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		3AB374B81B8B373E00BF4CD0 /* Release */ = {
+		3A6A6ED41BA59D9200FC75A1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "agar-clone/Info.plist";
+				INFOPLIST_FILE = agario/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = agario;
-			};
-			name = Release;
-		};
-		3AB374BA1B8B373E00BF4CD0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "agar-cloneTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = agarioTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/agar-clone.app/agar-clone";
-			};
-			name = Debug;
-		};
-		3AB374BB1B8B373E00BF4CD0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "agar-cloneTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = agarioTests;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/agar-clone.app/agar-clone";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3AB3748E1B8B373E00BF4CD0 /* Build configuration list for PBXProject "agario" */ = {
+		3A6A6EAA1BA59D9200FC75A1 /* Build configuration list for PBXProject "agario" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3AB374B41B8B373E00BF4CD0 /* Debug */,
-				3AB374B51B8B373E00BF4CD0 /* Release */,
+				3A6A6ED01BA59D9200FC75A1 /* Debug */,
+				3A6A6ED11BA59D9200FC75A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3AB374B61B8B373E00BF4CD0 /* Build configuration list for PBXNativeTarget "agario" */ = {
+		3A6A6ED21BA59D9200FC75A1 /* Build configuration list for PBXNativeTarget "agario" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3AB374B71B8B373E00BF4CD0 /* Debug */,
-				3AB374B81B8B373E00BF4CD0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3AB374B91B8B373E00BF4CD0 /* Build configuration list for PBXNativeTarget "agarioTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3AB374BA1B8B373E00BF4CD0 /* Debug */,
-				3AB374BB1B8B373E00BF4CD0 /* Release */,
+				3A6A6ED31BA59D9200FC75A1 /* Debug */,
+				3A6A6ED41BA59D9200FC75A1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 3AB3748B1B8B373E00BF4CD0 /* Project object */;
+	rootObject = 3A6A6EA71BA59D9200FC75A1 /* Project object */;
 }
