@@ -15,6 +15,7 @@
 		3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */; };
 		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
 		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
+		B5424A3F1BA5C55F00F79355 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = B5424A3E1BA5C55F00F79355 /* pattern.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3A6A6EC21BA59D9200FC75A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B5424A3E1BA5C55F00F79355 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 		3A6A6EB21BA59D9200FC75A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B5424A3E1BA5C55F00F79355 /* pattern.png */,
 				3A6A6EB31BA59D9200FC75A1 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -137,6 +140,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5424A3F1BA5C55F00F79355 /* pattern.png in Resources */,
 				3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */,
 				3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */,
 				3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */,

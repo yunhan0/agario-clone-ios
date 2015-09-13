@@ -39,21 +39,56 @@ class GameViewController: UIViewController {
         
         // Main menu view set up
         
-        let buttonWidth = width / 6;
+        let rectWidth = width / 3;
+        let rectHeight = width / 13;
+        let squareWidth = width / 13;
         self.mainMenuView = UIView(frame: UIScreen.mainScreen().bounds)
         mainMenuView.opaque = false
         mainMenuView.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
+
+        let nameField = UITextField(frame: CGRect(
+            x: (width - rectWidth) / 2, y: (height - rectWidth) / 2,
+            width: rectWidth, height: rectHeight))
+        nameField.layer.borderWidth = 1
+        nameField.layer.cornerRadius = 10.0
+        nameField.placeholder = "Nickname"
         
         let startButton = UIButton(frame: CGRect(
-            x: (width - buttonWidth) / 2, y: (height - buttonWidth) / 2,
-            width: buttonWidth, height: buttonWidth));
+            x: (width - rectWidth) / 2, y: nameField.frame.origin.y + (rectHeight * 1.5),
+            width: rectWidth, height: rectHeight));
         startButton.setTitle("Start Game", forState: .Normal)
         startButton.backgroundColor = UIColor.greenColor()
-        
+        startButton.layer.cornerRadius = 10.0
         startButton.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
         
-        mainMenuView.addSubview(startButton)
+        let multiPlayerBtn = UIButton(frame: CGRect(
+            x: (width - rectWidth) / 2, y: startButton.frame.origin.y + (rectHeight * 1.5),
+            width: rectWidth, height: rectHeight))
+        multiPlayerBtn.setTitle("Multiple Player", forState: .Normal)
+        multiPlayerBtn.backgroundColor = UIColor.greenColor()
+        multiPlayerBtn.layer.cornerRadius = 10.0
         
+        let scoreBtn = UIButton(frame: CGRect(
+            x: 0, y: multiPlayerBtn.frame.origin.y,
+            width: squareWidth, height: rectHeight))
+        scoreBtn.setTitle("i", forState: .Normal)
+        scoreBtn.backgroundColor = UIColor.greenColor()
+        scoreBtn.bounds = CGRectInset(scoreBtn.frame, 5.0, 5.0)
+        scoreBtn.layer.cornerRadius = 10.0
+        
+        let aboutBtn = UIButton(frame: CGRect(
+            x: (width - squareWidth), y: multiPlayerBtn.frame.origin.y,
+            width: squareWidth, height: rectHeight))
+        aboutBtn.setTitle("?", forState: .Normal)
+        aboutBtn.backgroundColor = UIColor.greenColor()
+        aboutBtn.bounds = CGRectInset(aboutBtn.frame, 5.0, 5.0)
+        aboutBtn.layer.cornerRadius = 10.0
+        
+        mainMenuView.addSubview(startButton)
+        mainMenuView.addSubview(multiPlayerBtn)
+        mainMenuView.addSubview(scoreBtn)
+        mainMenuView.addSubview(aboutBtn)
+        mainMenuView.addSubview(nameField)
         self.view.addSubview(mainMenuView);
         
         // Game view set up
