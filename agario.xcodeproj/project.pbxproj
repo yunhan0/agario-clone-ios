@@ -14,6 +14,7 @@
 		3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */; };
 		3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */; };
 		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
+		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3A6A6EC21BA59D9200FC75A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +60,9 @@
 		3A6A6EB11BA59D9200FC75A1 /* agario */ = {
 			isa = PBXGroup;
 			children = (
-				3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */,
 				3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */,
+				3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */,
+				3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */,
 				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
 				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
@@ -150,6 +153,7 @@
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
 				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,
+				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
 				3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -38,11 +38,30 @@ class GameScene: SKScene {
             y: -position.y + CGRectGetMidY(frame))
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func didEvaluateActions() {
         if (!gameStarted) {
             return
         }
-        //let touch = touches.first as! UITouch
+        
+        defaultBall.regulateSpeed()
+    }
+   
+    override func update(currentTime: CFTimeInterval) {
+        if (!gameStarted) {
+            return
+        }
+        
+        defaultBall.move()
+
+        centerWorldOnPosition(defaultBall.position)
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if (!gameStarted || touches.count <= 0) {
+            return
+        }
+        let touch = touches.first as! UITouch
+        defaultBall.moveTowardTarget(targetLocation: touch.locationInNode(world))
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -51,17 +70,6 @@ class GameScene: SKScene {
         }
         
         let touch = touches.first as! UITouch
-        defaultBall.targetLocation = touch.locationInNode(world)
-        defaultBall.moveRequested = true
-        
-        defaultBall.position = touch.locationInNode(world)
-    }
-   
-    override func update(currentTime: CFTimeInterval) {
-        if (!gameStarted) {
-            return
-        }
-        /* Called before each frame is rendered */
-        centerWorldOnPosition(defaultBall.position)
+        defaultBall.moveTowardTarget(targetLocation: touch.locationInNode(world))
     }
 }
