@@ -15,6 +15,8 @@ class GameScene: SKScene {
     var otherBalls : [Ball]!
     var gameStarted = false
     
+    let rankHudName = "randHud"
+    
     override func didMoveToView(view: SKView) {
         
         world = self.childNodeWithName("world")!
@@ -23,6 +25,7 @@ class GameScene: SKScene {
         
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
+        setupHud()
     }
     
     func start() {
@@ -80,5 +83,15 @@ class GameScene: SKScene {
         
         let touch = touches.first as! UITouch
         defaultBall.targetDirection = CGVector(dx: 0, dy: 0)
+    }
+    
+    // setup hud
+    func setupHud() {
+        let rankLabel = SKLabelNode(fontNamed: "Courier")
+        rankLabel.name = rankHudName
+        rankLabel.fontColor = SKColor.greenColor()
+        rankLabel.text = "Learderboard"
+        rankLabel.position = CGPointMake(self.frame.size.width/1.2, self.frame.size.height/1.2)
+        addChild(rankLabel)
     }
 }
