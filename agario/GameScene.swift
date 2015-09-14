@@ -72,4 +72,13 @@ class GameScene: SKScene {
         let touch = touches.first as! UITouch
         defaultBall.moveTowardTarget(targetLocation: touch.locationInNode(world))
     }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if !gameStarted || touches.count <= 0 {
+            return
+        }
+        
+        let touch = touches.first as! UITouch
+        defaultBall.targetDirection = CGVector(dx: 0, dy: 0)
+    }
 }
