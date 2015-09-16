@@ -12,9 +12,11 @@ class GameScene: SKScene {
     
     var world : SKNode!
     var defaultBall : Ball!
-    var otherBalls : [Ball]!
+//    var otherBalls : [Ball]!
+    var food : Food!
+    var player: Player!
+    var sceneCallback : SceneCallback!
     var gameStarted = false
-    
     let rankHudName = "randHud"
     
     override func didMoveToView(view: SKView) {
@@ -30,10 +32,15 @@ class GameScene: SKScene {
     
     func start() {
         gameStarted = true
+        self.sceneCallback = SceneCallback(sceneNode: self.world)
+        self.player = Player(playerName: "Stupid", callback: sceneCallback)
         
-        self.defaultBall = Ball(ballName: "hello", ballColor: SKColor.redColor(), ballRadius: 20)
+        self.defaultBall = Ball(ballName: "hello", ballColor: SKColor.redColor(), ballRadius: 25)
         self.defaultBall.position = CGPoint(x: 0, y: 0)
+        self.food = Food( foodColor: SKColor.greenColor(), foodRadius: 10)
+        self.food.position = CGPoint(x: 10, y: 10)
         world.addChild(self.defaultBall)
+        world.addChild(self.food)
     }
     
     func centerWorldOnPosition(position: CGPoint) {

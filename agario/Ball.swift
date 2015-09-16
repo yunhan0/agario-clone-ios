@@ -18,7 +18,7 @@ class Ball : SKShapeNode {
     
     init(ballName name : String, ballColor color : SKColor, ballRadius radius : CGFloat) {
         super.init()
-        
+    
         self.radius = radius
 
         let diameter = radius * 2
@@ -27,8 +27,16 @@ class Ball : SKShapeNode {
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.mass = 10
         self.physicsBody?.friction = 10
+        self.physicsBody?.allowsRotation = false
         
         self.fillColor = color
+        
+        let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+        nameLabel.text = name
+        nameLabel.fontSize = 16
+        nameLabel.horizontalAlignmentMode = .Center
+        nameLabel.verticalAlignmentMode = .Center
+        self.addChild(nameLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {
