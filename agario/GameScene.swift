@@ -11,20 +11,16 @@ import SpriteKit
 class GameScene: SKScene {
     
     var world : SKNode!
-    var defaultBall : Ball!
-//    var otherBalls : [Ball]!
-    var food : Food!
     var player: Player!
     var sceneCallback : SceneCallback!
     var gameStarted = false
-    let rankHudName = "randHud"
+    var splitButton : SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         
         world = self.childNodeWithName("world")!
         
         /* Setup your scene here */
-        
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
         setupHud()
@@ -32,15 +28,14 @@ class GameScene: SKScene {
     
     func start() {
         gameStarted = true
+        // Scene Callback
         self.sceneCallback = SceneCallback(sceneNode: self.world)
-        self.player = Player(playerName: "Stupid", callback: sceneCallback)
-        
-        self.defaultBall = Ball(ballName: "hello", ballColor: SKColor.redColor(), ballRadius: 25)
-        self.defaultBall.position = CGPoint(x: 0, y: 0)
-        self.food = Food( foodColor: SKColor.greenColor(), foodRadius: 10)
-        self.food.position = CGPoint(x: 10, y: 10)
-        world.addChild(self.defaultBall)
-        world.addChild(self.food)
+        // Create Foods
+        for food in 0..<100 {
+            sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
+        }
+        // New Player
+        self.player = Player(playerName: "Cat", callback: sceneCallback)
     }
     
     func centerWorldOnPosition(position: CGPoint) {
@@ -53,7 +48,9 @@ class GameScene: SKScene {
             return
         }
         
-        defaultBall.regulateSpeed()
+        for ball in sceneCallback.allBalls {
+            ball.regulateSpeed()
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -61,9 +58,15 @@ class GameScene: SKScene {
             return
         }
         
-        defaultBall.move()
-
-        centerWorldOnPosition(defaultBall.position)
+        for ball in sceneCallback.allBalls {
+            ball.move()
+            centerWorldOnPosition(ball.position)
+        }
+        
+        for food in 0..<3 {
+            sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
+        }
+        
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -71,7 +74,11 @@ class GameScene: SKScene {
             return
         }
         let touch = touches.first as! UITouch
-        defaultBall.moveTowardTarget(targetLocation: touch.locationInNode(world))
+
+        for ball in sceneCallback.allBalls {
+            ball.moveTowardTarget(targetLocation: touch.locationInNode(world))
+        }
+        
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -80,7 +87,10 @@ class GameScene: SKScene {
         }
         
         let touch = touches.first as! UITouch
-        defaultBall.moveTowardTarget(targetLocation: touch.locationInNode(world))
+        
+        for ball in sceneCallback.allBalls {
+            ball.moveTowardTarget(targetLocation: touch.locationInNode(world))
+        }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -89,16 +99,32 @@ class GameScene: SKScene {
         }
         
         let touch = touches.first as! UITouch
-        defaultBall.targetDirection = CGVector(dx: 0, dy: 0)
+        for ball in sceneCallback.allBalls {
+            ball.targetDirection = CGVector(dx: 0, dy: 0)
+        }
+        
+        // Capture the touch button event
+        let location = touch.locationInNode(self)
+        if splitButton.containsPoint(location) {
+            sceneCallback.splitBall()
+        }
+
     }
     
     // setup hud
     func setupHud() {
-        let rankLabel = SKLabelNode(fontNamed: "Courier")
-        rankLabel.name = rankHudName
-        rankLabel.fontColor = SKColor.greenColor()
-        rankLabel.text = "Learderboard"
-        rankLabel.position = CGPointMake(self.frame.size.width/1.2, self.frame.size.height/1.2)
-        addChild(rankLabel)
+//        let rankLabel = SKLabelNode(fontNamed: "Courier")
+//        rankLabel.name = "rankHud"
+//        rankLabel.fontColor = SKColor.greenColor()
+//        rankLabel.text = "Learderboard"
+//        rankLabel.position = CGPointMake(self.frame.size.width/1.2, self.frame.size.height/1.2)
+//        addChild(rankLabel)
+        
+        splitButton = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 50, height: 50))
+        splitButton.position = CGPointMake(self.frame.size.width/1.1, self.frame.size.height/1.2)
+        let splitLabel = SKLabelNode(fontNamed: "Courier")
+        splitLabel.text = "S"
+        splitButton.addChild(splitLabel)
+        addChild(splitButton)
     }
 }

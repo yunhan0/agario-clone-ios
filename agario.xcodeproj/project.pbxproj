@@ -17,8 +17,11 @@
 		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
 		B53441571BA83029005EEEAB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53441561BA83029005EEEAB /* Player.swift */; };
 		B59016D41BA6AD27008215A3 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = B59016D31BA6AD27008215A3 /* pattern.png */; };
+		B5AA3C541BA9841700E41081 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AA3C531BA9841700E41081 /* Hud.swift */; };
 		B5E0B1BC1BA843E800A153EC /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BB1BA843E800A153EC /* Food.swift */; };
 		B5E0B1BE1BA849BA00A153EC /* SceneCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */; };
+		B5E0B1C41BA9233600A153EC /* Hud.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5E0B1C31BA9233600A153EC /* Hud.sks */; };
+		B5E0B1C81BA9271C00A153EC /* split-button.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E0B1C71BA9271C00A153EC /* split-button.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +37,11 @@
 		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		B53441561BA83029005EEEAB /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		B59016D31BA6AD27008215A3 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
+		B5AA3C531BA9841700E41081 /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		B5E0B1BB1BA843E800A153EC /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCallback.swift; sourceTree = "<group>"; };
+		B5E0B1C31BA9233600A153EC /* Hud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Hud.sks; path = ../Hud.sks; sourceTree = "<group>"; };
+		B5E0B1C71BA9271C00A153EC /* split-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "split-button.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,8 @@
 				B5E0B1BB1BA843E800A153EC /* Food.swift */,
 				B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */,
 				3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */,
+				B5E0B1C31BA9233600A153EC /* Hud.sks */,
+				B5AA3C531BA9841700E41081 /* Hud.swift */,
 				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
 				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
@@ -88,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				B59016D31BA6AD27008215A3 /* pattern.png */,
+				B5E0B1C71BA9271C00A153EC /* split-button.png */,
 				3A6A6EB31BA59D9200FC75A1 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -151,6 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B59016D41BA6AD27008215A3 /* pattern.png in Resources */,
+				B5E0B1C41BA9233600A153EC /* Hud.sks in Resources */,
+				B5E0B1C81BA9271C00A153EC /* split-button.png in Resources */,
 				3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */,
 				3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */,
 				3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */,
@@ -172,6 +183,7 @@
 				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
 				B53441571BA83029005EEEAB /* Player.swift in Sources */,
 				3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */,
+				B5AA3C541BA9841700E41081 /* Hud.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
