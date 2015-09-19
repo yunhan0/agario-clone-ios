@@ -20,4 +20,17 @@ struct GlobalConstants {
         static let barrier :CGFloat = 3
         static let wall    :CGFloat = 4
     }
+    
+    static let Color = [
+        0xF44336, // Red
+        0xE91E63, // Pink
+        0x9C27B0, // Purple
+        0x3F51B5, // DarkBlue
+        0x03A9F4, // LightBlue
+        0xFFEB3B, // Yellow
+        0xFF9800, // Orange
+        0x4CAF50, // DarkGreen
+        0x8bc34a, // Lime
+        0x212121, // DarkGray
+    ]
 }

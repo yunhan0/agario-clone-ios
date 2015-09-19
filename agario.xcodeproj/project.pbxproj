@@ -25,6 +25,7 @@
 		B5E0B1BE1BA849BA00A153EC /* SceneCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */; };
 		B5E0B1C41BA9233600A153EC /* Hud.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5E0B1C31BA9233600A153EC /* Hud.sks */; };
 		B5E0B1C81BA9271C00A153EC /* split-button.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E0B1C71BA9271C00A153EC /* split-button.png */; };
+		B5F759FF1BAD9D0A00953E9A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F759FE1BAD9D0A00953E9A /* UIColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCallback.swift; sourceTree = "<group>"; };
 		B5E0B1C31BA9233600A153EC /* Hud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Hud.sks; path = ../Hud.sks; sourceTree = "<group>"; };
 		B5E0B1C71BA9271C00A153EC /* split-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "split-button.png"; sourceTree = "<group>"; };
+		B5F759FE1BAD9D0A00953E9A /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */,
-				B527CEA31BAC36F3000054CE /* GlobalConstants.swift */,
 				3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */,
 				B53441561BA83029005EEEAB /* Player.swift */,
 				B527CEA51BAC40B7000054CE /* Barrier.swift */,
@@ -94,6 +95,8 @@
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
 				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
 				B538EB421BAD28A300D3E148 /* Menu.swift */,
+				B527CEA31BAC36F3000054CE /* GlobalConstants.swift */,
+				B5F759FE1BAD9D0A00953E9A /* UIColorExtension.swift */,
 				3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */,
 				3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */,
 				3A6A6EB21BA59D9200FC75A1 /* Supporting Files */,
@@ -190,6 +193,7 @@
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
 				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,
+				B5F759FF1BAD9D0A00953E9A /* UIColorExtension.swift in Sources */,
 				B538EB431BAD28A300D3E148 /* Menu.swift in Sources */,
 				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
 				B527CEA61BAC40B7000054CE /* Barrier.swift in Sources */,

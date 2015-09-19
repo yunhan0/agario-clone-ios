@@ -28,8 +28,8 @@ class Ball : SKShapeNode {
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.ball
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall
         self.physicsBody?.contactTestBitMask = GlobalConstants.Category.food | GlobalConstants.Category.barrier
+        self.zPosition = GlobalConstants.ZPosition.ball        
         let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-        self.zPosition = GlobalConstants.ZPosition.ball
         nameLabel.text = name
         nameLabel.fontSize = 16
         nameLabel.horizontalAlignmentMode = .Center

@@ -19,7 +19,6 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         world = self.childNodeWithName("world")!
-        
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
