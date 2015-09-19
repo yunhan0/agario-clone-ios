@@ -17,7 +17,7 @@ class Ball : SKShapeNode {
     
     init(ballName name : String, ballColor color : SKColor, ballRadius radius : CGFloat) {
         super.init()
-        self.name   = "ball"
+        self.name   = "ball_" + name
         self.radius = radius
         self.drawBall(radius)
         self.fillColor = color

@@ -18,5 +18,6 @@ struct GlobalConstants {
         static let food    :CGFloat = 1
         static let ball    :CGFloat = 2
         static let barrier :CGFloat = 3
+        static let wall    :CGFloat = 4
     }
 }

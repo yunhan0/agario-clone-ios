@@ -18,6 +18,7 @@
 		B527CEA41BAC36F3000054CE /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527CEA31BAC36F3000054CE /* GlobalConstants.swift */; };
 		B527CEA61BAC40B7000054CE /* Barrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B527CEA51BAC40B7000054CE /* Barrier.swift */; };
 		B53441571BA83029005EEEAB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53441561BA83029005EEEAB /* Player.swift */; };
+		B538EB431BAD28A300D3E148 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538EB421BAD28A300D3E148 /* Menu.swift */; };
 		B59016D41BA6AD27008215A3 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = B59016D31BA6AD27008215A3 /* pattern.png */; };
 		B5AA3C541BA9841700E41081 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AA3C531BA9841700E41081 /* Hud.swift */; };
 		B5E0B1BC1BA843E800A153EC /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BB1BA843E800A153EC /* Food.swift */; };
@@ -40,6 +41,7 @@
 		B527CEA31BAC36F3000054CE /* GlobalConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		B527CEA51BAC40B7000054CE /* Barrier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Barrier.swift; sourceTree = "<group>"; };
 		B53441561BA83029005EEEAB /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		B538EB421BAD28A300D3E148 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B59016D31BA6AD27008215A3 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
 		B5AA3C531BA9841700E41081 /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
 		B5E0B1BB1BA843E800A153EC /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
 				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
+				B538EB421BAD28A300D3E148 /* Menu.swift */,
 				3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */,
 				3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */,
 				3A6A6EB21BA59D9200FC75A1 /* Supporting Files */,
@@ -187,6 +190,7 @@
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
 				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,
+				B538EB431BAD28A300D3E148 /* Menu.swift in Sources */,
 				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
 				B527CEA61BAC40B7000054CE /* Barrier.swift in Sources */,
 				B53441571BA83029005EEEAB /* Player.swift in Sources */,

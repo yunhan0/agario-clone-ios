@@ -9,6 +9,7 @@ import SpriteKit
 
 class Food : SKShapeNode {
     var radius = CGFloat(0)
+    
     init(foodColor color: SKColor, foodRadius radius: CGFloat){
         super.init()
         self.name   = "food"

@@ -14,6 +14,7 @@ class GameScene: SKScene {
     var player: Player!
     var sceneCallback : SceneCallback!
     var gameStarted = false
+    var playerName = ""
     var splitButton : SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
@@ -40,7 +41,7 @@ class GameScene: SKScene {
         }
         
         // New Player
-        self.player = Player(playerName: "Cat", callback: sceneCallback)
+        self.player = Player(playerName: playerName, callback: sceneCallback)
     }
     
     func centerWorldOnPosition(position: CGPoint) {
@@ -133,7 +134,7 @@ class GameScene: SKScene {
     }
 }
 
-//Contacts
+//Contact Detection
 extension GameScene : SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact) {
         var fstBody : SKPhysicsBody
@@ -147,19 +148,24 @@ extension GameScene : SKPhysicsContactDelegate {
             sndBody = contact.bodyA
         }
         
-        let fstNode = fstBody.node
-        let sndNode = sndBody.node
-
-        if fstNode!.name == "ball" && sndNode!.name == "barrier" {
-            let nodeA = fstNode as! Ball
-            let nodeB = sndNode as! Barrier
-            if nodeA.radius >= nodeB.radius {
-                sceneCallback.splitBall()
+        // Purpose of using "if let" is to test if the object exist
+        if let fstNode = fstBody.node {
+            if let sndNode = sndBody.node {
+                if fstNode.name!.hasPrefix("ball_") && sndNode.name == "barrier" {
+                    let nodeA = fstNode as! Ball
+                    let nodeB = sndNode as! Barrier
+                    if nodeA.radius >= nodeB.radius {
+                        sceneCallback.splitBall()
+                    }
+                }
+                if fstNode.name == "food" && sndNode.name!.hasPrefix("ball_") {
+                    sceneCallback.eatFood(nodeA: fstNode as! Food, nodeB: sndNode as! Ball)
+                }
+                
+                if fstNode.name!.hasPrefix("ball_") && sndNode.name!.hasPrefix("ball_") {
+                    // Not implemented yet
+                }
             }
         }
-        if fstNode!.name == "food" && sndNode!.name == "ball" {
-            sceneCallback.eatFood(nodeA: fstNode as! Food, nodeB: sndNode as! Ball)
-        }
     }
-    
 }

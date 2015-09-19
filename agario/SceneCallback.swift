@@ -54,16 +54,20 @@ class SceneCallback {
         for ball in allBalls {
             if (ball.radius >= 25) {
                 ball.radius /= 2
-                ball.drawBall(ball.radius)
-                ball.physicsBody?.mass /= 2
-                ball.physicsBody?.friction /= 2
-                // Ugly demo
-                createBall(ballName: "Cat", ballColor: SKColor.redColor(), ballRadius: ball.radius)
+                // Remove the prefix of ball.name
+                var newBallName = (ball.name! as NSString).substringFromIndex(5)
+                // Destroy original balls
+                ball.removeFromParent()
+                allBalls.removeAtIndex(find(allBalls, ball)!)
+                // Create two new balls
+                createBall(ballName: newBallName, ballColor: SKColor.redColor(), ballRadius: ball.radius)
+                createBall(ballName: newBallName, ballColor: SKColor.redColor(), ballRadius: ball.radius)
             }
         }
     }
     
     func eatFood(nodeA fstNode: Food!, nodeB sndNode: Ball!) {
+        // Destroy the food been eaten
         fstNode.removeFromParent()
         allFoods.removeAtIndex(find(allFoods, fstNode)!)
         sndNode.radius += 1
