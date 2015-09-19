@@ -66,12 +66,13 @@ class GameScene: SKScene {
         
         for ball in sceneCallback.allBalls {
             ball.move()
-            centerWorldOnPosition(ball.position)
         }
         
         for food in 0..<3 {
             sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
         }
+        
+        centerWorldOnPosition(sceneCallback.allBalls[0].position)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
