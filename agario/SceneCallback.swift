@@ -19,19 +19,6 @@ class SceneCallback {
         allFoods = []
     }
     
-    func splitBall() {
-        for ball in allBalls {
-            if (ball.radius >= 25) {
-                ball.radius /= 2
-                ball.drawBall(ball.radius)
-                ball.physicsBody?.mass /= 2
-                ball.physicsBody?.friction /= 2
-                // Ugly demo
-                createBall(ballName: "Cat", ballColor: SKColor.redColor(), ballRadius: ball.radius)
-            }
-        }
-    }
-    
     func createBall(ballName name: String, ballColor color: SKColor, ballRadius radius: CGFloat) {
         var ball = Ball(ballName: name, ballColor: color, ballRadius: radius)
         if !allBalls.isEmpty {
@@ -54,4 +41,35 @@ class SceneCallback {
             scene.addChild(food)
         }
     }
+    
+    func createBarrier(barrierRadius radius: CGFloat) {
+        var barrier = Barrier(barrierRadius: radius)
+        var pos_x = CGFloat(arc4random_uniform(3800)) - 1900
+        var pos_y = CGFloat(arc4random_uniform(3800)) - 1900
+        barrier.position = CGPoint(x: pos_x, y: pos_y)
+        scene.addChild(barrier)
+    }
+    
+    func splitBall() {
+        for ball in allBalls {
+            if (ball.radius >= 25) {
+                ball.radius /= 2
+                ball.drawBall(ball.radius)
+                ball.physicsBody?.mass /= 2
+                ball.physicsBody?.friction /= 2
+                // Ugly demo
+                createBall(ballName: "Cat", ballColor: SKColor.redColor(), ballRadius: ball.radius)
+            }
+        }
+    }
+    
+    func eatFood(nodeA fstNode: Food!, nodeB sndNode: Ball!) {
+        fstNode.removeFromParent()
+        allFoods.removeAtIndex(find(allFoods, fstNode)!)
+        sndNode.radius += 1
+        sndNode.physicsBody?.mass += 1
+        sndNode.physicsBody?.friction += 1
+        sndNode.drawBall(sndNode.radius)
+    }
+    
 }

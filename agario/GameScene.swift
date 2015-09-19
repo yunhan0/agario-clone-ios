@@ -17,13 +17,13 @@ class GameScene: SKScene {
     var splitButton : SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
-        
         world = self.childNodeWithName("world")!
         
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
         setupHud()
+        physicsWorld.contactDelegate = self
     }
     
     func start() {
@@ -34,6 +34,11 @@ class GameScene: SKScene {
         for food in 0..<100 {
             sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
         }
+        // Create Barriers
+        for barrier in 0..<15 {
+            sceneCallback.createBarrier(barrierRadius: 70)
+        }
+        
         // New Player
         self.player = Player(playerName: "Cat", callback: sceneCallback)
     }
@@ -66,7 +71,6 @@ class GameScene: SKScene {
         for food in 0..<3 {
             sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
         }
-        
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -127,4 +131,35 @@ class GameScene: SKScene {
         splitButton.addChild(splitLabel)
         addChild(splitButton)
     }
+}
+
+//Contacts
+extension GameScene : SKPhysicsContactDelegate {
+    func didBeginContact(contact: SKPhysicsContact) {
+        var fstBody : SKPhysicsBody
+        var sndBody : SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            fstBody = contact.bodyA
+            sndBody = contact.bodyB
+        } else {
+            fstBody = contact.bodyB
+            sndBody = contact.bodyA
+        }
+        
+        let fstNode = fstBody.node
+        let sndNode = sndBody.node
+
+        if fstNode!.name == "ball" && sndNode!.name == "barrier" {
+            let nodeA = fstNode as! Ball
+            let nodeB = sndNode as! Barrier
+            if nodeA.radius >= nodeB.radius {
+                sceneCallback.splitBall()
+            }
+        }
+        if fstNode!.name == "food" && sndNode!.name == "ball" {
+            sceneCallback.eatFood(nodeA: fstNode as! Food, nodeB: sndNode as! Ball)
+        }
+    }
+    
 }

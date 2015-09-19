@@ -39,13 +39,11 @@ class GameViewController: UIViewController {
         let height = UIScreen.mainScreen().bounds.height;
         
         // Main menu view set up
-        
         let rectWidth = width / 3;
         let rectHeight = width / 13;
         let squareWidth = width / 13;
         self.mainMenuView = UIView(frame: UIScreen.mainScreen().bounds)
         mainMenuView.opaque = false
-//        mainMenuView.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
         mainMenuView.backgroundColor = UIColor(patternImage: UIImage(named: "pattern.png")!)
         let nameField = UITextField(frame: CGRect(
             x: (width - rectWidth) / 2, y: (height - rectWidth) / 2,

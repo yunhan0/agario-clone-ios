@@ -8,12 +8,7 @@
 
 import SpriteKit
 
-class Ball : SKShapeNode {
-    // Constraints, used for collision and contact
-    let ballCategory:UInt32 = 0;
-    let foodCategory:UInt32 = 1;
-    let wallCategory:UInt32 = 2;
-    
+class Ball : SKShapeNode {    
     var targetDirection = CGVector(dx: 0, dy: 0)
     var moveRequested = false
     var maxVelocity = CGFloat(200.0)
@@ -22,6 +17,7 @@ class Ball : SKShapeNode {
     
     init(ballName name : String, ballColor color : SKColor, ballRadius radius : CGFloat) {
         super.init()
+        self.name   = "ball"
         self.radius = radius
         self.drawBall(radius)
         self.fillColor = color
@@ -29,10 +25,11 @@ class Ball : SKShapeNode {
         self.physicsBody?.mass = 10
         self.physicsBody?.friction = 10
         self.physicsBody?.allowsRotation = false
-        self.physicsBody?.categoryBitMask = ballCategory
-        self.physicsBody?.collisionBitMask = wallCategory
-        self.physicsBody?.contactTestBitMask = foodCategory
+        self.physicsBody?.categoryBitMask = GlobalConstants.Category.ball
+        self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall
+        self.physicsBody?.contactTestBitMask = GlobalConstants.Category.food | GlobalConstants.Category.barrier
         let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+        self.zPosition = GlobalConstants.ZPosition.ball
         nameLabel.text = name
         nameLabel.fontSize = 16
         nameLabel.horizontalAlignmentMode = .Center
