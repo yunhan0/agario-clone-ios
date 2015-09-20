@@ -8,19 +8,21 @@
 
 import SpriteKit
 
-class Ball : SKShapeNode {    
+class Ball : SKShapeNode {
     var targetDirection = CGVector(dx: 0, dy: 0)
-    var moveRequested = false
-    var maxVelocity = CGFloat(200.0)
-    var force = CGFloat(2000.0)
-    var radius = CGFloat(0)
+    var moveRequested   = false
+    var maxVelocity     = CGFloat(200.0)
+    var force           = CGFloat(2000.0)
+    var radius          = CGFloat(0)
+    var color:Int?      = nil
     
-    init(ballName name : String, ballColor color : SKColor, ballRadius radius : CGFloat) {
+    init(ballName name : String, ballColor color : Int, ballRadius radius : CGFloat) {
         super.init()
         self.name   = "ball_" + name
+        self.color  = color
         self.radius = radius
         self.drawBall(radius)
-        self.fillColor = color
+        self.fillColor = UIColor(hex: color)
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.mass = 10
         self.physicsBody?.friction = 10

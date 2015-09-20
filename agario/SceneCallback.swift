@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class SceneCallback {    
     let scene : SKNode
     var allBalls : [Ball]!
@@ -19,7 +18,7 @@ class SceneCallback {
         allFoods = []
     }
     
-    func createBall(ballName name: String, ballColor color: SKColor, ballRadius radius: CGFloat) {
+    func createBall(ballName name: String, ballColor color: Int, ballRadius radius: CGFloat) {
         var ball = Ball(ballName: name, ballColor: color, ballRadius: radius)
         if !allBalls.isEmpty {
             ball.position = CGPoint(x: allBalls[0].position.x + allBalls[0].radius * 3, y: allBalls[0].position.y + allBalls[0].radius * 3)
@@ -31,7 +30,7 @@ class SceneCallback {
         // Speed
     }
     
-    func createFood(foodColor color: SKColor, foodRadius radius: CGFloat) {
+    func createFood(foodColor color: Int, foodRadius radius: CGFloat) {
         if allFoods.count <= 2000 {
             var food = Food(foodColor: color, foodRadius: radius)
             var pos_x = CGFloat(arc4random_uniform(4000)) - 2000
@@ -56,12 +55,14 @@ class SceneCallback {
                 ball.radius /= 2
                 // Remove the prefix of ball.name
                 var newBallName = (ball.name! as NSString).substringFromIndex(5)
+                // Get current ball color
+                var color = ball.color!
                 // Destroy original balls
                 ball.removeFromParent()
                 allBalls.removeAtIndex(find(allBalls, ball)!)
                 // Create two new balls
-                createBall(ballName: newBallName, ballColor: SKColor.redColor(), ballRadius: ball.radius)
-                createBall(ballName: newBallName, ballColor: SKColor.redColor(), ballRadius: ball.radius)
+                createBall(ballName: newBallName, ballColor: color, ballRadius: ball.radius)
+                createBall(ballName: newBallName, ballColor: color, ballRadius: ball.radius)
             }
         }
     }

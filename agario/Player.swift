@@ -15,8 +15,7 @@ class Player {
     init(playerName name : String, callback sceneCallback: SceneCallback) {
         self.name = name
         self.sceneCallback = sceneCallback
-        sceneCallback.createBall(ballName: name, ballColor: SKColor.redColor(), ballRadius: 25)
+        sceneCallback.createBall(ballName: name, ballColor: randomColor(), ballRadius: 25)
     }
-    
     
 }

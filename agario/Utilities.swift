@@ -31,3 +31,9 @@ func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
 func -(lhs: CGPoint, rhs: CGPoint) -> CGVector {
     return CGVector(dx: lhs.x - rhs.x, dy: lhs.y - rhs.y)
 }
+
+func randomColor() -> Int {
+    let maxIdx = GlobalConstants.Color.count - 1
+    var randi  = Int(arc4random_uniform(UInt32(maxIdx)))
+    return GlobalConstants.Color[randi]
+}

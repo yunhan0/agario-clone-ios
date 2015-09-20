@@ -30,7 +30,7 @@ struct GlobalConstants {
         0xFFEB3B, // Yellow
         0xFF9800, // Orange
         0x4CAF50, // DarkGreen
-        0x8bc34a, // Lime
-        0x212121, // DarkGray
+        0x8BC34A, // Lime
+        0xFF9955, // Peach
     ]
 }

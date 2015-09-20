@@ -32,7 +32,7 @@ class GameScene: SKScene {
         self.sceneCallback = SceneCallback(sceneNode: self.world)
         // Create Foods
         for food in 0..<100 {
-            sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
+            sceneCallback.createFood(foodColor: randomColor(), foodRadius: 10)
         }
         // Create Barriers
         for barrier in 0..<15 {
@@ -68,7 +68,7 @@ class GameScene: SKScene {
         }
         
         for food in 0..<3 {
-            sceneCallback.createFood(foodColor: SKColor.greenColor(), foodRadius: 10)
+            sceneCallback.createFood(foodColor: randomColor(), foodRadius: 10)
         }
         
         centerWorldOnPosition(sceneCallback.allBalls[0].position)
