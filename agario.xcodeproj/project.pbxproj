@@ -21,6 +21,7 @@
 		B538EB431BAD28A300D3E148 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538EB421BAD28A300D3E148 /* Menu.swift */; };
 		B59016D41BA6AD27008215A3 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = B59016D31BA6AD27008215A3 /* pattern.png */; };
 		B5AA3C541BA9841700E41081 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AA3C531BA9841700E41081 /* Hud.swift */; };
+		B5C1238E1BAE74D70088264E /* barrier.png in Resources */ = {isa = PBXBuildFile; fileRef = B5C1238D1BAE74D70088264E /* barrier.png */; };
 		B5E0B1BC1BA843E800A153EC /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BB1BA843E800A153EC /* Food.swift */; };
 		B5E0B1BE1BA849BA00A153EC /* SceneCallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */; };
 		B5E0B1C41BA9233600A153EC /* Hud.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5E0B1C31BA9233600A153EC /* Hud.sks */; };
@@ -45,6 +46,7 @@
 		B538EB421BAD28A300D3E148 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B59016D31BA6AD27008215A3 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
 		B5AA3C531BA9841700E41081 /* Hud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hud.swift; sourceTree = "<group>"; };
+		B5C1238D1BAE74D70088264E /* barrier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = barrier.png; sourceTree = "<group>"; };
 		B5E0B1BB1BA843E800A153EC /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		B5E0B1BD1BA849BA00A153EC /* SceneCallback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneCallback.swift; sourceTree = "<group>"; };
 		B5E0B1C31BA9233600A153EC /* Hud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = Hud.sks; path = ../Hud.sks; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				B59016D31BA6AD27008215A3 /* pattern.png */,
+				B5C1238D1BAE74D70088264E /* barrier.png */,
 				B5E0B1C71BA9271C00A153EC /* split-button.png */,
 				3A6A6EB31BA59D9200FC75A1 /* Info.plist */,
 			);
@@ -176,6 +179,7 @@
 				B5E0B1C81BA9271C00A153EC /* split-button.png in Resources */,
 				3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */,
 				3A6A6EC01BA59D9200FC75A1 /* Images.xcassets in Resources */,
+				B5C1238E1BAE74D70088264E /* barrier.png in Resources */,
 				3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

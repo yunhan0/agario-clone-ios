@@ -17,10 +17,10 @@ class Barrier : SKShapeNode {
         self.radius = radius
         let diameter = radius * 2
         self.path = CGPathCreateWithEllipseInRect(CGRect(origin: CGPoint(x: -radius, y: -radius), size: CGSize(width: diameter, height: diameter)), nil)
-        self.fillColor = SKColor.blueColor()
+        self.fillColor = SKColor.whiteColor()
+        self.fillTexture = SKTexture(imageNamed:"barrier")
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.dynamic = false
-        self.physicsBody?.allowsRotation = true
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.barrier
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall | GlobalConstants.Category.barrier
         self.physicsBody?.contactTestBitMask = GlobalConstants.Category.ball | GlobalConstants.Category.food
