@@ -26,7 +26,7 @@ class Menu: UIView {
         let rectWidth   = width / 3
         let rectHeight  = width / 13
         let squareWidth = width / 13
-        
+
         self.opaque = false
         self.backgroundColor = UIColor(patternImage: UIImage(named: "pattern.png")!)
         
@@ -43,7 +43,7 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: nameField.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight));
         startBtn.setTitle("Start Game", forState: .Normal)
-        startBtn.backgroundColor = UIColor.greenColor()
+        startBtn.backgroundColor = UIColor(hex: 0x2196F3)
         startBtn.layer.cornerRadius = 10.0
         
         // Multiplayer Start Button
@@ -51,7 +51,7 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: startBtn.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight))
         multiPlayerBtn.setTitle("Multiple Player", forState: .Normal)
-        multiPlayerBtn.backgroundColor = UIColor.greenColor()
+        multiPlayerBtn.backgroundColor = UIColor(hex: 0x2196F3)
         multiPlayerBtn.layer.cornerRadius = 10.0
         
         // Leaderboard Button
@@ -59,7 +59,7 @@ class Menu: UIView {
             x: 0, y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
         scoreBtn.setTitle("i", forState: .Normal)
-        scoreBtn.backgroundColor = UIColor.greenColor()
+        scoreBtn.backgroundColor = UIColor(hex: 0x2196F3)
         scoreBtn.bounds = CGRectInset(scoreBtn.frame, 5.0, 5.0)
         scoreBtn.layer.cornerRadius = 10.0
         
@@ -68,7 +68,7 @@ class Menu: UIView {
             x: (width - squareWidth), y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
         aboutBtn.setTitle("?", forState: .Normal)
-        aboutBtn.backgroundColor = UIColor.greenColor()
+        aboutBtn.backgroundColor = UIColor(hex: 0x2196F3)
         aboutBtn.bounds = CGRectInset(aboutBtn.frame, 5.0, 5.0)
         aboutBtn.layer.cornerRadius = 10.0
         
