@@ -17,6 +17,7 @@ class Ball : SKShapeNode {
     var mass : CGFloat!
     var ballName : String?
     var readyMerge = false
+    var impulsive = true
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
@@ -42,6 +43,9 @@ class Ball : SKShapeNode {
         }
         
         self.resetReadyMerge()
+        scheduleRun(self, time: 0.5) { () -> Void in
+            self.impulsive = false
+        }
     }
     
     convenience init(ballName name : String) {
@@ -78,6 +82,9 @@ class Ball : SKShapeNode {
     }
     
     func regulateSpeed() {
+        if self.impulsive {
+            return
+        }
         let v = self.physicsBody?.velocity
         
         if v!.dx * v!.dx + v!.dy * v!.dy > maxVelocity * maxVelocity {
@@ -103,7 +110,11 @@ class Ball : SKShapeNode {
         let ball2 = Ball(ballName: self.ballName, ballColor: self.color!,
             ballMass: self.mass / 2, ballPosition: self.position)
         if let v = self.physicsBody?.velocity {
-            ball2.physicsBody?.velocity = v.normalize() * ball2.maxVelocity
+            ball2.physicsBody?.velocity = v.normalize() * ball2.maxVelocity * 2
+//            let vn = v.normalize()
+//            let dx = vn.dx * 2 * ball2.maxVelocity * ball2.mass
+//            let dy = vn.dy * 2 * ball2.maxVelocity * ball2.mass
+//            ball2.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
             ball1.physicsBody?.velocity = v
         }
         let p = self.parent! as SKNode

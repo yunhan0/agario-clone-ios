@@ -45,6 +45,10 @@ class GameScene: SKScene {
         
         // New Player
         self.currentPlayer = Player(playerName: playerName, parentNode: self.world)
+        
+        for _ in 0..<4 {
+            players += [StupidPlayer(playerName: "Stupid AI", parentNode: self.world)]
+        }
         gameStarted = true
     }
     
@@ -92,6 +96,10 @@ class GameScene: SKScene {
         spawnBarrier()
         
         currentPlayer.refreshState()
+        
+        for p in players {
+            p.refreshState()
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

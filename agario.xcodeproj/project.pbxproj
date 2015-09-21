@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A414FD11BB071DE00FCB78C /* StupidPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A414FD01BB071DE00FCB78C /* StupidPlayer.swift */; settings = {ASSET_TAGS = (); }; };
 		3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */; };
 		3A6A6EB71BA59D9200FC75A1 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */; };
 		3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A414FD01BB071DE00FCB78C /* StupidPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StupidPlayer.swift; sourceTree = "<group>"; };
 		3A6A6EAF1BA59D9200FC75A1 /* agario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = agario.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A6A6EB31BA59D9200FC75A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				3A6A6EB41BA59D9200FC75A1 /* AppDelegate.swift */,
 				3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */,
 				B53441561BA83029005EEEAB /* Player.swift */,
+				3A414FD01BB071DE00FCB78C /* StupidPlayer.swift */,
 				B527CEA51BAC40B7000054CE /* Barrier.swift */,
 				B5E0B1BB1BA843E800A153EC /* Food.swift */,
 				3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */,
@@ -198,6 +201,7 @@
 				B5F759FF1BAD9D0A00953E9A /* UIColorExtension.swift in Sources */,
 				B538EB431BAD28A300D3E148 /* Menu.swift in Sources */,
 				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
+				3A414FD11BB071DE00FCB78C /* StupidPlayer.swift in Sources */,
 				B527CEA61BAC40B7000054CE /* Barrier.swift in Sources */,
 				B53441571BA83029005EEEAB /* Player.swift in Sources */,
 				3A6A6EB51BA59D9200FC75A1 /* AppDelegate.swift in Sources */,

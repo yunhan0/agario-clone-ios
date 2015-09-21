@@ -51,3 +51,9 @@ func scheduleRun(target: SKNode, time: NSTimeInterval, block: dispatch_block_t) 
     let runAction = SKAction.runBlock(block)
     target.runAction(SKAction.sequence([waitAction, runAction]))
 }
+
+func scheduleRunRepeat(target: SKNode, time: NSTimeInterval, block: dispatch_block_t) {
+    let waitAction = SKAction.waitForDuration(time)
+    let runAction = SKAction.runBlock(block)
+    target.runAction(SKAction.repeatActionForever(SKAction.sequence([waitAction, runAction])))
+}
