@@ -15,9 +15,9 @@ class Ball : SKShapeNode {
     var radius          = CGFloat(0)
     var color:Int?      = nil
     var mass : CGFloat!
-    var labelText : String?
+    var ballName : String?
     
-    init(ballName name : String, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
+    init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
         self.name   = "ball"
         self.position = pos
@@ -30,8 +30,8 @@ class Ball : SKShapeNode {
         self.initPhysicsBody()
         
         // Name label
-        self.labelText = name
-        if let nm = self.labelText {
+        self.ballName = name
+        if let nm = self.ballName {
             let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
             nameLabel.text = nm
             nameLabel.fontSize = 16
@@ -51,6 +51,8 @@ class Ball : SKShapeNode {
     
     func setMass(m : CGFloat) {
         self.mass = m
+        self.force = 5000.0 * self.mass / 10.0
+        self.maxVelocity = 200.0 / log10(self.mass)
         self.radius = sqrt(m) * 10.0
     }
     
@@ -76,14 +78,15 @@ class Ball : SKShapeNode {
         let v = self.physicsBody?.velocity
         
         if v!.dx * v!.dx + v!.dy * v!.dy > maxVelocity * maxVelocity {
-            //self.physicsBody?.velocity = v!.normalize() * maxVelocity
-            self.physicsBody?.velocity = v! * 0.5
+            self.physicsBody?.velocity = v!.normalize() * maxVelocity
+            //self.physicsBody?.velocity = v! * 0.99
         }
     }
     
     func refresh() {
         if targetDirection.dx * targetDirection.dx + targetDirection.dy * targetDirection.dy > radius * radius {
             self.physicsBody?.applyForce(targetDirection.normalize() * force)
+            //self.physicsBody?.velocity = targetDirection.normalize() * maxVelocity
         }
     }
     
@@ -92,10 +95,14 @@ class Ball : SKShapeNode {
     }
     
     func split() {
-        let ball1 = Ball(ballName: self.name!, ballColor: self.color!,
+        let ball1 = Ball(ballName: self.ballName, ballColor: self.color!,
             ballMass: self.mass / 2, ballPosition: self.position)
-        let ball2 = Ball(ballName: self.name!, ballColor: self.color!,
+        let ball2 = Ball(ballName: self.ballName, ballColor: self.color!,
             ballMass: self.mass / 2, ballPosition: self.position)
+        if let v = self.physicsBody?.velocity {
+            ball2.physicsBody?.velocity = v.normalize() * ball2.maxVelocity
+            ball1.physicsBody?.velocity = v
+        }
         let p = self.parent! as SKNode
         self.removeFromParent()
         p.addChild(ball1)

@@ -75,6 +75,9 @@ class GameScene: SKScene {
             let ball = node as! Ball
             ball.regulateSpeed()
         })
+        
+        
+        centerWorldOnPosition(currentPlayer.centerPosition())
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -89,8 +92,6 @@ class GameScene: SKScene {
         spawnBarrier()
         
         currentPlayer.refreshState()
-        
-        centerWorldOnPosition(currentPlayer.centerPosition())
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

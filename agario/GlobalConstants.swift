@@ -38,6 +38,6 @@ struct GlobalConstants {
     static let FoodRadius = CGFloat(10)
     static let BarrierRadius = CGFloat(70)
     static let MapSize = CGSize(width: 4000, height: 4000)
-    static let FoodLimit = 2000
+    static let FoodLimit = 500
     static let BarrierLimit = 15
 }
