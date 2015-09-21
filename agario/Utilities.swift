@@ -37,3 +37,11 @@ func randomColor() -> Int {
     var randi  = Int(arc4random_uniform(UInt32(maxIdx)))
     return GlobalConstants.Color[randi]
 }
+
+func randomPosition() -> CGPoint {
+    let width = UInt32(GlobalConstants.MapSize.width)
+    let height = UInt32(GlobalConstants.MapSize.height)
+    var pos_x = CGFloat(arc4random_uniform(width)) - CGFloat(width / 2)
+    var pos_y = CGFloat(arc4random_uniform(height)) - CGFloat(height / 2)
+    return CGPoint(x: pos_x, y: pos_y)
+}

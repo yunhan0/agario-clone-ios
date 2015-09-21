@@ -9,12 +9,11 @@
 import SpriteKit
 
 class Barrier : SKShapeNode {
-    var radius = CGFloat(0)
+    var radius = GlobalConstants.BarrierRadius
     
-    init(barrierRadius radius: CGFloat) {
+    override init() {
         super.init()
         self.name   = "barrier"
-        self.radius = radius
         let diameter = radius * 2
         self.path = CGPathCreateWithEllipseInRect(CGRect(origin: CGPoint(x: -radius, y: -radius), size: CGSize(width: diameter, height: diameter)), nil)
         self.fillColor = SKColor.whiteColor()
@@ -25,6 +24,8 @@ class Barrier : SKShapeNode {
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall | GlobalConstants.Category.barrier
         self.physicsBody?.contactTestBitMask = GlobalConstants.Category.ball | GlobalConstants.Category.food
         self.zPosition = GlobalConstants.ZPosition.barrier
+        
+        self.position = randomPosition()
     }
     
     required init?(coder aDecoder: NSCoder) {

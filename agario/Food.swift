@@ -8,12 +8,12 @@
 import SpriteKit
 
 class Food : SKShapeNode {
-    var radius = CGFloat(0)
     
-    init(foodColor color: Int, foodRadius radius: CGFloat){
+    var radius = GlobalConstants.FoodRadius
+    
+    init(foodColor color: Int){
         super.init()
         self.name   = "food"
-        self.radius = radius        
         let diameter = radius * 2
         self.path = CGPathCreateWithEllipseInRect(CGRect(origin: CGPoint(x: -radius, y: -radius), size: CGSize(width: diameter, height: diameter)), nil)
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
@@ -23,6 +23,8 @@ class Food : SKShapeNode {
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall
         self.physicsBody?.contactTestBitMask = GlobalConstants.Category.ball | GlobalConstants.Category.barrier
         self.zPosition = GlobalConstants.ZPosition.food
+        
+        self.position = randomPosition()
     }
 
     required init?(coder aDecoder: NSCoder) {

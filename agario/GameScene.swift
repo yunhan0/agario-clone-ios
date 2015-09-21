@@ -11,14 +11,21 @@ import SpriteKit
 class GameScene: SKScene {
     
     var world : SKNode!
-    var player: Player!
-    var sceneCallback : SceneCallback!
+    var foodLayer : SKNode!
+    var barrierLayer : SKNode!
+    
+    var currentPlayer: Player!
+    // Including online player and AI
+    var players : [Player] = []
+    
     var gameStarted = false
     var playerName = ""
     var splitButton : SKSpriteNode!
     
     override func didMoveToView(view: SKView) {
         world = self.childNodeWithName("world")!
+        foodLayer = world.childNodeWithName("foodLayer")
+        barrierLayer = world.childNodeWithName("barrierLayer")
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
@@ -27,20 +34,30 @@ class GameScene: SKScene {
     }
     
     func start() {
-        gameStarted = true
-        // Scene Callback
-        self.sceneCallback = SceneCallback(sceneNode: self.world)
         // Create Foods
         for food in 0..<100 {
-            sceneCallback.createFood(foodColor: randomColor(), foodRadius: 10)
+            self.spawnFood()
         }
         // Create Barriers
         for barrier in 0..<15 {
-            sceneCallback.createBarrier(barrierRadius: 70)
+            self.spawnBarrier()
         }
         
         // New Player
-        self.player = Player(playerName: playerName, callback: sceneCallback)
+        self.currentPlayer = Player(playerName: playerName, parentNode: self.world)
+        gameStarted = true
+    }
+    
+    func spawnFood() {
+        if foodLayer.children.count <= GlobalConstants.FoodLimit {
+            foodLayer.addChild(Food(foodColor: randomColor()))
+        }
+    }
+    
+    func spawnBarrier() {
+        if barrierLayer.children.count <= GlobalConstants.BarrierLimit {
+            barrierLayer.addChild(Barrier())
+        }
     }
     
     func centerWorldOnPosition(position: CGPoint) {
@@ -48,14 +65,16 @@ class GameScene: SKScene {
             y: -position.y + CGRectGetMidY(frame))
     }
     
-    override func didEvaluateActions() {
+    override func didSimulatePhysics() {
         if (!gameStarted) {
             return
         }
         
-        for ball in sceneCallback.allBalls {
+        world.enumerateChildNodesWithName("//ball", usingBlock: {
+            node, stop in
+            let ball = node as! Ball
             ball.regulateSpeed()
-        }
+        })
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -63,15 +82,15 @@ class GameScene: SKScene {
             return
         }
         
-        for ball in sceneCallback.allBalls {
-            ball.move()
-        }
-        
         for food in 0..<3 {
-            sceneCallback.createFood(foodColor: randomColor(), foodRadius: 10)
+            spawnFood()
         }
         
-        centerWorldOnPosition(sceneCallback.allBalls[0].position)
+        spawnBarrier()
+        
+        currentPlayer.refreshState()
+        
+        centerWorldOnPosition(currentPlayer.centerPosition())
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -79,11 +98,7 @@ class GameScene: SKScene {
             return
         }
         let touch = touches.first as! UITouch
-
-        for ball in sceneCallback.allBalls {
-            ball.moveTowardTarget(targetLocation: touch.locationInNode(world))
-        }
-        
+        currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -92,10 +107,7 @@ class GameScene: SKScene {
         }
         
         let touch = touches.first as! UITouch
-        
-        for ball in sceneCallback.allBalls {
-            ball.moveTowardTarget(targetLocation: touch.locationInNode(world))
-        }
+        currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -104,27 +116,18 @@ class GameScene: SKScene {
         }
         
         let touch = touches.first as! UITouch
-        for ball in sceneCallback.allBalls {
-            ball.targetDirection = CGVector(dx: 0, dy: 0)
-        }
+        currentPlayer.floating()
+
         
         // Capture the touch button event
         let location = touch.locationInNode(self)
         if splitButton.containsPoint(location) {
-            sceneCallback.splitBall()
+            currentPlayer.split()
         }
-
     }
     
     // setup hud
     func setupHud() {
-//        let rankLabel = SKLabelNode(fontNamed: "Courier")
-//        rankLabel.name = "rankHud"
-//        rankLabel.fontColor = SKColor.greenColor()
-//        rankLabel.text = "Learderboard"
-//        rankLabel.position = CGPointMake(self.frame.size.width/1.2, self.frame.size.height/1.2)
-//        addChild(rankLabel)
-        
         splitButton = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 50, height: 50))
         splitButton.position = CGPointMake(self.frame.size.width/1.1, self.frame.size.height/1.2)
         let splitLabel = SKLabelNode(fontNamed: "Courier")
@@ -155,11 +158,12 @@ extension GameScene : SKPhysicsContactDelegate {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
-                        sceneCallback.splitBall()
+                        nodeA.split()
                     }
                 }
-                if fstNode.name == "food" && sndNode.name!.hasPrefix("ball_") {
-                    sceneCallback.eatFood(nodeA: fstNode as! Food, nodeB: sndNode as! Ball)
+                if fstNode.name == "food" && sndNode.name == "ball" {
+                    let ball = sndNode as! Ball
+                    ball.eatFood(fstNode as! Food)
                 }
                 
                 if fstNode.name!.hasPrefix("ball_") && sndNode.name!.hasPrefix("ball_") {

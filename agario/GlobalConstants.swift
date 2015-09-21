@@ -7,6 +7,7 @@
 //
 import SpriteKit
 struct GlobalConstants {
+    
     struct Category {
         static let wall      :UInt32 = 0b0001;
         static let food      :UInt32 = 0b0010;
@@ -33,4 +34,10 @@ struct GlobalConstants {
         0x8BC34A, // Lime
         0xFF9955, // Peach
     ]
+    
+    static let FoodRadius = CGFloat(10)
+    static let BarrierRadius = CGFloat(70)
+    static let MapSize = CGSize(width: 4000, height: 4000)
+    static let FoodLimit = 2000
+    static let BarrierLimit = 15
 }
