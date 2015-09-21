@@ -45,3 +45,9 @@ func randomPosition() -> CGPoint {
     let pos_y = CGFloat(arc4random_uniform(height)) - CGFloat(height / 2)
     return CGPoint(x: pos_x, y: pos_y)
 }
+
+func scheduleRun(target: SKNode, time: NSTimeInterval, block: dispatch_block_t) {
+    let waitAction = SKAction.waitForDuration(time)
+    let runAction = SKAction.runBlock(block)
+    target.runAction(SKAction.sequence([waitAction, runAction]))
+}

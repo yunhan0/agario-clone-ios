@@ -155,7 +155,7 @@ extension GameScene : SKPhysicsContactDelegate {
         // Purpose of using "if let" is to test if the object exist
         if let fstNode = fstBody.node {
             if let sndNode = sndBody.node {
-                if fstNode.name!.hasPrefix("ball_") && sndNode.name == "barrier" {
+                if fstNode.name == name && sndNode.name == "barrier" {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
@@ -167,8 +167,21 @@ extension GameScene : SKPhysicsContactDelegate {
                     ball.eatFood(fstNode as! Food)
                 }
                 
-                if fstNode.name!.hasPrefix("ball_") && sndNode.name!.hasPrefix("ball_") {
+                if fstNode.name == "ball" && sndNode.name == "ball" {
                     // Not implemented yet
+                    let ball1 = fstNode as! Ball
+                    let ball2 = sndNode as! Ball
+                    if ball1.parent == ball2.parent { // Sibling
+                        if ball1.readyMerge && ball2.readyMerge {
+                            if ball2.mass > ball1.mass {
+                                ball2.mergeBall(ball1)
+                            } else {
+                                ball1.mergeBall(ball2)
+                            }
+                        }
+                    } else { // Enemy
+                        
+                    }
                 }
             }
         }

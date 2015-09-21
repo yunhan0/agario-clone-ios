@@ -16,6 +16,7 @@ class Ball : SKShapeNode {
     var color:Int?      = nil
     var mass : CGFloat!
     var ballName : String?
+    var readyMerge = false
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
@@ -39,6 +40,8 @@ class Ball : SKShapeNode {
             nameLabel.verticalAlignmentMode = .Center
             self.addChild(nameLabel)
         }
+        
+        self.resetReadyMerge()
     }
     
     convenience init(ballName name : String) {
@@ -117,5 +120,26 @@ class Ball : SKShapeNode {
         let oldv = self.physicsBody?.velocity
         self.initPhysicsBody()
         self.physicsBody?.velocity = oldv!
+    }
+    
+    func resetReadyMerge() {
+        self.readyMerge = false
+        scheduleRun(self, time: 30) { () -> Void in
+            self.readyMerge = true
+        }
+    }
+    
+    func mergeBall(ball : Ball) {
+        self.eatBall(ball)
+        self.resetReadyMerge()
+    }
+    
+    func eatBall(ball : Ball) {
+        ball.removeFromParent()
+        self.setMass(self.mass! + ball.mass)
+        self.drawBall()
+        let oldv = self.physicsBody?.velocity
+        self.initPhysicsBody()
+        self.physicsBody?.velocity = oldv!.normalize() * self.maxVelocity
     }
 }
