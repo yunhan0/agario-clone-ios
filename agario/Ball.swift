@@ -82,7 +82,6 @@ class Ball : SKShapeNode {
     }
     
     func refresh() {
-        let v = self.physicsBody?.velocity
         if targetDirection.dx * targetDirection.dx + targetDirection.dy * targetDirection.dy > radius * radius {
             self.physicsBody?.applyForce(targetDirection.normalize() * force)
         }
@@ -93,9 +92,9 @@ class Ball : SKShapeNode {
     }
     
     func split() {
-        var ball1 = Ball(ballName: self.name!, ballColor: self.color!,
+        let ball1 = Ball(ballName: self.name!, ballColor: self.color!,
             ballMass: self.mass / 2, ballPosition: self.position)
-        var ball2 = Ball(ballName: self.name!, ballColor: self.color!,
+        let ball2 = Ball(ballName: self.name!, ballColor: self.color!,
             ballMass: self.mass / 2, ballPosition: self.position)
         let p = self.parent! as SKNode
         self.removeFromParent()

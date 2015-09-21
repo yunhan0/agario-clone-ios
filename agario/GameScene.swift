@@ -35,11 +35,11 @@ class GameScene: SKScene {
     
     func start() {
         // Create Foods
-        for food in 0..<100 {
+        for _ in 0..<100 {
             self.spawnFood()
         }
         // Create Barriers
-        for barrier in 0..<15 {
+        for _ in 0..<15 {
             self.spawnBarrier()
         }
         
@@ -82,7 +82,7 @@ class GameScene: SKScene {
             return
         }
         
-        for food in 0..<3 {
+        for _ in 0..<3 {
             spawnFood()
         }
         
@@ -93,29 +93,29 @@ class GameScene: SKScene {
         centerWorldOnPosition(currentPlayer.centerPosition())
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!gameStarted || touches.count <= 0) {
             return
         }
-        let touch = touches.first as! UITouch
+        let touch = touches.first! as UITouch
         currentPlayer.move(touch.locationInNode(world))
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if !gameStarted || touches.count <= 0 {
             return
         }
         
-        let touch = touches.first as! UITouch
+        let touch = touches.first! as UITouch
         currentPlayer.move(touch.locationInNode(world))
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if !gameStarted || touches.count <= 0 {
             return
         }
         
-        let touch = touches.first as! UITouch
+        let touch = touches.first! as UITouch
         currentPlayer.floating()
 
         

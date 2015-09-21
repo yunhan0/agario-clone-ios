@@ -16,7 +16,7 @@ class Player : SKNode {
         
         self.name = name
         
-        var ball = Ball(ballName: self.name!)
+        let ball = Ball(ballName: self.name!)
         self.addChild(ball)
         
         //self.zPosition = GlobalConstants.ZPosition.ball

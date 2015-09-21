@@ -10,7 +10,7 @@ import SpriteKit
 
 extension CGVector {
     func normalize() -> CGVector {
-        var d = length()
+        let d = length()
         
         return CGVector(dx: dx / d, dy: dy / d)
     }
@@ -34,14 +34,14 @@ func -(lhs: CGPoint, rhs: CGPoint) -> CGVector {
 
 func randomColor() -> Int {
     let maxIdx = GlobalConstants.Color.count - 1
-    var randi  = Int(arc4random_uniform(UInt32(maxIdx)))
+    let randi  = Int(arc4random_uniform(UInt32(maxIdx)))
     return GlobalConstants.Color[randi]
 }
 
 func randomPosition() -> CGPoint {
     let width = UInt32(GlobalConstants.MapSize.width)
     let height = UInt32(GlobalConstants.MapSize.height)
-    var pos_x = CGFloat(arc4random_uniform(width)) - CGFloat(width / 2)
-    var pos_y = CGFloat(arc4random_uniform(height)) - CGFloat(height / 2)
+    let pos_x = CGFloat(arc4random_uniform(width)) - CGFloat(width / 2)
+    let pos_y = CGFloat(arc4random_uniform(height)) - CGFloat(height / 2)
     return CGPoint(x: pos_x, y: pos_y)
 }
