@@ -28,7 +28,7 @@ class Player : SKNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func centerPosition() -> CGPoint{
+    func centerPosition() -> CGPoint {
         let count = CGFloat(self.children.count)
         var x = CGFloat(0)
         var y = CGFloat(0)
@@ -37,6 +37,14 @@ class Player : SKNode {
             y += ball.position.y / count
         }
         return CGPoint(x: x, y: y)
+    }
+    
+    func totalMass() -> CGFloat {
+        var ret : CGFloat = 0
+        for ball in self.children as! [Ball] {
+            ret += ball.mass
+        }
+        return ret
     }
     
     func move(pos : CGPoint) {

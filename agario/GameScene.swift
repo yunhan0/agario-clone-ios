@@ -168,6 +168,7 @@ extension GameScene : SKPhysicsContactDelegate {
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
                         nodeA.split()
+                        sndNode.removeFromParent()
                     }
                 }
                 if fstNode.name == "food" && sndNode.name == "ball" {

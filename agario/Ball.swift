@@ -115,6 +115,7 @@ class Ball : SKShapeNode {
         
         for node in contacted {
             if node.parent == nil || !node.inParentHierarchy(node.parent!) {
+                // Node eaten by other nodes
                 contacted.remove(node)
             }
             if (node.name == "ball") {
@@ -149,23 +150,25 @@ class Ball : SKShapeNode {
         targetDirection = loc - self.position
     }
     
-    func split() {
-        let ball1 = Ball(ballName: self.ballName, ballColor: self.color!,
-            ballMass: self.mass / 2, ballPosition: self.position)
-        let ball2 = Ball(ballName: self.ballName, ballColor: self.color!,
-            ballMass: self.mass / 2, ballPosition: self.position)
+    func split(n : Int = 2) {
+        var newballs : [Ball] = []
+        for _ in 0..<n {
+            newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
+                ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+        }
         if let v = self.physicsBody?.velocity {
-            ball2.physicsBody?.velocity = v.normalize() * ball2.maxVelocity * 2
-//            let vn = v.normalize()
-//            let dx = vn.dx * 2 * ball2.maxVelocity * ball2.mass
-//            let dy = vn.dy * 2 * ball2.maxVelocity * ball2.mass
-//            ball2.physicsBody?.applyImpulse(CGVector(dx: dx, dy: dy))
-            ball1.physicsBody?.velocity = v
+            for ball in newballs {
+                ball.physicsBody?.velocity = v
+            }
+            if n == 2 {
+                newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 8 * (1 / log10(self.mass))
+            }
         }
         let p = self.parent! as SKNode
         self.removeFromParent()
-        p.addChild(ball1)
-        p.addChild(ball2)
+        for ball in newballs {
+            p.addChild(ball)
+        }
     }
     
     func eatFood(food : Food) {
