@@ -8,16 +8,14 @@
 
 import SpriteKit
 
-class Barrier : SKShapeNode {
+class Barrier : SKSpriteNode {
     var radius = GlobalConstants.BarrierRadius
     
-    override init() {
-        super.init()
+    init() {
+        super.init(texture: SKTexture(imageNamed: "barrier"),
+            color: SKColor.whiteColor(),
+            size: CGSize(width: 2 * radius, height: 2 * radius))
         self.name   = "barrier"
-        let diameter = radius * 2
-        self.path = CGPathCreateWithEllipseInRect(CGRect(origin: CGPoint(x: -radius, y: -radius), size: CGSize(width: diameter, height: diameter)), nil)
-        self.fillColor = SKColor.whiteColor()
-        self.fillTexture = SKTexture(imageNamed:"barrier")
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.barrier
@@ -26,6 +24,10 @@ class Barrier : SKShapeNode {
         self.zPosition = GlobalConstants.ZPosition.barrier
         
         self.position = randomPosition()
+        
+        // Let barrier spin
+        let spin = SKAction.rotateByAngle(CGFloat(M_PI*2), duration: 2)
+        self.runAction(SKAction.repeatActionForever(spin))
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -104,6 +104,9 @@ class Ball : SKShapeNode {
         }
         
         for node in contacted {
+            if node.parent == nil || !node.inParentHierarchy(node.parent!) {
+                contacted.remove(node)
+            }
             if (node.name == "ball") {
                 let ball = node as! Ball
                 if ball.parent == self.parent { // Sibling

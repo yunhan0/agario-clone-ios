@@ -31,13 +31,6 @@ class GameScene: SKScene {
             y: CGRectGetMidY(frame))
         setupHud()
         physicsWorld.contactDelegate = self
-        
-        // Let barrier spin
-        let spin = SKAction.rotateByAngle(CGFloat(M_PI*2), duration: 5)
-        let spinForever = SKAction.repeatActionForever(spin)
-        for barrier in barrierLayer.children {
-            barrier.runAction(spinForever)
-        }
     }
     
     func start() {
