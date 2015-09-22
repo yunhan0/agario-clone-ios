@@ -46,7 +46,7 @@ class GameScene: SKScene {
         // New Player
         self.currentPlayer = Player(playerName: playerName, parentNode: self.world)
         
-        for _ in 0..<4 {
+        for _ in 0..<8 {
             players += [StupidPlayer(playerName: "Stupid AI", parentNode: self.world)]
         }
         gameStarted = true
@@ -163,7 +163,7 @@ extension GameScene : SKPhysicsContactDelegate {
         // Purpose of using "if let" is to test if the object exist
         if let fstNode = fstBody.node {
             if let sndNode = sndBody.node {
-                if fstNode.name == name && sndNode.name == "barrier" {
+                if fstNode.name == "ball" && sndNode.name == "barrier" {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
@@ -172,24 +172,51 @@ extension GameScene : SKPhysicsContactDelegate {
                 }
                 if fstNode.name == "food" && sndNode.name == "ball" {
                     let ball = sndNode as! Ball
-                    ball.eatFood(fstNode as! Food)
+                    //ball.eatFood(fstNode as! Food)
+                    ball.beginContact(fstNode as! Food)
                 }
                 
                 if fstNode.name == "ball" && sndNode.name == "ball" {
-                    // Not implemented yet
-                    let ball1 = fstNode as! Ball
-                    let ball2 = sndNode as! Ball
-                    if ball1.parent == ball2.parent { // Sibling
-                        if ball1.readyMerge && ball2.readyMerge {
-                            if ball2.mass > ball1.mass {
-                                ball2.mergeBall(ball1)
-                            } else {
-                                ball1.mergeBall(ball2)
-                            }
-                        }
-                    } else { // Enemy
-                        
+                    var ball1 = fstNode as! Ball // Big
+                    var ball2 = sndNode as! Ball // Small
+                    if ball2.mass > ball1.mass {
+                        let tmp = ball2
+                        ball2 = ball1
+                        ball1 = tmp
                     }
+                    ball1.beginContact(ball2)
+                }
+            }
+        }
+    }
+    
+    func didEndContact(contact: SKPhysicsContact) {
+        var fstBody : SKPhysicsBody
+        var sndBody : SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            fstBody = contact.bodyA
+            sndBody = contact.bodyB
+        } else {
+            fstBody = contact.bodyB
+            sndBody = contact.bodyA
+        }
+        if let fstNode = fstBody.node {
+            if let sndNode = sndBody.node {
+                if fstNode.name == "food" && sndNode.name == "ball" {
+                    let ball = sndNode as! Ball
+                    ball.endContact(fstNode as! Food)
+                }
+                
+                if fstNode.name == "ball" && sndNode.name == "ball" {
+                    var ball1 = fstNode as! Ball // Big
+                    var ball2 = sndNode as! Ball // Small
+                    if ball2.mass > ball1.mass {
+                        let tmp = ball2
+                        ball2 = ball1
+                        ball1 = tmp
+                    }
+                    ball1.endContact(ball2)
                 }
             }
         }

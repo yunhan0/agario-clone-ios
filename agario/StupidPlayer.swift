@@ -11,7 +11,7 @@ import SpriteKit
 class StupidPlayer : Player {
     override init(playerName name : String, parentNode parent : SKNode) {
         super.init(playerName: name, parentNode: parent)
-        self.position = randomPosition()
+        self.children.first!.position = randomPosition()
         self.move(randomPosition())
         scheduleRunRepeat(self, time: 5.0) {
             self.move(randomPosition())

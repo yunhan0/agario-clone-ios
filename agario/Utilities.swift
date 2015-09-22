@@ -57,3 +57,30 @@ func scheduleRunRepeat(target: SKNode, time: NSTimeInterval, block: dispatch_blo
     let runAction = SKAction.runBlock(block)
     target.runAction(SKAction.repeatActionForever(SKAction.sequence([waitAction, runAction])))
 }
+
+func distance(p1 : CGPoint, p2 : CGPoint) -> CGFloat {
+    let v = p1 - p2 as CGVector
+    return v.length()
+}
+
+func circleOverlapArea(r1: CGFloat, r2: CGFloat, d: CGFloat) -> CGFloat {
+    if d >= r1 + r2 {
+        return 0
+    }
+    if r2 + d <= r1 {
+        return circleArea(r2)
+    }
+    //let t = (d * d - r2 * r2 + r1 * r1) * (d * d - r2 * r2 + r1 * r1)
+    //let a = 1.0 / d * sqrt(4 * d * d * r1 * r1 - t)
+    let d1 = (d * d - r2 * r2 + r1 * r1) / (2 * d)
+    let d2 = (d - d1)
+    
+    let f = { (rr : CGFloat, dd : CGFloat) -> CGFloat in
+        return rr * rr * acos(dd / rr) - dd * sqrt(rr * rr - dd * dd)
+    }
+    return f(r1, d1) + f(r2, d2)
+}
+
+func circleArea(r : CGFloat) -> CGFloat {
+    return CGFloat(M_PI) * r * r
+}

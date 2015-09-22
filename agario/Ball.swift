@@ -18,6 +18,7 @@ class Ball : SKShapeNode {
     var ballName : String?
     var readyMerge = false
     var impulsive = true
+    var contacted : Set<SKNode> = []
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
@@ -30,6 +31,8 @@ class Ball : SKShapeNode {
         self.drawBall()
         // Physics
         self.initPhysicsBody()
+        
+        self.zPosition = self.mass
         
         // Name label
         self.ballName = name
@@ -58,6 +61,7 @@ class Ball : SKShapeNode {
     
     func setMass(m : CGFloat) {
         self.mass = m
+        self.zPosition = m
         self.force = 5000.0 * self.mass / 10.0
         self.maxVelocity = 200.0 / log10(self.mass)
         self.radius = sqrt(m) * 10.0
@@ -78,7 +82,7 @@ class Ball : SKShapeNode {
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.ball
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall
         self.physicsBody?.contactTestBitMask = GlobalConstants.Category.barrier | GlobalConstants.Category.ball
-        self.zPosition = GlobalConstants.ZPosition.ball
+        //self.zPosition = GlobalConstants.ZPosition.ball
     }
     
     func regulateSpeed() {
@@ -97,6 +101,34 @@ class Ball : SKShapeNode {
         if targetDirection.dx * targetDirection.dx + targetDirection.dy * targetDirection.dy > radius * radius {
             self.physicsBody?.applyForce(targetDirection.normalize() * force)
             //self.physicsBody?.velocity = targetDirection.normalize() * maxVelocity
+        }
+        
+        for node in contacted {
+            if (node.name == "ball") {
+                let ball = node as! Ball
+                if ball.parent == self.parent { // Sibling
+                    if self.readyMerge && ball.readyMerge {
+                        self.mergeBall(ball)
+                        contacted.remove(node)
+                    } else {
+                        
+                    }
+                } else { // Enemy
+                    if self.mass - ball.mass > max(ball.mass * 0.05, 10) {
+                        let d = distance(self.position, p2: ball.position)
+                        let a = circleOverlapArea(self.radius, r2: ball.radius, d: d)
+                        if a > 0 && a > circleArea(ball.radius) * 0.75 {
+                            self.eatBall(ball)
+                            contacted.remove(node)
+                        }
+                    }
+                }
+            } else if (node.name == "food") {
+                if self.containsPoint(node.position) {
+                    self.eatFood(node as! Food)
+                    contacted.remove(node)
+                }
+            }
         }
     }
     
@@ -152,5 +184,13 @@ class Ball : SKShapeNode {
         let oldv = self.physicsBody?.velocity
         self.initPhysicsBody()
         self.physicsBody?.velocity = oldv!.normalize() * self.maxVelocity
+    }
+    
+    func beginContact(node : SKNode) {
+        contacted.insert(node)
+    }
+    
+    func endContact(node : SKNode) {
+        contacted.remove(node)
     }
 }
