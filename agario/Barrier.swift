@@ -26,7 +26,7 @@ class Barrier : SKSpriteNode {
         self.position = randomPosition()
         
         // Let barrier spin
-        let spin = SKAction.rotateByAngle(CGFloat(M_PI*2), duration: 2)
+        let spin = SKAction.rotateByAngle(CGFloat(M_PI*2), duration: 10)
         self.runAction(SKAction.repeatActionForever(spin))
     }
     
