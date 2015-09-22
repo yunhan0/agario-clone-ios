@@ -23,19 +23,20 @@ class Ball : SKShapeNode {
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
         self.name   = "ball"
-        self.position = pos
+        self.ballName = name
         self.color  = color
+        self.position = pos
         self.setMass(mass)
         
         //Graphic
         self.drawBall()
+        self.setBallSkin()
         // Physics
         self.initPhysicsBody()
         
         self.zPosition = self.mass
         
         // Name label
-        self.ballName = name
         if let nm = self.ballName {
             let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
             nameLabel.text = nm
@@ -70,7 +71,16 @@ class Ball : SKShapeNode {
     func drawBall() {
         let diameter = self.radius * 2
         self.path = CGPathCreateWithEllipseInRect(CGRect(origin: CGPoint(x: -self.radius, y: -self.radius), size: CGSize(width: diameter, height: diameter)), nil)
-        self.fillColor = UIColor(hex: self.color!)
+    }
+    
+    func setBallSkin() {
+        let _ballname = self.ballName!.lowercaseString
+        if GlobalConstants.Skin.indexForKey(_ballname) != nil{
+            self.fillColor = UIColor.whiteColor()
+            self.fillTexture = SKTexture(imageNamed: GlobalConstants.Skin[_ballname]!)
+        } else {
+            self.fillColor = UIColor(hex: self.color!)
+        }
     }
     
     func initPhysicsBody() {

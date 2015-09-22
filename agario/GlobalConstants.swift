@@ -35,6 +35,17 @@ struct GlobalConstants {
         0xFF9955, // Peach
     ]
     
+    static let Skin = [
+        "china"          : "china.png",
+        "united kingdom" : "uk.png",
+        "usa"            : "usa.png",
+        "australia"      : "australia.png",
+        "german"         : "german.png",
+        "canada"         : "canada.png",
+        "india"          : "india.png",
+        "doge"           : "doge.png"
+    ]
+    
     static let FoodRadius = CGFloat(10)
     static let BarrierRadius = CGFloat(70)
     static let MapSize = CGSize(width: 4000, height: 4000)
