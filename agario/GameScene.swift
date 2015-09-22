@@ -21,6 +21,7 @@ class GameScene: SKScene {
     var gameStarted = false
     var playerName = ""
     var splitButton : SKSpriteNode!
+    var currentMass : SKLabelNode!
     
     override func didMoveToView(view: SKView) {
         world = self.childNodeWithName("world")!
@@ -100,6 +101,7 @@ class GameScene: SKScene {
         for p in players {
             p.refreshState()
         }
+        currentMass.text = String(currentPlayer.position.x)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -143,6 +145,12 @@ class GameScene: SKScene {
         splitLabel.text = "S"
         splitButton.addChild(splitLabel)
         addChild(splitButton)
+        
+        currentMass = SKLabelNode(fontNamed: "Courier")
+        currentMass.fontColor = UIColor.grayColor()
+        currentMass.position = CGPointMake(self.frame.size.width/1.1, self.frame.size.height/1.3)
+        currentMass.text = "CurrentMass"
+        addChild(currentMass)
     }
 }
 
