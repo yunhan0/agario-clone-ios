@@ -87,7 +87,7 @@ class Ball : SKShapeNode {
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.mass = mass
         self.physicsBody?.friction = 1000
-        self.physicsBody?.restitution = 0
+        self.physicsBody?.restitution = 1
         self.physicsBody?.allowsRotation = false
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.ball
         self.physicsBody?.collisionBitMask = GlobalConstants.Category.wall
@@ -125,8 +125,15 @@ class Ball : SKShapeNode {
                         self.mergeBall(ball)
                         contacted.remove(node)
                     } else {
-                        
-                    }
+                        // Keep distance between nodes
+                        let d = distance(self.position, p2: ball.position)
+                        if d < self.radius + ball.radius {
+                            let v = (self.position - ball.position).normalize()
+                            let f = (self.force * 0.90) * (1 - (d / (self.radius + ball.radius))) + self.force * 0.10
+                            self.physicsBody?.applyForce(v * f)
+                            ball.physicsBody?.applyForce(v * -1 * f)
+                        }
+                     }
                 } else { // Enemy
                     if self.mass - ball.mass > max(ball.mass * 0.05, 10) {
                         let d = distance(self.position, p2: ball.position)
@@ -157,11 +164,16 @@ class Ball : SKShapeNode {
                 ballMass: self.mass / CGFloat(n), ballPosition: self.position))
         }
         if let v = self.physicsBody?.velocity {
+            var i = 0
             for ball in newballs {
                 ball.physicsBody?.velocity = v
+                if n > 2 && i > 0 {
+                    ball.physicsBody?.velocity = (randomPosition() - self.position).normalize() * ball.maxVelocity
+                }
+                i++
             }
             if n == 2 {
-                newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 8 * (1 / log10(self.mass))
+                newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 16 * (1 / log10(self.mass))
             }
         }
         let p = self.parent! as SKNode

@@ -23,6 +23,8 @@ class GameScene: SKScene {
     var splitButton : SKSpriteNode!
     var currentMass : SKLabelNode!
     
+    var touchingLocation : UITouch? = nil
+    
     override func didMoveToView(view: SKView) {
         world = self.childNodeWithName("world")!
         foodLayer = world.childNodeWithName("foodLayer")
@@ -96,20 +98,32 @@ class GameScene: SKScene {
         
         spawnBarrier()
         
+        if let t = touchingLocation {
+            currentPlayer.move(t.locationInNode(world))
+        } else {
+            currentPlayer.floating()
+        }
+        
         currentPlayer.refreshState()
         
         for p in players {
             p.refreshState()
         }
-        currentMass.text = String(currentPlayer.position.x)
+        let m = currentPlayer.totalMass()
+        currentMass.text = String(m)
+        
+//        let scaleFactorBallNumber = 1.0 + log(CGFloat(currentPlayer.children.count)) * 0.15
+//        world.xScale = 1 / scaleFactorBallNumber
+//        world.yScale = 1 / scaleFactorBallNumber
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if (!gameStarted || touches.count <= 0) {
             return
         }
-        let touch = touches.first! as UITouch
-        currentPlayer.move(touch.locationInNode(world))
+        let touch : UITouch = touches.first!
+        touchingLocation = touch
+        //currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -117,8 +131,9 @@ class GameScene: SKScene {
             return
         }
         
-        let touch = touches.first! as UITouch
-        currentPlayer.move(touch.locationInNode(world))
+        let touch : UITouch = touches.first!
+        touchingLocation = touch
+        //currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -126,14 +141,14 @@ class GameScene: SKScene {
             return
         }
         
-        let touch = touches.first! as UITouch
-        currentPlayer.floating()
-
+        touchingLocation = nil
         
-        // Capture the touch button event
-        let location = touch.locationInNode(self)
-        if splitButton.containsPoint(location) {
-            currentPlayer.split()
+        for touch in touches {
+            let screenLocation = touch.locationInNode(self)
+            if splitButton.containsPoint(screenLocation) {
+                currentPlayer.split()
+            } else  {
+            }
         }
     }
     
@@ -175,7 +190,7 @@ extension GameScene : SKPhysicsContactDelegate {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
-                        nodeA.split()
+                        nodeA.split(4)
                         sndNode.removeFromParent()
                     }
                 }
