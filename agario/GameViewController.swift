@@ -28,6 +28,7 @@ extension SKNode {
 class GameViewController: UIViewController {
     
     var mainMenuView : Menu!
+    var settings : Settings!
     var gameView : SKView!
     var scene : GameScene!
     var hud : Hud!
@@ -38,7 +39,14 @@ class GameViewController: UIViewController {
         // Main menu view set up
         mainMenuView = Menu(frame: UIScreen.mainScreen().bounds)
         mainMenuView.startBtn.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
+        mainMenuView.settingBtn.addTarget(self, action: "openSetting", forControlEvents: .TouchUpInside)
         self.view.addSubview(mainMenuView);
+        
+        // Setting view set up
+        settings = Settings(frame: UIScreen.mainScreen().bounds)
+        settings.exitBtn.addTarget(self, action: "exitSetting", forControlEvents: .TouchUpInside)
+        settings.hidden = true
+        mainMenuView.addSubview(settings)
         
         // Game view set up
         self.gameView = SKView(frame: UIScreen.mainScreen().bounds)
@@ -69,6 +77,14 @@ class GameViewController: UIViewController {
         self.scene.start()
     }
 
+    func openSetting() {
+        settings.hidden = false
+    }
+    
+    func exitSetting() {
+        settings.hidden = true
+    }
+    
     override func shouldAutorotate() -> Bool {
         return true
     }

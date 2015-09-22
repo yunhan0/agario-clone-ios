@@ -13,7 +13,7 @@ class Menu: UIView {
     var startBtn       = UIButton()
     var multiPlayerBtn = UIButton()
     var scoreBtn       = UIButton()
-    var aboutBtn       = UIButton()
+    var settingBtn     = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +28,7 @@ class Menu: UIView {
         let squareWidth = width / 13
 
         self.opaque = false
-        self.backgroundColor = UIColor(patternImage: UIImage(named: "pattern.png")!)
+        self.backgroundColor = UIColor(patternImage: UIImage(named: "pattern")!)
         
         // Player Name TextField
         nameField = UITextField(frame: CGRect(
@@ -58,27 +58,27 @@ class Menu: UIView {
         scoreBtn = UIButton(frame: CGRect(
             x: 0, y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
-        scoreBtn.setTitle("i", forState: .Normal)
+        scoreBtn.setImage(UIImage(named: "icon-info"), forState: UIControlState.Normal)
         scoreBtn.backgroundColor = UIColor(hex: 0x2196F3)
         scoreBtn.bounds = CGRectInset(scoreBtn.frame, 5.0, 5.0)
         scoreBtn.layer.cornerRadius = 10.0
         
-        // How To Play Button
-        aboutBtn = UIButton(frame: CGRect(
+        // Settings Button
+        settingBtn = UIButton(frame: CGRect(
             x: (width - squareWidth), y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
-        aboutBtn.setTitle("?", forState: .Normal)
-        aboutBtn.backgroundColor = UIColor(hex: 0x2196F3)
-        aboutBtn.bounds = CGRectInset(aboutBtn.frame, 5.0, 5.0)
-        aboutBtn.layer.cornerRadius = 10.0
+        settingBtn.backgroundColor = UIColor(hex: 0x2196F3)
+        settingBtn.setImage(UIImage(named: "icon-settings"), forState: UIControlState.Normal)
+        settingBtn.bounds = CGRectInset(settingBtn.frame, 5.0, 5.0)
+        settingBtn.layer.cornerRadius = 10.0
         
         self.addSubview(startBtn)
         self.addSubview(multiPlayerBtn)
         self.addSubview(scoreBtn)
-        self.addSubview(aboutBtn)
+        self.addSubview(settingBtn)
         self.addSubview(nameField)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
