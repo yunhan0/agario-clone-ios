@@ -19,6 +19,7 @@ class Ball : SKShapeNode {
     var readyMerge = false
     var impulsive = true
     var contacted : Set<SKNode> = []
+    var nameLabel : SKLabelNode? = nil
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
@@ -38,12 +39,12 @@ class Ball : SKShapeNode {
         
         // Name label
         if let nm = self.ballName {
-            let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-            nameLabel.text = nm
-            nameLabel.fontSize = 16
-            nameLabel.horizontalAlignmentMode = .Center
-            nameLabel.verticalAlignmentMode = .Center
-            self.addChild(nameLabel)
+            self.nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+            self.nameLabel!.text = nm
+            self.nameLabel!.fontSize = 16
+            self.nameLabel!.horizontalAlignmentMode = .Center
+            self.nameLabel!.verticalAlignmentMode = .Center
+            self.addChild(self.nameLabel!)
         }
         
         self.resetReadyMerge()
@@ -66,6 +67,10 @@ class Ball : SKShapeNode {
         self.force = 5000.0 * self.mass / 10.0
         self.maxVelocity = 200.0 / log10(self.mass)
         self.radius = sqrt(m) * 10.0
+        
+        if let nl = self.nameLabel {
+            nl.fontSize = max(self.radius / 3, 15)
+        }
     }
     
     func drawBall() {
@@ -158,28 +163,32 @@ class Ball : SKShapeNode {
     }
     
     func split(n : Int = 2) {
-        var newballs : [Ball] = []
-        for _ in 0..<n {
-            newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
-                ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+        if n <= 1 {
+            return
         }
-        if let v = self.physicsBody?.velocity {
-            var i = 0
-            for ball in newballs {
-                ball.physicsBody?.velocity = v
-                if n > 2 && i > 0 {
-                    ball.physicsBody?.velocity = (randomPosition() - self.position).normalize() * ball.maxVelocity
+        if let p = self.parent {
+            var newballs : [Ball] = []
+            for _ in 0..<n {
+                newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
+                    ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+            }
+            if let v = self.physicsBody?.velocity {
+                var i = 0
+                for ball in newballs {
+                    ball.physicsBody?.velocity = v
+                    if n > 2 && i > 0 {
+                        ball.physicsBody?.velocity = (randomPosition() - self.position).normalize() * ball.maxVelocity
+                    }
+                    i++
                 }
-                i++
+                if n == 2 {
+                    newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 8 * (1 / log10(self.mass))
+                }
             }
-            if n == 2 {
-                newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 16 * (1 / log10(self.mass))
+            self.removeFromParent()
+            for ball in newballs {
+                p.addChild(ball)
             }
-        }
-        let p = self.parent! as SKNode
-        self.removeFromParent()
-        for ball in newballs {
-            p.addChild(ball)
         }
     }
     

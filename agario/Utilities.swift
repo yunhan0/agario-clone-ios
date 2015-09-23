@@ -28,6 +28,10 @@ func -(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
     return CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
 }
 
+func +(lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    return CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
+}
+
 func -(lhs: CGPoint, rhs: CGPoint) -> CGVector {
     return CGVector(dx: lhs.x - rhs.x, dy: lhs.y - rhs.y)
 }

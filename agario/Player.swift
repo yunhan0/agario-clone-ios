@@ -29,12 +29,13 @@ class Player : SKNode {
     }
     
     func centerPosition() -> CGPoint {
-        let count = CGFloat(self.children.count)
+        //let count = CGFloat(self.children.count)
         var x = CGFloat(0)
         var y = CGFloat(0)
-        for ball in self.children {
-            x += ball.position.x / count
-            y += ball.position.y / count
+        let m = self.totalMass()
+        for ball in self.children as! [Ball] {
+            x += ball.position.x * ball.mass / m
+            y += ball.position.y * ball.mass / m
         }
         return CGPoint(x: x, y: y)
     }
@@ -68,7 +69,7 @@ class Player : SKNode {
     
     func split() {
         for ball in self.children as! [Ball] {
-            if self.children.count < 15 && ball.radius >= 25 {
+            if self.children.count < 15 && ball.mass >= 25 {
                 ball.split()
             }
         }

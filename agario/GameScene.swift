@@ -27,9 +27,12 @@ class GameScene: SKScene {
     var touchingLocation : UITouch? = nil
     
     override func didMoveToView(view: SKView) {
+        paused = true
+        
         world = self.childNodeWithName("world")!
         foodLayer = world.childNodeWithName("foodLayer")
         barrierLayer = world.childNodeWithName("barrierLayer")
+        //self.anchorPoint = CGPointMake(0.5, 0.5)
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
@@ -38,17 +41,19 @@ class GameScene: SKScene {
         hudLayer = Hud(hudWidth: self.frame.width, hudHeight: self.frame.height)
         self.addChild(hudLayer)
         physicsWorld.contactDelegate = self
+        
+        scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
+            if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
+                self.spawnBarrier()
+            }
+        }
     }
     
     func start() {
         // Create Foods
-        for _ in 0..<100 {
-            self.spawnFood()
-        }
+        self.spawnFood(100)
         // Create Barriers
-        for _ in 0..<15 {
-            self.spawnBarrier()
-        }
+        self.spawnBarrier(15)
         
         // New Player
         self.currentPlayer = Player(playerName: playerName, parentNode: self.world)
@@ -57,23 +62,27 @@ class GameScene: SKScene {
             players += [StupidPlayer(playerName: "Stupid AI", parentNode: self.world)]
         }
         gameStarted = true
+        paused = false
     }
     
-    func spawnFood() {
-        if foodLayer.children.count <= GlobalConstants.FoodLimit {
+    func spawnFood(n : Int = 1) {
+        for _ in 0..<n {
             foodLayer.addChild(Food(foodColor: randomColor()))
         }
     }
     
-    func spawnBarrier() {
-        if barrierLayer.children.count <= GlobalConstants.BarrierLimit {
+    func spawnBarrier(n : Int = 1) {
+        for _ in 0..<n {
             barrierLayer.addChild(Barrier())
         }
     }
     
     func centerWorldOnPosition(position: CGPoint) {
-        world.position = CGPoint(x: -position.x + CGRectGetMidX(frame),
-            y: -position.y + CGRectGetMidY(frame))
+        let screenLocation = self.convertPoint(position, fromNode: world)
+//        world.position = CGPoint(x: -position.x + CGRectGetMidX(frame),
+//            y: -position.y + CGRectGetMidY(frame))
+        let screenCenter = CGPointMake(CGRectGetMidX(frame), CGRectGetMidY(frame))
+        world.position = world.position - screenLocation + screenCenter
     }
     
     override func didSimulatePhysics() {
@@ -96,11 +105,9 @@ class GameScene: SKScene {
             return
         }
         
-        for _ in 0..<3 {
-            spawnFood()
-        }
-        
-        spawnBarrier()
+        let foodRespawnNumber = min(GlobalConstants.FoodLimit - foodLayer.children.count,
+            GlobalConstants.FoodRespawnRate)
+        spawnFood(foodRespawnNumber)
         
         if let t = touchingLocation {
             currentPlayer.move(t.locationInNode(world))
@@ -116,9 +123,9 @@ class GameScene: SKScene {
         let m = currentPlayer.totalMass()
         hudLayer.currentScore.text = "Score : " + String(m)
         
-//        let scaleFactorBallNumber = 1.0 + log(CGFloat(currentPlayer.children.count)) * 0.15
-//        world.xScale = 1 / scaleFactorBallNumber
-//        world.yScale = 1 / scaleFactorBallNumber
+        let scaleFactorBallNumber = 1.0 + (log(CGFloat(currentPlayer.children.count)) - 1) * 0.2
+        let scaleFactorBallMass = 1.0 + (log10(CGFloat(currentPlayer.totalMass())) - 1) * 1.0
+        world.setScale(1 / scaleFactorBallNumber / scaleFactorBallMass)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -127,7 +134,6 @@ class GameScene: SKScene {
         }
         let touch : UITouch = touches.first!
         touchingLocation = touch
-        //currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -137,7 +143,6 @@ class GameScene: SKScene {
         
         let touch : UITouch = touches.first!
         touchingLocation = touch
-        //currentPlayer.move(touch.locationInNode(world))
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -178,8 +183,10 @@ extension GameScene : SKPhysicsContactDelegate {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
-                        nodeA.split(4)
-                        sndNode.removeFromParent()
+                        if let p = nodeA.parent {
+                            nodeA.split(min(4, 16 - p.children.count + 1))
+                            sndNode.removeFromParent()
+                        }
                     }
                 }
                 if fstNode.name == "food" && sndNode.name == "ball" {
