@@ -53,7 +53,7 @@ class Ball : SKShapeNode {
     }
     
     convenience init(ballName name : String) {
-        self.init(ballName: name, ballColor: randomColor(), ballMass: 10, ballPosition : CGPoint(x: 0, y: 0))
+        self.init(ballName: name, ballColor: randomColor(), ballMass: 1000, ballPosition : CGPoint(x: 0, y: 0))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -158,28 +158,32 @@ class Ball : SKShapeNode {
     }
     
     func split(n : Int = 2) {
-        var newballs : [Ball] = []
-        for _ in 0..<n {
-            newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
-                ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+        if n <= 1 {
+            return
         }
-        if let v = self.physicsBody?.velocity {
-            var i = 0
-            for ball in newballs {
-                ball.physicsBody?.velocity = v
-                if n > 2 && i > 0 {
-                    ball.physicsBody?.velocity = (randomPosition() - self.position).normalize() * ball.maxVelocity
+        if let p = self.parent {
+            var newballs : [Ball] = []
+            for _ in 0..<n {
+                newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
+                    ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+            }
+            if let v = self.physicsBody?.velocity {
+                var i = 0
+                for ball in newballs {
+                    ball.physicsBody?.velocity = v
+                    if n > 2 && i > 0 {
+                        ball.physicsBody?.velocity = (randomPosition() - self.position).normalize() * ball.maxVelocity
+                    }
+                    i++
                 }
-                i++
+                if n == 2 {
+                    newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 8 * (1 / log10(self.mass))
+                }
             }
-            if n == 2 {
-                newballs[1].physicsBody?.velocity = v.normalize() * self.radius * 16 * (1 / log10(self.mass))
+            self.removeFromParent()
+            for ball in newballs {
+                p.addChild(ball)
             }
-        }
-        let p = self.parent! as SKNode
-        self.removeFromParent()
-        for ball in newballs {
-            p.addChild(ball)
         }
     }
     
