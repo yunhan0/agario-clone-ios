@@ -53,4 +53,5 @@ struct GlobalConstants {
     static let FoodRespawnRate = 20
     static let BarrierLimit = 15
     static let BarrierRespawnInterval = 45
+    static let LeaderboardUpdateInterval = 5
 }

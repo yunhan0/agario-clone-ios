@@ -18,7 +18,7 @@ class GameScene: SKScene {
     var currentPlayer: Player!
     // Including online player and AI
     var players : [Player] = []
-    
+    var rank : [Dictionary<String, Any>] = []
     var gameStarted = false
     var playerName = ""
     var splitButton : SKSpriteNode!
@@ -63,6 +63,11 @@ class GameScene: SKScene {
         }
         gameStarted = true
         paused = false
+        
+        self.updateLeaderboard()
+        scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
+            self.updateLeaderboard()
+        }
     }
     
     func spawnFood(n : Int = 1) {
@@ -75,6 +80,24 @@ class GameScene: SKScene {
         for _ in 0..<n {
             barrierLayer.addChild(Barrier())
         }
+    }
+    
+    func updateLeaderboard() {
+        rank = []
+        rank.append([
+            "name": currentPlayer.name!,
+            "score": currentPlayer.totalMass()
+        ])
+        for player in players {
+            rank.append([
+                "name": player.name!,
+                "score": player.totalMass()
+            ])
+        }
+        
+        rank.sortInPlace({$0["score"] as! CGFloat > $1["score"] as! CGFloat})
+
+        hudLayer.setLeaderboard(rank)
     }
     
     func centerWorldOnPosition(position: CGPoint) {
@@ -152,13 +175,12 @@ class GameScene: SKScene {
         
         touchingLocation = nil
         
-//        for touch in touches {
-//            let screenLocation = touch.locationInNode(self)
-//            if splitButton.containsPoint(screenLocation) {
-//                currentPlayer.split()
-//            } else  {
-//            }
-//        }
+        for touch in touches {
+            let screenLocation = touch.locationInNode(self)
+            if self.hudLayer.splitBtn.containsPoint(screenLocation) {
+                currentPlayer.split()
+            }
+        }
     }
 }
 

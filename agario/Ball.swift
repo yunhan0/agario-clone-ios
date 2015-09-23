@@ -170,7 +170,7 @@ class Ball : SKShapeNode {
             var newballs : [Ball] = []
             for _ in 0..<n {
                 newballs.append(Ball(ballName: self.ballName, ballColor: self.color!,
-                    ballMass: self.mass / CGFloat(n), ballPosition: self.position))
+                    ballMass: floor(self.mass / CGFloat(n)), ballPosition: self.position))
             }
             if let v = self.physicsBody?.velocity {
                 var i = 0
