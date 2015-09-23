@@ -116,6 +116,10 @@ class Ball : SKShapeNode {
         if targetDirection.dx * targetDirection.dx + targetDirection.dy * targetDirection.dy > radius * radius {
             self.physicsBody?.applyForce(targetDirection.normalize() * force)
             //self.physicsBody?.velocity = targetDirection.normalize() * maxVelocity
+        } else {
+            if !impulsive {
+                self.physicsBody?.velocity = (self.physicsBody?.velocity)! * CGFloat(0.9)
+            }
         }
         
         for node in contacted {

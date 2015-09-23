@@ -28,6 +28,7 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         paused = true
+        self.view?.multipleTouchEnabled = true
         
         world = self.childNodeWithName("world")!
         foodLayer = world.childNodeWithName("foodLayer")
@@ -155,8 +156,27 @@ class GameScene: SKScene {
         if (!gameStarted || touches.count <= 0) {
             return
         }
-        let touch : UITouch = touches.first!
-        touchingLocation = touch
+        //let touch : UITouch = touches.first!
+        //touchingLocation = touch
+        
+        for touch in touches {
+            let screenLocation = touch.locationInNode(self)
+            if self.hudLayer.splitBtn.containsPoint(screenLocation) {
+                currentPlayer.split()
+            } else {
+                touchingLocation = touch
+            }
+        }
+        
+        if let t = touchingLocation {
+            let screenLocation = t.locationInNode(self)
+            if screenLocation.x > frame.width * 0.7 {
+                hudLayer.moveSplitButtonToLeft()
+            }
+            if screenLocation.x < frame.width * 0.3 {
+                hudLayer.moveSplitButtonToRight()
+            }
+        }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -164,8 +184,26 @@ class GameScene: SKScene {
             return
         }
         
-        let touch : UITouch = touches.first!
-        touchingLocation = touch
+        //let touch : UITouch = touches.first!
+        //touchingLocation = touch
+        
+        for touch in touches {
+            let screenLocation = touch.locationInNode(self)
+            if self.hudLayer.splitBtn.containsPoint(screenLocation) {
+            } else {
+                touchingLocation = touch
+            }
+        }
+        
+        if let t = touchingLocation {
+            let screenLocation = t.locationInNode(self)
+            if screenLocation.x > frame.width * 0.7 {
+                hudLayer.moveSplitButtonToLeft()
+            }
+            if screenLocation.x < frame.width * 0.3 {
+                hudLayer.moveSplitButtonToRight()
+            }
+        }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -174,13 +212,6 @@ class GameScene: SKScene {
         }
         
         touchingLocation = nil
-        
-        for touch in touches {
-            let screenLocation = touch.locationInNode(self)
-            if self.hudLayer.splitBtn.containsPoint(screenLocation) {
-                currentPlayer.split()
-            }
-        }
     }
 }
 

@@ -19,7 +19,7 @@ struct GlobalConstants {
         static let food    :CGFloat = 0
         static let ball    :CGFloat = 10
         static let barrier :CGFloat = 49
-        static let wall    :CGFloat = 0x7fffffff
+        static let wall    :CGFloat = 200000
     }
     
     static let Color = [

@@ -20,6 +20,7 @@ class Hud: SKNode {
         super.init()
         self.width = width
         self.height = height
+        self.zPosition = 0x7fffffff
         setup()
     }
     
@@ -102,6 +103,14 @@ class Hud: SKNode {
         self.addChild(currentScore)
         self.addChild(leaderboard)
         self.addChild(splitBtn)
+    }
+    
+    func moveSplitButtonToLeft() {
+        splitBtn.position.x = 20
+    }
+    
+    func moveSplitButtonToRight() {
+        splitBtn.position.x = self.width! - self.width! / 8 - 20
     }
     
     required init?(coder aDecoder: NSCoder) {
