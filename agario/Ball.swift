@@ -19,6 +19,7 @@ class Ball : SKShapeNode {
     var readyMerge = false
     var impulsive = true
     var contacted : Set<SKNode> = []
+    var nameLabel : SKLabelNode? = nil
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
@@ -38,12 +39,12 @@ class Ball : SKShapeNode {
         
         // Name label
         if let nm = self.ballName {
-            let nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
-            nameLabel.text = nm
-            nameLabel.fontSize = 16
-            nameLabel.horizontalAlignmentMode = .Center
-            nameLabel.verticalAlignmentMode = .Center
-            self.addChild(nameLabel)
+            self.nameLabel = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
+            self.nameLabel!.text = nm
+            self.nameLabel!.fontSize = 16
+            self.nameLabel!.horizontalAlignmentMode = .Center
+            self.nameLabel!.verticalAlignmentMode = .Center
+            self.addChild(self.nameLabel!)
         }
         
         self.resetReadyMerge()
@@ -53,7 +54,7 @@ class Ball : SKShapeNode {
     }
     
     convenience init(ballName name : String) {
-        self.init(ballName: name, ballColor: randomColor(), ballMass: 1000, ballPosition : CGPoint(x: 0, y: 0))
+        self.init(ballName: name, ballColor: randomColor(), ballMass: 10, ballPosition : CGPoint(x: 0, y: 0))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,6 +67,10 @@ class Ball : SKShapeNode {
         self.force = 5000.0 * self.mass / 10.0
         self.maxVelocity = 200.0 / log10(self.mass)
         self.radius = sqrt(m) * 10.0
+        
+        if let nl = self.nameLabel {
+            nl.fontSize = max(self.radius / 3, 15)
+        }
     }
     
     func drawBall() {
