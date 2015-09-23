@@ -31,7 +31,6 @@ class GameViewController: UIViewController {
     var settings : Settings!
     var gameView : SKView!
     var scene : GameScene!
-    var hud : Hud!
 
     override func viewDidLoad() {
         super.viewDidLoad()

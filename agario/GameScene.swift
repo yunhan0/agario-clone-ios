@@ -13,6 +13,7 @@ class GameScene: SKScene {
     var world : SKNode!
     var foodLayer : SKNode!
     var barrierLayer : SKNode!
+    var hudLayer : Hud!
     
     var currentPlayer: Player!
     // Including online player and AI
@@ -32,7 +33,10 @@ class GameScene: SKScene {
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
-        setupHud()
+ 
+        // Setup Hud
+        hudLayer = Hud(hudWidth: self.frame.width, hudHeight: self.frame.height)
+        self.addChild(hudLayer)
         physicsWorld.contactDelegate = self
     }
     
@@ -110,7 +114,7 @@ class GameScene: SKScene {
             p.refreshState()
         }
         let m = currentPlayer.totalMass()
-        currentMass.text = String(m)
+        hudLayer.currentScore.text = "Score : " + String(m)
         
 //        let scaleFactorBallNumber = 1.0 + log(CGFloat(currentPlayer.children.count)) * 0.15
 //        world.xScale = 1 / scaleFactorBallNumber
@@ -143,29 +147,13 @@ class GameScene: SKScene {
         
         touchingLocation = nil
         
-        for touch in touches {
-            let screenLocation = touch.locationInNode(self)
-            if splitButton.containsPoint(screenLocation) {
-                currentPlayer.split()
-            } else  {
-            }
-        }
-    }
-    
-    // setup hud
-    func setupHud() {
-        splitButton = SKSpriteNode(color: SKColor.grayColor(), size: CGSize(width: 50, height: 50))
-        splitButton.position = CGPointMake(self.frame.size.width/1.1, self.frame.size.height/1.2)
-        let splitLabel = SKLabelNode(fontNamed: "Courier")
-        splitLabel.text = "S"
-        splitButton.addChild(splitLabel)
-        addChild(splitButton)
-        
-        currentMass = SKLabelNode(fontNamed: "Courier")
-        currentMass.fontColor = UIColor.grayColor()
-        currentMass.position = CGPointMake(self.frame.size.width/1.1, self.frame.size.height/1.3)
-        currentMass.text = "CurrentMass"
-        addChild(currentMass)
+//        for touch in touches {
+//            let screenLocation = touch.locationInNode(self)
+//            if splitButton.containsPoint(screenLocation) {
+//                currentPlayer.split()
+//            } else  {
+//            }
+//        }
     }
 }
 
