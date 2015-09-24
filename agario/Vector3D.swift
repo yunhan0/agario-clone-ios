@@ -30,10 +30,6 @@ struct Vector3D {
     }
 }
 
-//func *(lhs: Vector3D, rhs: Vector3D) -> Vector3D {
-//    return Vector3D(x: lhs.x * rhs.x, y: lhs.y * rhs.y, z: lhs.z * rhs.z)
-//}
-
 func dot(lhs : Vector3D, rhs : Vector3D) -> CGFloat {
     return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z
 }

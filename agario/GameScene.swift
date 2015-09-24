@@ -45,7 +45,7 @@ class GameScene: SKScene {
         hudLayer = Hud(hudWidth: self.frame.width, hudHeight: self.frame.height)
         self.addChild(hudLayer)
         physicsWorld.contactDelegate = self
-        // Start collecting accelerometer information
+        // Device motion detector
         motionManager = CMMotionManager()
 
         scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
