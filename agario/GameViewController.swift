@@ -44,6 +44,7 @@ class GameViewController: UIViewController {
         // Setting view set up
         settings = Settings(frame: UIScreen.mainScreen().bounds)
         settings.exitBtn.addTarget(self, action: "exitSetting", forControlEvents: .TouchUpInside)
+        settings.motionDetectSwitch.addTarget(self, action: Selector("checkMotionDetectStatus:"), forControlEvents: UIControlEvents.ValueChanged)
         settings.hidden = true
         mainMenuView.addSubview(settings)
         
@@ -82,6 +83,16 @@ class GameViewController: UIViewController {
     
     func exitSetting() {
         settings.hidden = true
+    }
+    
+    func checkMotionDetectStatus(mdswitch: UISwitch) {
+        if mdswitch.on {
+            self.scene.motionManager.startDeviceMotionUpdates()
+            self.scene.motionDetectionIsEnabled = true
+        } else {
+            self.scene.motionManager.stopDeviceMotionUpdates()
+            self.scene.motionDetectionIsEnabled = false
+        }
     }
     
     override func shouldAutorotate() -> Bool {

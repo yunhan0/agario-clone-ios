@@ -9,7 +9,7 @@
 import UIKit
 
 class Settings: UIView {
-    var motionDetectorSwitch = UISwitch()
+    var motionDetectSwitch = UISwitch()
     var exitBtn = UIButton()
     
     override init(frame: CGRect) {
@@ -42,9 +42,9 @@ class Settings: UIView {
         motionDetectorLabel.textColor = UIColor(hex:0x333333)
         motionDetectorLabel.sizeToFit()
 
-        motionDetectorSwitch = UISwitch(frame: CGRect(x: 0, y: rectHeight * 1.2, width: 0, height: 0))
-        motionDetectorSwitch.sizeToFit()
-        motionDetectorSwitch.frame.origin.x = settingsGroup.frame.width - motionDetectorSwitch.frame.width - marginWidth
+        motionDetectSwitch = UISwitch(frame: CGRect(x: 0, y: rectHeight * 1.2, width: 0, height: 0))
+        motionDetectSwitch.sizeToFit()
+        motionDetectSwitch.frame.origin.x = settingsGroup.frame.width - motionDetectSwitch.frame.width - marginWidth
         
         exitBtn = UIButton(frame: CGRect(x:0, y:0, width:40, height:40))
         exitBtn.backgroundColor = UIColor(hex: 0xF44336)
@@ -55,7 +55,7 @@ class Settings: UIView {
         
         settingsGroup.addSubview(settingsLabel)
         settingsGroup.addSubview(motionDetectorLabel)
-        settingsGroup.addSubview(motionDetectorSwitch)
+        settingsGroup.addSubview(motionDetectSwitch)
         settingsGroup.addSubview(exitBtn)
         self.addSubview(settingsGroup)
     }
