@@ -19,6 +19,12 @@ struct Vector3D {
         self.z = z
     }
     
+    init(x: Double, y: Double, z: Double) {
+        self.x = CGFloat(x)
+        self.y = CGFloat(y)
+        self.z = CGFloat(z)
+    }
+    
     func length() -> CGFloat {
         return sqrt(x*x + y*y + z*z)
     }

@@ -46,7 +46,7 @@ class GameScene: SKScene {
         physicsWorld.contactDelegate = self
         // Start collecting accelerometer information
         motionManager = CMMotionManager()
-        motionManager.startAccelerometerUpdates()
+        motionManager.startDeviceMotionUpdates()
         
         scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
             if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
@@ -144,18 +144,25 @@ class GameScene: SKScene {
             currentPlayer.floating()
         }
         
-//        if let accelerometerData = motionManager. {
-//            let accX = CGFloat(accelerometerData.acceleration.x)
-//            let accY = CGFloat(accelerometerData.acceleration.y)
-//            let accZ = CGFloat(accelerometerData.acceleration.z)
-//        
-//            let acc =  Vector3D(x: accX, y: accY, z: accZ)
-//            let gravity = Vector3D(x: 0, y: 0, z: -1)
-//            let accLength = acc.length()
-//            let projLength = dot(acc, rhs: gravity) / accLength
-//            let direction = gravity - acc / accLength * projLength
-//            
-//        }
+        if let motion = motionManager.deviceMotion {
+            //motion.attitude.yaw
+            let m = motion.attitude.rotationMatrix
+            let x = Vector3D(x: m.m11, y: m.m12, z: m.m13)
+            let y = Vector3D(x: m.m21, y: m.m22, z: m.m23)
+            let z = Vector3D(x: m.m31, y: m.m32, z: m.m33)
+            
+            //print(z.x, z.y, z.z, z.length())
+        
+            let g = Vector3D(x: 0.0, y: 0.0, z: -1.0)
+            let pl = dot(z, rhs: g)
+            var d = g - z * pl
+            d = d / d.length()
+            
+            let nd = CGVector(dx: dot(d, rhs: y), dy: -1.0 * dot(d, rhs: x))
+            let maxv : CGFloat = 10000.0
+            let c = currentPlayer.centerPosition()
+            currentPlayer.move(CGPoint(x: c.x + maxv * nd.dx, y: c.y + maxv * nd.dy))
+        }
         
         currentPlayer.refreshState()
         
