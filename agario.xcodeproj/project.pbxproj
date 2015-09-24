@@ -16,6 +16,7 @@
 		3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */; };
 		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
 		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
+		B50B98F01BB427AE00EFF5BF /* Vector3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */; settings = {ASSET_TAGS = (); }; };
 		B51EC6FD1BB13A470079FDEC /* icon-exit.png in Resources */ = {isa = PBXBuildFile; fileRef = B51EC6FC1BB13A470079FDEC /* icon-exit.png */; settings = {ASSET_TAGS = (); }; };
 		B51EC6FF1BB13C6E0079FDEC /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = B51EC6FE1BB13C6E0079FDEC /* icon-info.png */; settings = {ASSET_TAGS = (); }; };
 		B51EC7031BB13DCE0079FDEC /* icon-settings.png in Resources */ = {isa = PBXBuildFile; fileRef = B51EC7021BB13DCE0079FDEC /* icon-settings.png */; settings = {ASSET_TAGS = (); }; };
@@ -52,6 +53,7 @@
 		3A6A6EC21BA59D9200FC75A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3D.swift; sourceTree = "<group>"; };
 		B51EC6FC1BB13A470079FDEC /* icon-exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-exit.png"; sourceTree = "<group>"; };
 		B51EC6FE1BB13C6E0079FDEC /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
 		B51EC7021BB13DCE0079FDEC /* icon-settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-settings.png"; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				B5AA3C531BA9841700E41081 /* Hud.swift */,
 				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
+				B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */,
 				3A6A6EBA1BA59D9200FC75A1 /* GameViewController.swift */,
 				B538EB421BAD28A300D3E148 /* Menu.swift */,
 				B53FAF451BB0FC8F00A3A68C /* Settings.swift */,
@@ -247,6 +250,7 @@
 				B5E0B1BC1BA843E800A153EC /* Food.swift in Sources */,
 				B527CEA41BAC36F3000054CE /* GlobalConstants.swift in Sources */,
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
+				B50B98F01BB427AE00EFF5BF /* Vector3D.swift in Sources */,
 				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
 				B53FAF461BB0FC8F00A3A68C /* Settings.swift in Sources */,
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import CoreMotion
 
 class GameScene: SKScene {
     
@@ -25,6 +26,7 @@ class GameScene: SKScene {
     var currentMass : SKLabelNode!
     
     var touchingLocation : UITouch? = nil
+    var motionManager : CMMotionManager!
     
     override func didMoveToView(view: SKView) {
         paused = true
@@ -33,7 +35,7 @@ class GameScene: SKScene {
         world = self.childNodeWithName("world")!
         foodLayer = world.childNodeWithName("foodLayer")
         barrierLayer = world.childNodeWithName("barrierLayer")
-        //self.anchorPoint = CGPointMake(0.5, 0.5)
+        
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
             y: CGRectGetMidY(frame))
@@ -42,6 +44,9 @@ class GameScene: SKScene {
         hudLayer = Hud(hudWidth: self.frame.width, hudHeight: self.frame.height)
         self.addChild(hudLayer)
         physicsWorld.contactDelegate = self
+        // Start collecting accelerometer information
+        motionManager = CMMotionManager()
+        motionManager.startAccelerometerUpdates()
         
         scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
             if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
@@ -138,6 +143,19 @@ class GameScene: SKScene {
         } else {
             currentPlayer.floating()
         }
+        
+//        if let accelerometerData = motionManager. {
+//            let accX = CGFloat(accelerometerData.acceleration.x)
+//            let accY = CGFloat(accelerometerData.acceleration.y)
+//            let accZ = CGFloat(accelerometerData.acceleration.z)
+//        
+//            let acc =  Vector3D(x: accX, y: accY, z: accZ)
+//            let gravity = Vector3D(x: 0, y: 0, z: -1)
+//            let accLength = acc.length()
+//            let projLength = dot(acc, rhs: gravity) / accLength
+//            let direction = gravity - acc / accLength * projLength
+//            
+//        }
         
         currentPlayer.refreshState()
         
