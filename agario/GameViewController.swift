@@ -25,7 +25,7 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, UITextFieldDelegate {
     
     var mainMenuView : Menu!
     var settings : Settings!
@@ -39,7 +39,8 @@ class GameViewController: UIViewController {
         mainMenuView = Menu(frame: UIScreen.mainScreen().bounds)
         mainMenuView.startBtn.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
         mainMenuView.settingBtn.addTarget(self, action: "openSetting", forControlEvents: .TouchUpInside)
-        self.view.addSubview(mainMenuView);
+        mainMenuView.nameField.delegate = self
+        self.view.addSubview(mainMenuView)
         
         // Setting view set up
         settings = Settings(frame: UIScreen.mainScreen().bounds)
@@ -114,5 +115,18 @@ class GameViewController: UIViewController {
 
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    /********************** UITextFieldDelegate Functions **********************/
+    // Dismiss keyboard on pressing return key
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+    // Check the maximum length of textfield
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let textLength = (textField.text!.utf16).count + (string.utf16).count - range.length
+        return textLength <= GlobalConstants.MaxNameLength
     }
 }

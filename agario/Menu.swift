@@ -37,6 +37,10 @@ class Menu: UIView {
         nameField.layer.borderWidth = 1
         nameField.layer.cornerRadius = 10.0
         nameField.placeholder = "Nickname"
+        // Change keyboard "Return" key to "Done" key
+        nameField.returnKeyType = UIReturnKeyType.Done
+        // Disable text auto correction
+        nameField.autocorrectionType = UITextAutocorrectionType.No
         
         // Single Player Start Button
         startBtn = UIButton(frame: CGRect(
@@ -78,7 +82,7 @@ class Menu: UIView {
         self.addSubview(settingBtn)
         self.addSubview(nameField)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
