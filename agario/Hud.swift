@@ -113,6 +113,10 @@ class Hud: SKNode {
         splitBtn.position.x = self.width! - self.width! / 8 - 20
     }
     
+    func setScore(s : CGFloat) {
+        currentScore.text = "Score " + String(s)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

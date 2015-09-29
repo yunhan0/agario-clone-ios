@@ -67,6 +67,16 @@ class Player : SKNode {
         }
     }
     
+    func checkDeath() {
+        if self.children.count == 0 {
+            self.removeFromParent()
+        }
+    }
+    
+    func isDead() -> Bool {
+        return self.children.count == 0
+    }
+    
     func split() {
         for ball in self.children as! [Ball] {
             if self.children.count < 15 && ball.mass >= 25 {
