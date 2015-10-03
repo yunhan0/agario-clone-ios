@@ -37,8 +37,9 @@ class Menu: UIView {
         nameField.layer.borderWidth = 1
         nameField.layer.cornerRadius = 10.0
         nameField.placeholder = "Nickname"
+        nameField.backgroundColor = UIColor.whiteColor()
         // Change keyboard "Return" key to "Done" key
-        nameField.returnKeyType = UIReturnKeyType.Done
+        nameField.returnKeyType = UIReturnKeyType.Go
         // Disable text auto correction
         nameField.autocorrectionType = UITextAutocorrectionType.No
         
@@ -47,7 +48,7 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: nameField.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight));
         startBtn.setTitle("Start Game", forState: .Normal)
-        startBtn.backgroundColor = UIColor(hex: 0x2196F3)
+        startBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         startBtn.layer.cornerRadius = 10.0
         
         // Multiplayer Start Button
@@ -55,15 +56,15 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: startBtn.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight))
         multiPlayerBtn.setTitle("Multiple Player", forState: .Normal)
-        multiPlayerBtn.backgroundColor = UIColor(hex: 0x2196F3)
+        multiPlayerBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         multiPlayerBtn.layer.cornerRadius = 10.0
         
         // Leaderboard Button
         scoreBtn = UIButton(frame: CGRect(
             x: 0, y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
-        scoreBtn.setImage(UIImage(named: "icon-info"), forState: UIControlState.Normal)
-        scoreBtn.backgroundColor = UIColor(hex: 0x2196F3)
+        scoreBtn.setImage(UIImage(named: "icon-leaderboard"), forState: UIControlState.Normal)
+        scoreBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         scoreBtn.bounds = CGRectInset(scoreBtn.frame, 5.0, 5.0)
         scoreBtn.layer.cornerRadius = 10.0
         
@@ -71,7 +72,7 @@ class Menu: UIView {
         settingBtn = UIButton(frame: CGRect(
             x: (width - squareWidth), y: multiPlayerBtn.frame.origin.y,
             width: squareWidth, height: rectHeight))
-        settingBtn.backgroundColor = UIColor(hex: 0x2196F3)
+        settingBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         settingBtn.setImage(UIImage(named: "icon-settings"), forState: UIControlState.Normal)
         settingBtn.bounds = CGRectInset(settingBtn.frame, 5.0, 5.0)
         settingBtn.layer.cornerRadius = 10.0

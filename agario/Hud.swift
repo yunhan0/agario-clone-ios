@@ -10,9 +10,10 @@ import SpriteKit
 
 class Hud: SKNode {
     var currentScore : SKLabelNode!
+    var pauseBtn     : SKSpriteNode!
     var splitBtn     : SKSpriteNode!
     var leaderboard  : SKSpriteNode!
-    var scoreLabel : [SKLabelNode] = []
+    var scoreLabel   : [SKLabelNode] = []
     var width        : CGFloat?
     var height       : CGFloat?
     
@@ -36,13 +37,21 @@ class Hud: SKNode {
     }
     
     func setup() {
+        // Top Left  : Pause
+        let pauseBtnWidth = self.width! / 17
+        pauseBtn = SKSpriteNode(imageNamed: "icon-pause")
+        pauseBtn.size = CGSize(width: pauseBtnWidth, height: pauseBtnWidth)
+        pauseBtn.anchorPoint = CGPoint(x: 0,y: 0)
+        let pauseBtn_y = self.height! - pauseBtn.frame.height
+        pauseBtn.position = CGPointMake(0, pauseBtn_y)
+        
         // Top Left  : Show Score
         currentScore = SKLabelNode(fontNamed: "AmericanTypewriter-Bold")
         currentScore.fontColor = UIColor.grayColor()
         currentScore.text = "Score : 0"
         currentScore.fontSize = 12
-        let currentScore_x = currentScore.frame.width
-        let currentScore_y = self.height! - currentScore.frame.height
+        let currentScore_x = currentScore.frame.width + pauseBtn.frame.width
+        let currentScore_y = self.height! - currentScore.frame.height * 2
         currentScore.position = CGPointMake(currentScore_x, currentScore_y)
         
         // Top Right : Show Leaderboard
@@ -93,13 +102,13 @@ class Hud: SKNode {
         // Bottom Right : Show split button
         let splitBtnWidth = self.width! / 8
         splitBtn = SKSpriteNode(imageNamed: "split-button")
-        splitBtn.anchorPoint = CGPoint(x: 0,y: 0)
         splitBtn.size = CGSize(width: splitBtnWidth, height: splitBtnWidth)
         splitBtn.anchorPoint = CGPoint(x: 0, y: 0)
         let splitBtn_x = self.width! - splitBtnWidth - 20
         splitBtn.position = CGPointMake(splitBtn_x, 20)
         
         // Add the elements
+        self.addChild(pauseBtn)
         self.addChild(currentScore)
         self.addChild(leaderboard)
         self.addChild(splitBtn)
