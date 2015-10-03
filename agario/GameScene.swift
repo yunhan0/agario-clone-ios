@@ -11,6 +11,14 @@ import CoreMotion
 
 class GameScene: SKScene {
     
+    enum GameMode {
+        case SP // Single player
+        case MPMaster // Multi player master
+        case MPClient // Multi player client
+    }
+    
+    var parentView : GameViewController!
+    
     var world : SKNode!
     var foodLayer : SKNode!
     var barrierLayer : SKNode!
@@ -18,7 +26,6 @@ class GameScene: SKScene {
     var hudLayer : Hud!
     
     var currentPlayer: Player!
-    // Including online player and AI
     var rank : [Dictionary<String, Any>] = []
     var playerName = ""
     var splitButton : SKSpriteNode!
@@ -27,6 +34,11 @@ class GameScene: SKScene {
     var touchingLocation : UITouch? = nil
     var motionManager : CMMotionManager!
     var motionDetectionIsEnabled = false
+    
+    // Menus
+    var pauseMenu : PauseView!
+    
+    var gameMode : GameMode! = GameMode.SP
     
     override func didMoveToView(view: SKView) {
         paused = true
@@ -46,9 +58,31 @@ class GameScene: SKScene {
         self.addChild(hudLayer)
         physicsWorld.contactDelegate = self
         
+        // Setup pause menu and death menu
+        pauseMenu = PauseView(frame: self.frame, scene: self)
+        self.view!.addSubview(pauseMenu)
+        
         // Device motion detector
         motionManager = CMMotionManager()
-
+    }
+    
+    func cleanAll() {
+        foodLayer.removeAllChildren()
+        barrierLayer.removeAllChildren()
+        playerLayer.removeAllChildren()
+        
+        self.removeAllActions()
+    }
+    
+    func start() {
+        
+        cleanAll()
+        
+        // Create Foods
+        self.spawnFood(100)
+        // Create Barriers
+        self.spawnBarrier(15)
+        
         scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
             if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
                 self.spawnBarrier()
@@ -58,16 +92,6 @@ class GameScene: SKScene {
         scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
             self.updateLeaderboard()
         }
-    }
-    
-    func start() {
-        foodLayer.removeAllChildren()
-        barrierLayer.removeAllChildren()
-        
-        // Create Foods
-        self.spawnFood(100)
-        // Create Barriers
-        self.spawnBarrier(15)
         
         // New Player
         self.currentPlayer = Player(playerName: playerName, parentNode: self.playerLayer)
@@ -79,6 +103,22 @@ class GameScene: SKScene {
         self.updateLeaderboard()
         
         paused = false
+    }
+    
+    func pauseGame() {
+        self.pauseMenu.hidden = false
+        self.paused = true
+    }
+    
+    func continueGame() {
+        self.pauseMenu.hidden = true
+        self.paused = false
+    }
+    
+    func abortGame() {
+        self.paused = true
+        self.pauseMenu.hidden = true
+        self.parentView.mainMenuView.hidden = false
     }
     
     func spawnFood(n : Int = 1) {
@@ -153,6 +193,9 @@ class GameScene: SKScene {
     }
    
     override func update(currentTime: CFTimeInterval) {
+        if paused {
+            return
+        }
         
         // Respawn food and barrier
         let foodRespawnNumber = min(GlobalConstants.FoodLimit - foodLayer.children.count,
@@ -192,6 +235,8 @@ class GameScene: SKScene {
             let screenLocation = touch.locationInNode(self)
             if self.hudLayer.splitBtn.containsPoint(screenLocation) {
                 currentPlayer.split()
+            } else if self.hudLayer.pauseBtn.containsPoint(screenLocation) {
+                self.pauseGame()
             } else {
                 touchingLocation = touch
             }

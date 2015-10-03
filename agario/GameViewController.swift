@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import MultipeerConnectivity
 
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
@@ -31,9 +32,20 @@ class GameViewController: UIViewController, UITextFieldDelegate {
     var settings : Settings!
     var gameView : SKView!
     var scene : GameScene!
+    
+    // Multipeer part
+    //var peerId : MCPeerID!
+    //var browser : MCBrowserViewController!
+    //var assistant : MCAdvertiserAssistant!
+    //var session : MCSession!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Multipeer init
+        //self.peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
+        //self.session = MCSession(peer: peerId)
+        //self.browser = MCBrowserViewController(serviceType: "comp90048-agario", session: self.session)
         
         // Main menu view set up
         mainMenuView = Menu(frame: UIScreen.mainScreen().bounds)
@@ -67,6 +79,8 @@ class GameViewController: UIViewController, UITextFieldDelegate {
             skView.presentScene(scene)
             
             self.scene = scene
+            
+            scene.parentView = self
         }
         self.view.insertSubview(gameView, belowSubview: mainMenuView)
     }
