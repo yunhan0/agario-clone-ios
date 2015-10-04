@@ -17,6 +17,7 @@
 		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
 		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
 		3A82445F1BC01AB8002C177E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A82445E1BC01AB8002C177E /* PauseView.swift */; settings = {ASSET_TAGS = (); }; };
+		3A8244611BC0D0DE002C177E /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8244601BC0D0DE002C177E /* GameOverView.swift */; settings = {ASSET_TAGS = (); }; };
 		B50B98F01BB427AE00EFF5BF /* Vector3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */; settings = {ASSET_TAGS = (); }; };
 		B51EC6FD1BB13A470079FDEC /* icon-exit.png in Resources */ = {isa = PBXBuildFile; fileRef = B51EC6FC1BB13A470079FDEC /* icon-exit.png */; settings = {ASSET_TAGS = (); }; };
 		B51EC6FF1BB13C6E0079FDEC /* icon-info.png in Resources */ = {isa = PBXBuildFile; fileRef = B51EC6FE1BB13C6E0079FDEC /* icon-info.png */; settings = {ASSET_TAGS = (); }; };
@@ -57,6 +58,7 @@
 		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		3A82445E1BC01AB8002C177E /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
+		3A8244601BC0D0DE002C177E /* GameOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3D.swift; sourceTree = "<group>"; };
 		B51EC6FC1BB13A470079FDEC /* icon-exit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-exit.png"; sourceTree = "<group>"; };
 		B51EC6FE1BB13C6E0079FDEC /* icon-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-info.png"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				B538EB421BAD28A300D3E148 /* Menu.swift */,
 				B53FAF451BB0FC8F00A3A68C /* Settings.swift */,
 				3A82445E1BC01AB8002C177E /* PauseView.swift */,
+				3A8244601BC0D0DE002C177E /* GameOverView.swift */,
 				B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */,
 				B527CEA31BAC36F3000054CE /* GlobalConstants.swift */,
 				B5F759FE1BAD9D0A00953E9A /* UIColorExtension.swift */,
@@ -263,6 +266,7 @@
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
 				3A82445F1BC01AB8002C177E /* PauseView.swift in Sources */,
 				B50B98F01BB427AE00EFF5BF /* Vector3D.swift in Sources */,
+				3A8244611BC0D0DE002C177E /* GameOverView.swift in Sources */,
 				3A6A6EB91BA59D9200FC75A1 /* GameScene.swift in Sources */,
 				B53FAF461BB0FC8F00A3A68C /* Settings.swift in Sources */,
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,

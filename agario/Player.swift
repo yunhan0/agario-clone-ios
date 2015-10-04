@@ -10,13 +10,16 @@ import SpriteKit
 
 class Player : SKNode {
     
+    var displayName : String = ""
+    
     init(playerName name : String, parentNode parent : SKNode) {
         super.init()
         self.position = CGPoint(x: 0, y: 0)
         
-        self.name = name
+        self.displayName = name
+        self.name = "player-"
         
-        let ball = Ball(ballName: self.name!)
+        let ball = Ball(ballName: self.displayName)
         self.addChild(ball)
         
         //self.zPosition = GlobalConstants.ZPosition.ball

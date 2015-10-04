@@ -25,7 +25,7 @@ class GameScene: SKScene {
     var playerLayer : SKNode!
     var hudLayer : Hud!
     
-    var currentPlayer: Player!
+    var currentPlayer: Player? = nil
     var rank : [Dictionary<String, Any>] = []
     var playerName = ""
     var splitButton : SKSpriteNode!
@@ -37,6 +37,7 @@ class GameScene: SKScene {
     
     // Menus
     var pauseMenu : PauseView!
+    var gameOverMenu : GameOverView!
     
     var gameMode : GameMode! = GameMode.SP
     
@@ -61,6 +62,8 @@ class GameScene: SKScene {
         // Setup pause menu and death menu
         pauseMenu = PauseView(frame: self.frame, scene: self)
         self.view!.addSubview(pauseMenu)
+        gameOverMenu = GameOverView(frame: self.frame, scene: self)
+        self.view!.addSubview(gameOverMenu)
         
         // Device motion detector
         motionManager = CMMotionManager()
@@ -74,31 +77,37 @@ class GameScene: SKScene {
         self.removeAllActions()
     }
     
-    func start() {
+    func start(gameMode : GameMode = GameMode.SP) {
+        
+        self.gameMode = gameMode
         
         cleanAll()
         
-        // Create Foods
-        self.spawnFood(100)
-        // Create Barriers
-        self.spawnBarrier(15)
-        
-        scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
-            if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
-                self.spawnBarrier()
+        if gameMode == GameMode.SP || gameMode == GameMode.MPMaster {
+            // Create Foods
+            self.spawnFood(100)
+            // Create Barriers
+            self.spawnBarrier(15)
+            
+            scheduleRunRepeat(self, time: Double(GlobalConstants.BarrierRespawnInterval)) { () -> Void in
+                if self.barrierLayer.children.count < GlobalConstants.BarrierLimit {
+                    self.spawnBarrier()
+                }
+            }
+            
+            scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
+                self.updateLeaderboard()
             }
         }
         
-        scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
-            self.updateLeaderboard()
+        // Spawn AI for single player mode
+        if gameMode == GameMode.SP {
+            for _ in 0..<8 {
+                let _ = StupidPlayer(playerName: "Stupid AI", parentNode: self.playerLayer)
+            }
         }
         
-        // New Player
         self.currentPlayer = Player(playerName: playerName, parentNode: self.playerLayer)
-        
-        for _ in 0..<8 {
-            let _ = StupidPlayer(playerName: "Stupid AI", parentNode: self.playerLayer)
-        }
         
         self.updateLeaderboard()
         
@@ -118,7 +127,30 @@ class GameScene: SKScene {
     func abortGame() {
         self.paused = true
         self.pauseMenu.hidden = true
+        self.gameOverMenu.hidden = true
         self.parentView.mainMenuView.hidden = false
+    }
+    
+    func gameOver() {
+        if gameMode == GameMode.SP {
+            // Pause only in SP mode
+            //self.paused = true
+        }
+        
+        self.gameOverMenu.hidden = false
+    }
+    
+    func respawn() {
+        self.paused = false
+        self.gameOverMenu.hidden = true
+        if gameMode == GameMode.SP || gameMode == GameMode.MPMaster {
+            if currentPlayer == nil || currentPlayer!.isDead() {
+                currentPlayer = Player(playerName: playerName, parentNode: self.playerLayer)
+                currentPlayer!.children.first!.position = randomPosition()
+            }
+        } else {
+            // Send request to server
+        }
     }
     
     func spawnFood(n : Int = 1) {
@@ -137,7 +169,7 @@ class GameScene: SKScene {
         rank = []
         for player in playerLayer.children as! [Player] {
             rank.append([
-                "name": player.name!,
+                "name": player.displayName,
                 "score": player.totalMass()
             ])
         }
@@ -154,13 +186,17 @@ class GameScene: SKScene {
     }
     
     func scaleWorldBasedOnPlayer(player : Player) {
-        let scaleFactorBallNumber = 1.0 + (log(CGFloat(currentPlayer.children.count)) - 1) * 0.2
-        let t = log10(CGFloat(currentPlayer.totalMass())) - 1
+        if player.children.count == 0 || player.totalMass() == 0 {
+            world.setScale(1.0)
+            return
+        }
+        let scaleFactorBallNumber = 1.0 + (log(CGFloat(player.children.count)) - 1) * 0.2
+        let t = log10(CGFloat(player.totalMass())) - 1
         let scaleFactorBallMass = 1.0 + t * t * 1.0
         world.setScale(1 / scaleFactorBallNumber / scaleFactorBallMass)
     }
     
-    func motionDetection() {
+    func motionDetection() -> CGVector? {
         if let motion = motionManager.deviceMotion {
             //motion.attitude.yaw
             let m = motion.attitude.rotationMatrix
@@ -175,9 +211,9 @@ class GameScene: SKScene {
             
             let nd = CGVector(dx: dot(d, rhs: y), dy: -1.0 * dot(d, rhs: x))
             let maxv : CGFloat = 10000.0
-            let c = currentPlayer.centerPosition()
-            currentPlayer.move(CGPoint(x: c.x + maxv * nd.dx, y: c.y + maxv * nd.dy))
+            return nd * maxv
         }
+        return nil
     }
     
     override func didSimulatePhysics() {
@@ -188,8 +224,12 @@ class GameScene: SKScene {
             ball.regulateSpeed()
         })
         
-        
-        centerWorldOnPosition(currentPlayer.centerPosition())
+        if let p = currentPlayer {
+            centerWorldOnPosition(p.centerPosition())
+        } else {
+            let p = playerLayer.children.first! as! Player
+            centerWorldOnPosition(p.centerPosition())
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -202,14 +242,20 @@ class GameScene: SKScene {
             GlobalConstants.FoodRespawnRate)
         spawnFood(foodRespawnNumber)
         
-        if let t = touchingLocation {
-            currentPlayer.move(t.locationInNode(world))
+        if currentPlayer != nil && (gameMode == GameMode.SP || gameMode == GameMode.MPMaster) {
+            if let t = touchingLocation {
+                currentPlayer!.move(t.locationInNode(world))
+            } else {
+                currentPlayer!.floating()
+            }
+            
+            let v = motionDetection()
+            if motionDetectionIsEnabled && v != nil {
+                let c = currentPlayer!.centerPosition()
+                currentPlayer!.move(CGPoint(x: c.x + v!.dx, y: c.y + v!.dy))
+            }
         } else {
-            currentPlayer.floating()
-        }
-        
-        if (motionDetectionIsEnabled) {
-            motionDetection()
+            // Send request to server
         }
         
         for var i = playerLayer.children.count - 1; i >= 0; i-- {
@@ -217,13 +263,21 @@ class GameScene: SKScene {
             p.checkDeath()
         }
         
+        if currentPlayer != nil && currentPlayer!.isDead() {
+            currentPlayer = nil
+            self.gameOver()
+        }
+        
         for p in playerLayer.children as! [Player] {
             p.refreshState()
         }
         
-        hudLayer.setScore(currentPlayer.totalMass())
-        
-        scaleWorldBasedOnPlayer(currentPlayer)
+        if currentPlayer != nil {
+            hudLayer.setScore(currentPlayer!.totalMass())
+            scaleWorldBasedOnPlayer(currentPlayer!)
+        } else {
+            scaleWorldBasedOnPlayer(playerLayer.children.first! as! Player)
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -234,7 +288,9 @@ class GameScene: SKScene {
         for touch in touches {
             let screenLocation = touch.locationInNode(self)
             if self.hudLayer.splitBtn.containsPoint(screenLocation) {
-                currentPlayer.split()
+                if currentPlayer != nil {
+                    currentPlayer!.split()
+                }
             } else if self.hudLayer.pauseBtn.containsPoint(screenLocation) {
                 self.pauseGame()
             } else {
