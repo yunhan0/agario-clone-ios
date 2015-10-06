@@ -49,10 +49,13 @@ struct GlobalConstants {
     static let FoodRadius = CGFloat(10)
     static let BarrierRadius = CGFloat(70)
     static let MapSize = CGSize(width: 4000, height: 4000)
-    static let FoodLimit = 500
+    static let FoodLimit = 250
     static let FoodRespawnRate = 40
     static let BarrierLimit = 15
     static let BarrierRespawnInterval = 45
     static let LeaderboardUpdateInterval = 1
     static let MaxNameLength = 10
+    
+    // Server
+    static let BroadcastInterval : Double = 0.15
 }

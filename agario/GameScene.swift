@@ -8,6 +8,7 @@
 
 import SpriteKit
 import CoreMotion
+import MultipeerConnectivity
 
 class GameScene: SKScene {
     
@@ -41,9 +42,19 @@ class GameScene: SKScene {
     
     var gameMode : GameMode! = GameMode.SP
     
+    // Multipeer variables
+    var session : MCSession!
+    var clientDelegate : ClientSessionDelegate!
+    var masterDelegate : MasterSessionDelegate!
+    
     override func didMoveToView(view: SKView) {
         paused = true
         self.view?.multipleTouchEnabled = true
+        
+        // Prepare multipeer connectivity
+        session = MCSession(peer: MCPeerID(displayName: UIDevice.currentDevice().name))
+        clientDelegate = ClientSessionDelegate(scene: self, session: session)
+        masterDelegate = MasterSessionDelegate(scene: self, session: session)
         
         world = self.childNodeWithName("world")!
         foodLayer = world.childNodeWithName("foodLayer")
@@ -83,6 +94,10 @@ class GameScene: SKScene {
         
         cleanAll()
         
+        scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
+            self.updateLeaderboard()
+        }
+        
         if gameMode == GameMode.SP || gameMode == GameMode.MPMaster {
             // Create Foods
             self.spawnFood(100)
@@ -95,9 +110,7 @@ class GameScene: SKScene {
                 }
             }
             
-            scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
-                self.updateLeaderboard()
-            }
+            self.currentPlayer = Player(playerName: playerName, parentNode: self.playerLayer)
         }
         
         // Spawn AI for single player mode
@@ -107,7 +120,18 @@ class GameScene: SKScene {
             }
         }
         
-        self.currentPlayer = Player(playerName: playerName, parentNode: self.playerLayer)
+        if gameMode != GameMode.SP {
+            if gameMode == GameMode.MPMaster {
+                session.delegate = masterDelegate
+                scheduleRunRepeat(self, time: Double(GlobalConstants.BroadcastInterval)) { () -> Void in
+                    self.masterDelegate.broadcast()
+                }
+            }
+            if gameMode == GameMode.MPClient {
+                session.delegate = clientDelegate
+                clientDelegate.requestSpawn()
+            }
+        }
         
         self.updateLeaderboard()
         
@@ -129,6 +153,8 @@ class GameScene: SKScene {
         self.pauseMenu.hidden = true
         self.gameOverMenu.hidden = true
         self.parentView.mainMenuView.hidden = false
+        
+        self.session.disconnect()
     }
     
     func gameOver() {
@@ -218,7 +244,7 @@ class GameScene: SKScene {
     
     override func didSimulatePhysics() {
 
-        world.enumerateChildNodesWithName("//ball", usingBlock: {
+        world.enumerateChildNodesWithName("//ball*", usingBlock: {
             node, stop in
             let ball = node as! Ball
             ball.regulateSpeed()
@@ -226,9 +252,11 @@ class GameScene: SKScene {
         
         if let p = currentPlayer {
             centerWorldOnPosition(p.centerPosition())
-        } else {
+        } else if playerLayer.children.count > 0 {
             let p = playerLayer.children.first! as! Player
             centerWorldOnPosition(p.centerPosition())
+        } else {
+            centerWorldOnPosition(CGPoint(x: 0, y: 0))
         }
     }
    
@@ -237,10 +265,16 @@ class GameScene: SKScene {
             return
         }
         
-        // Respawn food and barrier
-        let foodRespawnNumber = min(GlobalConstants.FoodLimit - foodLayer.children.count,
-            GlobalConstants.FoodRespawnRate)
-        spawnFood(foodRespawnNumber)
+        if gameMode == GameMode.MPClient {
+            clientDelegate.updateScene()
+        }
+        
+        if gameMode != GameMode.MPClient {
+            // Respawn food and barrier
+            let foodRespawnNumber = min(GlobalConstants.FoodLimit - foodLayer.children.count,
+                GlobalConstants.FoodRespawnRate)
+            spawnFood(foodRespawnNumber)
+        }
         
         if currentPlayer != nil && (gameMode == GameMode.SP || gameMode == GameMode.MPMaster) {
             if let t = touchingLocation {
@@ -275,13 +309,15 @@ class GameScene: SKScene {
         if currentPlayer != nil {
             hudLayer.setScore(currentPlayer!.totalMass())
             scaleWorldBasedOnPlayer(currentPlayer!)
-        } else {
+        } else if playerLayer.children.count > 0 {
             scaleWorldBasedOnPlayer(playerLayer.children.first! as! Player)
+        } else {
+            world.setScale(1.0)
         }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if touches.count <= 0 {
+        if touches.count <= 0 || paused {
             return
         }
         
@@ -310,7 +346,7 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if touches.count <= 0 {
+        if touches.count <= 0 || paused {
             return
         }
         
@@ -334,7 +370,7 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if touches.count <= 0 {
+        if touches.count <= 0 || paused {
             return
         }
         
@@ -359,7 +395,7 @@ extension GameScene : SKPhysicsContactDelegate {
         // Purpose of using "if let" is to test if the object exist
         if let fstNode = fstBody.node {
             if let sndNode = sndBody.node {
-                if fstNode.name == "ball" && sndNode.name == "barrier" {
+                if fstNode.name!.hasPrefix("ball") && sndNode.name!.hasPrefix("barrier") {
                     let nodeA = fstNode as! Ball
                     let nodeB = sndNode as! Barrier
                     if nodeA.radius >= nodeB.radius {
@@ -369,13 +405,12 @@ extension GameScene : SKPhysicsContactDelegate {
                         }
                     }
                 }
-                if fstNode.name == "food" && sndNode.name == "ball" {
+                if fstNode.name!.hasPrefix("food") && sndNode.name!.hasPrefix("ball") {
                     let ball = sndNode as! Ball
-                    //ball.eatFood(fstNode as! Food)
                     ball.beginContact(fstNode as! Food)
                 }
                 
-                if fstNode.name == "ball" && sndNode.name == "ball" {
+                if fstNode.name!.hasPrefix("ball") && sndNode.name!.hasPrefix("ball") {
                     var ball1 = fstNode as! Ball // Big
                     var ball2 = sndNode as! Ball // Small
                     if ball2.mass > ball1.mass {
@@ -402,12 +437,12 @@ extension GameScene : SKPhysicsContactDelegate {
         }
         if let fstNode = fstBody.node {
             if let sndNode = sndBody.node {
-                if fstNode.name == "food" && sndNode.name == "ball" {
+                if fstNode.name!.hasPrefix("food") && sndNode.name!.hasPrefix("ball") {
                     let ball = sndNode as! Ball
                     ball.endContact(fstNode as! Food)
                 }
                 
-                if fstNode.name == "ball" && sndNode.name == "ball" {
+                if fstNode.name!.hasPrefix("ball") && sndNode.name!.hasPrefix("ball") {
                     var ball1 = fstNode as! Ball // Big
                     var ball2 = sndNode as! Ball // Small
                     if ball2.mass > ball1.mass {

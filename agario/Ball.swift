@@ -23,7 +23,7 @@ class Ball : SKShapeNode {
     
     init(ballName name : String?, ballColor color : Int, ballMass mass : CGFloat, ballPosition pos : CGPoint) {
         super.init()
-        self.name   = "ball"
+        self.name   = "ball-" + NSUUID().UUIDString
         self.ballName = name
         self.color  = color
         self.position = pos
@@ -127,7 +127,7 @@ class Ball : SKShapeNode {
                 // Node eaten by other nodes
                 contacted.remove(node)
             }
-            if (node.name == "ball") {
+            if (node.name!.hasPrefix("ball")) {
                 let ball = node as! Ball
                 if ball.parent == self.parent { // Sibling
                     if self.readyMerge && ball.readyMerge {
@@ -153,7 +153,7 @@ class Ball : SKShapeNode {
                         }
                     }
                 }
-            } else if (node.name == "food") {
+            } else if (node.name!.hasPrefix("food")) {
                 if self.containsPoint(node.position) {
                     self.eatFood(node as! Food)
                     contacted.remove(node)
@@ -224,7 +224,8 @@ class Ball : SKShapeNode {
         self.drawBall()
         let oldv = self.physicsBody?.velocity
         self.initPhysicsBody()
-        self.physicsBody?.velocity = oldv!.normalize() * self.maxVelocity
+        self.physicsBody?.velocity = oldv!
+        //self.physicsBody?.velocity = oldv!.normalize() * self.maxVelocity
     }
     
     func beginContact(node : SKNode) {
@@ -233,5 +234,16 @@ class Ball : SKShapeNode {
     
     func endContact(node : SKNode) {
         contacted.remove(node)
+    }
+    
+    func toJSON() -> JSON {
+        let v = self.physicsBody?.velocity
+        let x = Double(self.position.x)
+        let y = Double(self.position.y)
+        let dx = Double(v!.dx)
+        let dy = Double(v!.dy)
+        let mass = Double(self.mass)
+        let json : JSON = ["name": self.name!, "ballName": self.ballName!, "color": self.color!, "mass": mass, "x": x, "y": y, "dx": dx, "dy": dy, "tdx": Double(self.targetDirection.dx), "tdy": Double(self.targetDirection.dy)]
+        return json
     }
 }

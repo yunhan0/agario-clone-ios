@@ -26,7 +26,7 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController, UITextFieldDelegate {
+class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewControllerDelegate, MCAdvertiserAssistantDelegate {
     
     var mainMenuView : Menu!
     var settings : Settings!
@@ -34,22 +34,16 @@ class GameViewController: UIViewController, UITextFieldDelegate {
     var scene : GameScene!
     
     // Multipeer part
-    //var peerId : MCPeerID!
-    //var browser : MCBrowserViewController!
-    //var assistant : MCAdvertiserAssistant!
-    //var session : MCSession!
+    var browser : MCBrowserViewController!
+    var advertiser : MCAdvertiserAssistant!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Multipeer init
-        //self.peerId = MCPeerID(displayName: UIDevice.currentDevice().name)
-        //self.session = MCSession(peer: peerId)
-        //self.browser = MCBrowserViewController(serviceType: "comp90048-agario", session: self.session)
-        
         // Main menu view set up
         mainMenuView = Menu(frame: UIScreen.mainScreen().bounds)
         mainMenuView.startBtn.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
+        mainMenuView.multiPlayerBtn.addTarget(self, action: "startMultiple", forControlEvents: .TouchUpInside)
         mainMenuView.settingBtn.addTarget(self, action: "openSetting", forControlEvents: .TouchUpInside)
         mainMenuView.nameField.delegate = self
         self.view.addSubview(mainMenuView)
@@ -83,13 +77,58 @@ class GameViewController: UIViewController, UITextFieldDelegate {
             scene.parentView = self
         }
         self.view.insertSubview(gameView, belowSubview: mainMenuView)
+        
+        // Multipeer init
+        self.browser = MCBrowserViewController(serviceType: "agario-ming", session: self.scene.session)
+        self.browser.modalPresentationStyle = .FormSheet
+        self.browser.maximumNumberOfPeers = 1
+        self.browser.delegate = self
+        self.advertiser = MCAdvertiserAssistant(serviceType: "agario-ming", discoveryInfo: nil, session: self.scene.session)
+        self.advertiser.delegate = self
     }
     
     func startSingle() {
+        self.advertiser.stop()
+        
         // Set Player Name
         self.scene.playerName = mainMenuView.nameField.text!
         self.mainMenuView.hidden = true
         self.scene.start()
+    }
+    
+    func startMultiple() {
+        self.scene.playerName = mainMenuView.nameField.text!
+        self.advertiser.stop()
+        
+        let alert = UIAlertController(title: "New Game or Existent Game", message: "Please make a decision", preferredStyle: .ActionSheet)
+        let masterAction = UIAlertAction(title: "Start a New Game", style: .Default) { (action) in
+            self.mainMenuView.hidden = true
+            self.scene.start(GameScene.GameMode.MPMaster)
+            self.advertiser.start()
+            alert.dismissViewControllerAnimated(false, completion: { () -> Void in})
+        }
+        alert.addAction(masterAction)
+        let clientAction = UIAlertAction(title: "Search & Join a Game", style: .Default) { [unowned self, browser = self.browser] (action) in
+            self.presentViewController(browser, animated: true, completion: nil)
+            alert.dismissViewControllerAnimated(false, completion: { () -> Void in})
+        }
+        alert.addAction(clientAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            alert.dismissViewControllerAnimated(false, completion: nil)
+        }
+        alert.addAction(cancelAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
+        self.mainMenuView.hidden = true
+        self.scene.start(GameScene.GameMode.MPClient)
+        browserViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func browserViewControllerWasCancelled(browserViewController: MCBrowserViewController) {
+        browser.session.disconnect()
+        browserViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 
     func openSetting() {

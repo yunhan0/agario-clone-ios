@@ -88,3 +88,12 @@ func circleOverlapArea(r1: CGFloat, r2: CGFloat, d: CGFloat) -> CGFloat {
 func circleArea(r : CGFloat) -> CGFloat {
     return CGFloat(M_PI) * r * r
 }
+
+func colorToHex(color: UIColor) -> Int {
+    let rgb = CGColorGetComponents(color.CGColor)
+    let r = Int(255.0 * rgb[0])
+    let g = Int(255.0 * rgb[1])
+    let b = Int(255.0 * rgb[2])
+    let c = (r << 16) + (g << 8) + b
+    return c
+}

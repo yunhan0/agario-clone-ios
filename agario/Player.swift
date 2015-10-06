@@ -12,14 +12,15 @@ class Player : SKNode {
     
     var displayName : String = ""
     
-    init(playerName name : String, parentNode parent : SKNode) {
+    init(playerName name : String, parentNode parent : SKNode, initPosition p : CGPoint) {
         super.init()
         self.position = CGPoint(x: 0, y: 0)
         
         self.displayName = name
-        self.name = "player-"
+        self.name = "player-" + NSUUID().UUIDString
         
         let ball = Ball(ballName: self.displayName)
+        ball.position = p
         self.addChild(ball)
         
         //self.zPosition = GlobalConstants.ZPosition.ball
@@ -29,6 +30,10 @@ class Player : SKNode {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    convenience init(playerName name : String, parentNode parent : SKNode) {
+        self.init(playerName: name, parentNode: parent, initPosition: CGPoint(x: 0, y: 0))
     }
     
     func centerPosition() -> CGPoint {
@@ -86,5 +91,15 @@ class Player : SKNode {
                 ball.split()
             }
         }
+    }
+    
+    func toJSON() -> JSON {
+        var json : JSON = ["name": self.name!, "displayName" : self.displayName]
+        var jsonArray : [JSON] = []
+        for ball in self.children as! [Ball] {
+            jsonArray.append(ball.toJSON())
+        }
+        json["balls"] = JSON(jsonArray)
+        return json
     }
 }

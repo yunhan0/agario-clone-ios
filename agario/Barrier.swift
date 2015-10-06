@@ -15,7 +15,7 @@ class Barrier : SKSpriteNode {
         super.init(texture: SKTexture(imageNamed: "barrier"),
             color: SKColor.whiteColor(),
             size: CGSize(width: 2 * radius, height: 2 * radius))
-        self.name   = "barrier"
+        self.name   = "barrier-" + NSUUID().UUIDString
         self.physicsBody = SKPhysicsBody(circleOfRadius: radius)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GlobalConstants.Category.barrier
