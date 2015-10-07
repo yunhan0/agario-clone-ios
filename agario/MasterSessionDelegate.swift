@@ -14,6 +14,8 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
     var scene : GameScene!
     var session : MCSession!
     
+    var userDict : Dictionary<MCPeerID, String> = Dictionary<MCPeerID, String>()
+    
     init(scene : GameScene, session : MCSession) {
         self.scene = scene
         self.session = session
@@ -69,10 +71,28 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
             //let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: randomPosition())
             let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: CGPoint(x: 0, y: 0))
             let response : JSON = ["type": "SPAWN", "ID": p.name!]
+            userDict[peerID] = p.name!
             do {
                 try self.session.sendData(response.rawData(), toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable)
             } catch let e as NSError {
                 print("Something wrong when sending SPAWN info back", e)
+            }
+        }
+        if json["type"].stringValue == "MOVE" {
+            let p : CGPoint = CGPoint(x: json["x"].doubleValue, y: json["y"].doubleValue)
+            if let nm = userDict[peerID] {
+                if let nd = scene.playerLayer.childNodeWithName(nm) {
+                    let player = nd as! Player
+                    player.move(p)
+                }
+            }
+        }
+        if json["type"].stringValue == "FLOATING" {
+            if let nm = userDict[peerID] {
+                if let nd = scene.playerLayer.childNodeWithName(nm) {
+                    let player = nd as! Player
+                    player.floating()
+                }
             }
         }
     }

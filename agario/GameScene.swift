@@ -276,17 +276,28 @@ class GameScene: SKScene {
             spawnFood(foodRespawnNumber)
         }
         
-        if currentPlayer != nil && (gameMode == GameMode.SP || gameMode == GameMode.MPMaster) {
+        if currentPlayer != nil {
             if let t = touchingLocation {
-                currentPlayer!.move(t.locationInNode(world))
+                let p = t.locationInNode(world)
+                if gameMode == GameMode.MPClient {
+                    clientDelegate.requestMove(p)
+                }
+                currentPlayer!.move(p)
             } else {
+                if gameMode == GameMode.MPClient {
+                    clientDelegate.requestFloating()
+                }
                 currentPlayer!.floating()
             }
             
             let v = motionDetection()
             if motionDetectionIsEnabled && v != nil {
                 let c = currentPlayer!.centerPosition()
-                currentPlayer!.move(CGPoint(x: c.x + v!.dx, y: c.y + v!.dy))
+                let p = CGPoint(x: c.x + v!.dx, y: c.y + v!.dy)
+                if gameMode == GameMode.MPClient {
+                    clientDelegate.requestMove(p)
+                }
+                currentPlayer!.move(p)
             }
         } else {
             // Send request to server

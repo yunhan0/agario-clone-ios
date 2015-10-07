@@ -26,7 +26,6 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
     
     
     // NETWORK
-    // TODO: better class structure
     func requestSpawn() {
         //print("Request spawn")
         let json : JSON = ["type": "SPAWN", "name": self.scene.playerName]
@@ -36,6 +35,24 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
         } catch let e as NSError {
             // Do something
             print("Something wrong")
+            print(e)
+        }
+    }
+    
+    func requestMove(position : CGPoint) {
+        let json : JSON = ["type" : "MOVE", "x" : Double(position.x), "y": Double(position.y)]
+        do {
+            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        } catch let e as NSError {
+            print(e)
+        }
+    }
+    
+    func requestFloating() {
+        let json : JSON = ["type" : "FLOATING"]
+        do {
+            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        } catch let e as NSError {
             print(e)
         }
     }
@@ -78,7 +95,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             updateLayer(scene.playerLayer, array: json["players"], handler: {(node : SKNode?, playerJSON) -> Void in
                 var ballLayer : Player? = nil
                 if let nd = node {
-                    ballLayer = nd as! Player
+                    ballLayer = (nd as! Player)
                 } else {
                     // New player
                     let player : Player = Player(playerName: playerJSON["displayName"].stringValue, parentNode: self.scene.playerLayer)
