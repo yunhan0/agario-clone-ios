@@ -16,6 +16,7 @@
 		3A6A6EC31BA59D9200FC75A1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */; };
 		3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */; };
 		3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */; };
+		3A8205F81BCBBE2800380348 /* PersistentLeaderborad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8205F71BCBBE2800380348 /* PersistentLeaderborad.swift */; settings = {ASSET_TAGS = (); }; };
 		3A82445F1BC01AB8002C177E /* PauseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A82445E1BC01AB8002C177E /* PauseView.swift */; settings = {ASSET_TAGS = (); }; };
 		3A8244611BC0D0DE002C177E /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8244601BC0D0DE002C177E /* GameOverView.swift */; settings = {ASSET_TAGS = (); }; };
 		3AB24E4D1BC14A4C00E8D793 /* MasterSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB24E4C1BC14A4C00E8D793 /* MasterSessionDelegate.swift */; settings = {ASSET_TAGS = (); }; };
@@ -60,6 +61,7 @@
 		3A6A6EC21BA59D9200FC75A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3A6A6ED81BA59E0A00FC75A1 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		3A6A6EDC1BA5A72200FC75A1 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		3A8205F71BCBBE2800380348 /* PersistentLeaderborad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentLeaderborad.swift; sourceTree = "<group>"; };
 		3A82445E1BC01AB8002C177E /* PauseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseView.swift; sourceTree = "<group>"; };
 		3A8244601BC0D0DE002C177E /* GameOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		3AB24E4C1BC14A4C00E8D793 /* MasterSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterSessionDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				B5AA3C531BA9841700E41081 /* Hud.swift */,
 				3A6A6EB61BA59D9200FC75A1 /* GameScene.sks */,
 				3A6A6EB81BA59D9200FC75A1 /* GameScene.swift */,
+				3A8205F71BCBBE2800380348 /* PersistentLeaderborad.swift */,
 				3AB24E4C1BC14A4C00E8D793 /* MasterSessionDelegate.swift */,
 				3AB908FC1BC2A23A00925D4A /* ClientSessionDelegate.swift */,
 				3AB908FE1BC2A74C00925D4A /* SwiftyJSON.swift */,
@@ -270,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A8205F81BCBBE2800380348 /* PersistentLeaderborad.swift in Sources */,
 				B5E0B1BC1BA843E800A153EC /* Food.swift in Sources */,
 				B527CEA41BAC36F3000054CE /* GlobalConstants.swift in Sources */,
 				3A6A6ED91BA59E0A00FC75A1 /* Ball.swift in Sources */,
