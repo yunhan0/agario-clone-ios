@@ -109,6 +109,10 @@ class GameScene: SKScene {
             self.changeBackground(db)
         }
         
+        scheduleRunRepeat(self, time: Double(GlobalConstants.PersistentLeaderboardUpdateInterval)) { () -> Void in
+            self.parentView.leaderboard.save()
+        }
+        
         if gameMode == GameMode.SP || gameMode == GameMode.MPMaster {
             // Create Foods
             self.spawnFood(100)
@@ -126,8 +130,11 @@ class GameScene: SKScene {
         
         // Spawn AI for single player mode
         if gameMode == GameMode.SP {
-            for _ in 0..<8 {
+            for _ in 0..<4 {
                 let _ = StupidPlayer(playerName: "Stupid AI", parentNode: self.playerLayer)
+            }
+            for _ in 0..<4 {
+                let _ = AIPlayer(playerName: "Smarter AI", parentNode: self.playerLayer)
             }
         }
         
@@ -231,6 +238,13 @@ class GameScene: SKScene {
                 "name": player.displayName,
                 "score": player.totalMass()
             ])
+        }
+        
+        if gameMode == GameMode.SP && currentPlayer != nil { // Only put self score into leaderboard
+            self.parentView.leaderboard.updateRank([["name" : currentPlayer!.displayName,
+                "score": currentPlayer!.totalMass()]])
+        } else {
+            self.parentView.leaderboard.updateRank(rank)
         }
         
         rank.sortInPlace({$0["score"] as! CGFloat > $1["score"] as! CGFloat})

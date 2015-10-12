@@ -17,7 +17,11 @@ class StupidPlayer : Player {
             self.move(randomPosition())
         }
         scheduleRunRepeat(self, time: 60.0) {
+            if self.children.count >= 2 {
+                return
+            }
             self.split()
+            self.move(randomPosition())
         }
     }
 

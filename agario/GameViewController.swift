@@ -36,14 +36,25 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
     // Multipeer part
     var browser : MCBrowserViewController!
     var advertiser : MCAdvertiserAssistant!
+    
+    // Leaderboard data
+    var leaderboard : PersistentLeaderboard!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Load persistent leaderboard
+        if let l = NSKeyedUnarchiver.unarchiveObjectWithFile(PersistentLeaderboard.ArchiveURL.path!) {
+            self.leaderboard = l as! PersistentLeaderboard
+        } else {
+            self.leaderboard = PersistentLeaderboard()
+        }
         
         // Main menu view set up
         mainMenuView = Menu(frame: UIScreen.mainScreen().bounds)
         mainMenuView.startBtn.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
         mainMenuView.multiPlayerBtn.addTarget(self, action: "startMultiple", forControlEvents: .TouchUpInside)
+        mainMenuView.scoreBtn.addTarget(self, action: "showLeaderboard", forControlEvents: .TouchUpInside)
         mainMenuView.settingBtn.addTarget(self, action: "openSetting", forControlEvents: .TouchUpInside)
         mainMenuView.nameField.delegate = self
         self.view.addSubview(mainMenuView)
@@ -118,6 +129,11 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         }
         alert.addAction(cancelAction)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func showLeaderboard() {
+        let l = leaderboard.getRank()
+        print(l)
     }
     
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
