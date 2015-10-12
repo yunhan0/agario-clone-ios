@@ -119,8 +119,11 @@ class GameScene: SKScene {
         
         // Spawn AI for single player mode
         if gameMode == GameMode.SP {
-            for _ in 0..<8 {
+            for _ in 0..<4 {
                 let _ = StupidPlayer(playerName: "Stupid AI", parentNode: self.playerLayer)
+            }
+            for _ in 0..<4 {
+                let _ = AIPlayer(playerName: "Smarter AI", parentNode: self.playerLayer)
             }
         }
         
