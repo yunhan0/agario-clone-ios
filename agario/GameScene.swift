@@ -140,7 +140,11 @@ class GameScene: SKScene {
     
     func pauseGame() {
         self.pauseMenu.hidden = false
-        self.paused = true
+        
+        // Only pause in SP mode
+        if gameMode == GameMode.SP {
+            self.paused = true
+        }
     }
     
     func continueGame() {
