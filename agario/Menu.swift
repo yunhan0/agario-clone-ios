@@ -48,6 +48,8 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: nameField.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight));
         startBtn.setTitle("Start Game", forState: .Normal)
+        let startBtnTitleLabel = startBtn.titleLabel!
+        startBtnTitleLabel.font = UIFont(name: "ChalkboardSE-Regular", size: startBtnTitleLabel.font.pointSize)
         startBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         startBtn.layer.cornerRadius = 10.0
         
@@ -56,6 +58,8 @@ class Menu: UIView {
             x: (width - rectWidth) / 2, y: startBtn.frame.origin.y + (rectHeight * 1.5),
             width: rectWidth, height: rectHeight))
         multiPlayerBtn.setTitle("Multiple Player", forState: .Normal)
+        let multiPlayerTitleLabel = multiPlayerBtn.titleLabel!
+        multiPlayerTitleLabel.font = UIFont(name: "ChalkboardSE-Regular", size: multiPlayerTitleLabel.font.pointSize)
         multiPlayerBtn.backgroundColor = UIColor(hex: 0x57c2e6)
         multiPlayerBtn.layer.cornerRadius = 10.0
         

@@ -35,6 +35,7 @@ class Settings: UIView {
         let settingsLabel = UILabel(frame: CGRect(x: 0, y: 0, width: settingsGroup.frame.width, height: rectHeight))
         settingsLabel.text = "Settings"
         settingsLabel.textColor = UIColor(hex:0x333333)
+        settingsLabel.font = UIFont(name: "ChalkboardSE-Bold", size: settingsLabel.font.pointSize)
         settingsLabel.textAlignment = NSTextAlignment.Center
         
         let motionDetectorLabel = UILabel(frame: CGRect(x: marginWidth, y: rectHeight * 1.2, width: 0, height: 0))
