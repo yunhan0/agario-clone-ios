@@ -54,6 +54,8 @@ struct GlobalConstants {
     static let BarrierLimit = 15
     static let BarrierRespawnInterval = 45
     static let LeaderboardUpdateInterval = 1
+    static let SoundUpateInterval = 3
+    static let minumDecibel = Float(-64.0)
     static let MaxNameLength = 10
     
     // Server

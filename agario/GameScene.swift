@@ -25,6 +25,7 @@ class GameScene: SKScene {
     var barrierLayer : SKNode!
     var playerLayer : SKNode!
     var hudLayer : Hud!
+    var background : SKSpriteNode!
     
     var currentPlayer: Player? = nil
     var rank : [Dictionary<String, Any>] = []
@@ -35,6 +36,7 @@ class GameScene: SKScene {
     var touchingLocation : UITouch? = nil
     var motionManager : CMMotionManager!
     var motionDetectionIsEnabled = false
+    var soundDetector : SoundController!
     
     // Menus
     var pauseMenu : PauseView!
@@ -60,6 +62,7 @@ class GameScene: SKScene {
         foodLayer = world.childNodeWithName("foodLayer")
         barrierLayer = world.childNodeWithName("barrierLayer")
         playerLayer = world.childNodeWithName("playerLayer")
+        background = world.childNodeWithName("//background") as! SKSpriteNode
         
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
@@ -78,6 +81,9 @@ class GameScene: SKScene {
         
         // Device motion detector
         motionManager = CMMotionManager()
+        
+        // Sound Detector
+        soundDetector = SoundController()
     }
     
     func cleanAll() {
@@ -96,6 +102,11 @@ class GameScene: SKScene {
         
         scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
             self.updateLeaderboard()
+        }
+ 
+        scheduleRunRepeat(self, time: Double(GlobalConstants.SoundUpateInterval)) { () -> Void in
+            let db = self.soundDetector.update()
+            self.changeBackground(db)
         }
         
         if gameMode == GameMode.SP || gameMode == GameMode.MPMaster {
@@ -153,6 +164,7 @@ class GameScene: SKScene {
     }
     
     func abortGame() {
+        self.soundDetector.stopRecording()
         self.paused = true
         self.pauseMenu.hidden = true
         self.gameOverMenu.hidden = true
@@ -193,6 +205,23 @@ class GameScene: SKScene {
         for _ in 0..<n {
             barrierLayer.addChild(Barrier())
         }
+    }
+    
+    func changeBackground(db: Float) {
+        print(db)
+        if db < GlobalConstants.minumDecibel {
+            background.runAction(SKAction.colorizeWithColor(UIColor(hex:0x30393b), colorBlendFactor: 1.0, duration: 3.0))
+        } else {
+            let r = background.color.components.red
+            let g = background.color.components.green
+            let b = background.color.components.blue
+            let color = UIColor(red: dbMapToColor(db, color: r), green: dbMapToColor(db, color: g), blue: dbMapToColor(db, color: b),alpha: 1)
+            background.runAction(SKAction.colorizeWithColor(color, colorBlendFactor: 1.0, duration: 3.0))
+        }
+    }
+    
+    func dbMapToColor(db: Float, color: CGFloat) -> CGFloat{
+        return (1 - color) * CGFloat(db - (-GlobalConstants.minumDecibel) / (-GlobalConstants.minumDecibel)) + color
     }
     
     func updateLeaderboard() {

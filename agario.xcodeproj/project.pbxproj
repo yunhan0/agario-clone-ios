@@ -31,6 +31,7 @@
 		B53441571BA83029005EEEAB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53441561BA83029005EEEAB /* Player.swift */; };
 		B538EB431BAD28A300D3E148 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538EB421BAD28A300D3E148 /* Menu.swift */; };
 		B53FAF461BB0FC8F00A3A68C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53FAF451BB0FC8F00A3A68C /* Settings.swift */; settings = {ASSET_TAGS = (); }; };
+		B57EEA181BCBBA60003016C2 /* SoundController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57EEA171BCBBA60003016C2 /* SoundController.swift */; settings = {ASSET_TAGS = (); }; };
 		B59016D41BA6AD27008215A3 /* pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = B59016D31BA6AD27008215A3 /* pattern.png */; };
 		B5906D951BB173470002BB00 /* usa.png in Resources */ = {isa = PBXBuildFile; fileRef = B5906D941BB173470002BB00 /* usa.png */; settings = {ASSET_TAGS = (); }; };
 		B5906D9B1BB173520002BB00 /* german.png in Resources */ = {isa = PBXBuildFile; fileRef = B5906D981BB173520002BB00 /* german.png */; settings = {ASSET_TAGS = (); }; };
@@ -75,6 +76,7 @@
 		B53441561BA83029005EEEAB /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		B538EB421BAD28A300D3E148 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B53FAF451BB0FC8F00A3A68C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B57EEA171BCBBA60003016C2 /* SoundController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundController.swift; sourceTree = "<group>"; };
 		B59016D31BA6AD27008215A3 /* pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pattern.png; sourceTree = "<group>"; };
 		B5906D941BB173470002BB00 /* usa.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = usa.png; sourceTree = "<group>"; };
 		B5906D981BB173520002BB00 /* german.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = german.png; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				B50B98EF1BB427AE00EFF5BF /* Vector3D.swift */,
 				B527CEA31BAC36F3000054CE /* GlobalConstants.swift */,
 				B5F759FE1BAD9D0A00953E9A /* UIColorExtension.swift */,
+				B57EEA171BCBBA60003016C2 /* SoundController.swift */,
 				3A6A6EBF1BA59D9200FC75A1 /* Images.xcassets */,
 				3A6A6EC11BA59D9200FC75A1 /* LaunchScreen.xib */,
 				3A6A6EB21BA59D9200FC75A1 /* Supporting Files */,
@@ -282,6 +285,7 @@
 				3A6A6EBB1BA59D9200FC75A1 /* GameViewController.swift in Sources */,
 				3AB908FD1BC2A23A00925D4A /* ClientSessionDelegate.swift in Sources */,
 				B5F759FF1BAD9D0A00953E9A /* UIColorExtension.swift in Sources */,
+				B57EEA181BCBBA60003016C2 /* SoundController.swift in Sources */,
 				B538EB431BAD28A300D3E148 /* Menu.swift in Sources */,
 				3A6A6EDD1BA5A72200FC75A1 /* Utilities.swift in Sources */,
 				3A414FD11BB071DE00FCB78C /* StupidPlayer.swift in Sources */,
