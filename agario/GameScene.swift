@@ -271,8 +271,8 @@ class GameScene: SKScene {
         
         if gameMode != GameMode.MPClient {
             // Respawn food and barrier
-            let foodRespawnNumber = min(GlobalConstants.FoodLimit - foodLayer.children.count,
-                GlobalConstants.FoodRespawnRate)
+            let fl = gameMode == GameMode.SP ? GlobalConstants.FoodLimit : 250
+            let foodRespawnNumber = min(fl - foodLayer.children.count, GlobalConstants.FoodRespawnRate)
             spawnFood(foodRespawnNumber)
         }
         
@@ -337,6 +337,9 @@ class GameScene: SKScene {
             if self.hudLayer.splitBtn.containsPoint(screenLocation) {
                 if currentPlayer != nil {
                     currentPlayer!.split()
+                    if gameMode == GameMode.MPClient {
+                        clientDelegate.requestSplit()
+                    }
                 }
             } else if self.hudLayer.pauseBtn.containsPoint(screenLocation) {
                 self.pauseGame()

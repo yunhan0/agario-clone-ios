@@ -42,8 +42,15 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
             }
             json["players"] = JSON(playerArray)
             
+            // Barriers
+            var barrierArray : [JSON] = []
+            for f in self.scene.barrierLayer.children as! [Barrier] {
+                barrierArray.append(f.toJSON())
+            }
+            json["barriers"] = JSON(barrierArray)
+            
             do {
-                try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+                try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable)
             } catch let e as NSError {
                 print(e)
             }
@@ -92,6 +99,14 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
                 if let nd = scene.playerLayer.childNodeWithName(nm) {
                     let player = nd as! Player
                     player.floating()
+                }
+            }
+        }
+        if json["type"].stringValue == "SPLIT" {
+            if let nm = userDict[peerID] {
+                if let nd = scene.playerLayer.childNodeWithName(nm) {
+                    let player = nd as! Player
+                    player.split()
                 }
             }
         }

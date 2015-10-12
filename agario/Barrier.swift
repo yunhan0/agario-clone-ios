@@ -33,4 +33,9 @@ class Barrier : SKSpriteNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func toJSON() -> JSON {
+        let json : JSON = ["name": self.name!, "x": Double(self.position.x), "y": Double(self.position.y)]
+        return json
+    }
 }

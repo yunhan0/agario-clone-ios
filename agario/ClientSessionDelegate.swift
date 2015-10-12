@@ -27,6 +27,9 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
     
     // NETWORK
     func requestSpawn() {
+        if self.session.connectedPeers.count <= 0 {
+            return
+        }
         //print("Request spawn")
         let json : JSON = ["type": "SPAWN", "name": self.scene.playerName]
         do {
@@ -40,6 +43,9 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
     }
     
     func requestMove(position : CGPoint) {
+        if self.session.connectedPeers.count <= 0 {
+            return
+        }
         let json : JSON = ["type" : "MOVE", "x" : Double(position.x), "y": Double(position.y)]
         do {
             try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
@@ -48,7 +54,22 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
         }
     }
     
+    func requestSplit() {
+        if self.session.connectedPeers.count <= 0 {
+            return
+        }
+        let json : JSON = ["type" : "SPLIT"]
+        do {
+            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+        } catch let e as NSError {
+            print(e)
+        }
+    }
+    
     func requestFloating() {
+        if self.session.connectedPeers.count <= 0 {
+            return
+        }
         let json : JSON = ["type" : "FLOATING"]
         do {
             try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
@@ -71,7 +92,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
 //                }
 //            })
             
-            
+            // Special optimization for Food layer
             var newids = Set<String>()
             for (_, subjson):(String, JSON) in json["foods"] {
                 let nm = subjson["name"].stringValue
@@ -92,6 +113,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
                 }
             }
             
+            // Player layer synchronization
             updateLayer(scene.playerLayer, array: json["players"], handler: {(node : SKNode?, playerJSON) -> Void in
                 var ballLayer : Player? = nil
                 if let nd = node {
@@ -131,6 +153,18 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
                             layer.addChild(ball)
                         }
                     })
+                }
+            })
+            
+            self.updateLayer(self.scene.barrierLayer, array: json["barriers"], handler: { (node : SKNode?, json) -> Void in
+                if let _ = node {
+                    // Wont need any change
+                } else {
+                    let br = Barrier()
+                    br.name = json["name"].stringValue
+                    br.position.x = CGFloat(json["x"].double!)
+                    br.position.y = CGFloat(json["y"].double!)
+                    self.scene.barrierLayer.addChild(br)
                 }
             })
             
@@ -193,6 +227,19 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
     
     func session(session: MCSession, peer peerID: MCPeerID, didChangeState state: MCSessionState) {
         if state == MCSessionState.Connected {
+        }
+        if state == MCSessionState.NotConnected {
+            // A black hack to check whether this bebavious is expected
+            if self.scene.parentView.mainMenuView.hidden == false {
+                return
+            }
+            
+            print("Connection to server is broken");
+            let alert = UIAlertController(title: "Error", message: "Connection to the server is broken", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                self.scene.abortGame()
+            }))
+            self.scene.parentView.presentViewController(alert, animated: true, completion: nil)
         }
     }
 }
