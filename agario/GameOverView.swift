@@ -25,7 +25,7 @@ class GameOverView: UIView {
         let width       = frame.width
         let height      = frame.height
         
-        self.hidden = false
+        self.hidden = true
         
         // Semi-Opacity Background
         self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
