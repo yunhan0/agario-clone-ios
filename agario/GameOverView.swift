@@ -25,17 +25,20 @@ class GameOverView: UIView {
         let width       = frame.width
         let height      = frame.height
         
-        self.hidden = true
+        self.hidden = false
         
         // Semi-Opacity Background
         self.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         
-        let labelWidth = width / 5
-        let labelHeight = height / 3
-        
-        label = UILabel(frame: CGRect(x: width / 2 - labelWidth / 2, y: height / 4 - labelHeight / 2,
-            width: labelWidth, height: labelHeight))
+        label = UILabel()
         label.text = "You are eaten :<"
+        label.textAlignment = NSTextAlignment.Center
+        label.textColor = UIColor.whiteColor()
+        label.font = UIFont(name: "Chalkduster", size: label.font.pointSize * 1.5)
+        label.sizeToFit()
+        let labelWidth = label.frame.width
+        let labelHeight = label.frame.height
+        label.frame.origin = CGPoint(x: width / 2 - labelWidth / 2, y: height / 4 - labelHeight / 2)
         self.addSubview(label)
         
         let buttonWidth = width / 5
@@ -43,7 +46,7 @@ class GameOverView: UIView {
         
         backButton = UIButton(frame: CGRect(x: width / 2 - buttonWidth / 2, y: 3 * height / 4 - buttonHeight / 2,
             width: buttonWidth, height: buttonHeight))
-        backButton.setTitle("Back to main menu", forState: .Normal)
+        backButton.setTitle("Quit Game", forState: .Normal)
         backButton.addTarget(scene, action: "abortGame", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(backButton)
         

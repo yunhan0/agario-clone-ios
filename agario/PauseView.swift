@@ -34,7 +34,7 @@ class PauseView: UIView {
         
         backButton = UIButton(frame: CGRect(x: width / 2 - buttonWidth / 2, y: 3 * height / 4 - buttonHeight / 2,
             width: buttonWidth, height: buttonHeight))
-        backButton.setTitle("Back to main menu", forState: .Normal)
+        backButton.setTitle("Quit Game", forState: .Normal)
         backButton.addTarget(scene, action: "abortGame", forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(backButton)
         
