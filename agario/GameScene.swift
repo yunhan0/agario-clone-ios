@@ -184,7 +184,9 @@ class GameScene: SKScene {
     }
     
     func abortGame() {
-        self.soundDetector.stopRecording()
+        if soundDetectionIsEnabled {
+            self.soundDetector.stopRecording()        
+        }
         self.paused = true
         self.pauseMenu.hidden = true
         self.gameOverMenu.hidden = true
@@ -235,7 +237,7 @@ class GameScene: SKScene {
             let g = background.color.components.green
             let b = background.color.components.blue
             let color = UIColor(red: dbMapToColor(db, color: r), green: dbMapToColor(db, color: g), blue: dbMapToColor(db, color: b),alpha: 1)
-            background.runAction(SKAction.colorizeWithColor(color, colorBlendFactor: 1.0, duration: 3.0))
+            background.runAction(SKAction.colorizeWithColor(color, colorBlendFactor: 1.0, duration: 2.0))
         }
     }
     
