@@ -170,7 +170,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             })
             
             if let nm = clientID {
-                if self.scene.currentPlayer == nil || self.scene.currentPlayer!.name != nm{
+                if self.scene.currentPlayer == nil || self.scene.currentPlayer!.name != nm {
                     self.scene.currentPlayer = scene.playerLayer.childNodeWithName(nm) as! Player?   
                 }
             }
@@ -189,6 +189,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             let nd : SKNode = layer.children[i]
             if !newids.contains(nd.name!) {
                 nd.removeFromParent()
+                nd.removeAllChildren()
             }
         }
         
