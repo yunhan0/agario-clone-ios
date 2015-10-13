@@ -235,6 +235,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             }
             
             print("Connection to server is broken");
+            //dispatch_async(dispatch_get_main_queue(), )
             let alert = UIAlertController(title: "Error", message: "Connection to the server is broken", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 self.scene.abortGame()

@@ -212,6 +212,7 @@ class GameScene: SKScene {
             }
         } else {
             // Send request to server
+            self.clientDelegate.requestSpawn()
         }
     }
     
