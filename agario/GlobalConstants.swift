@@ -60,5 +60,5 @@ struct GlobalConstants {
     static let MaxNameLength = 10
     
     // Server
-    static let BroadcastInterval : Double = 0.15
+    static let BroadcastInterval : Double = 0.10
 }

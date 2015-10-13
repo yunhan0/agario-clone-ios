@@ -48,7 +48,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
         }
         let json : JSON = ["type" : "MOVE", "x" : Double(position.x), "y": Double(position.y)]
         do {
-            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable)
         } catch let e as NSError {
             print(e)
         }
@@ -72,7 +72,7 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
         }
         let json : JSON = ["type" : "FLOATING"]
         do {
-            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Reliable)
+            try self.session.sendData(json.rawData(), toPeers: self.session.connectedPeers, withMode: MCSessionSendDataMode.Unreliable)
         } catch let e as NSError {
             print(e)
         }
@@ -80,36 +80,27 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
     
     func updateScene() {
         if let json = newestBroadcast {
-//            self.updateLayer(self.scene.foodLayer, array: json["foods"], handler: { (node : SKNode?, json) -> Void in
-//                if let _ = node {
-//                    // Wont need any change
-//                } else {
-//                    let fd = Food(foodColor: json["color"].intValue)
-//                    fd.name = json["name"].stringValue
-//                    fd.position.x = CGFloat(json["x"].double!)
-//                    fd.position.y = CGFloat(json["y"].double!)
-//                    self.scene.foodLayer.addChild(fd)
-//                }
-//            })
             
             // Special optimization for Food layer
-            var newids = Set<String>()
-            for (_, subjson):(String, JSON) in json["foods"] {
-                let nm = subjson["name"].stringValue
-                newids.insert(nm)
-                if !foodSet.contains(nm) {
-                    let fd = Food(foodColor: subjson["color"].intValue)
-                    fd.name = nm
-                    fd.position.x = CGFloat(subjson["x"].double!)
-                    fd.position.y = CGFloat(subjson["y"].double!)
-                    self.scene.foodLayer.addChild(fd)
-                    self.foodSet.insert(nm)
+            if json["foods"].count > 0 {
+                var newids = Set<String>()
+                for (_, subjson):(String, JSON) in json["foods"] {
+                    let nm = subjson["name"].stringValue
+                    newids.insert(nm)
+                    if !foodSet.contains(nm) {
+                        let fd = Food(foodColor: subjson["color"].intValue)
+                        fd.name = nm
+                        fd.position.x = CGFloat(subjson["x"].double!)
+                        fd.position.y = CGFloat(subjson["y"].double!)
+                        self.scene.foodLayer.addChild(fd)
+                        self.foodSet.insert(nm)
+                    }
                 }
-            }
-            for nd in self.scene.foodLayer.children {
-                if !newids.contains(nd.name!) {
-                    nd.removeFromParent()
-                    foodSet.remove(nd.name!)
+                for nd in self.scene.foodLayer.children {
+                    if !newids.contains(nd.name!) {
+                        nd.removeFromParent()
+                        foodSet.remove(nd.name!)
+                    }
                 }
             }
             
@@ -139,7 +130,17 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
                             let ball = nd as! Ball
                             ball.targetDirection = td
                             ball.physicsBody!.velocity = v
-                            ball.position = p
+                            //ball.position = p
+                            
+                            // Simple interpolation
+                            let newv : CGVector = p - ball.position
+                            let newvl = newv.length()
+                            if newvl > ball.radius * 1.5 {
+                                ball.position = p
+                            } else {
+                                ball.physicsBody!.velocity = v + newv.normalize() * (min(newvl, ball.radius) / ball.radius * ball.maxVelocity)
+                            }
+                            
                             let ms = CGFloat(ballJSON["mass"].doubleValue)
                             if ball.mass != ms {
                                 ball.setMass(ms)
@@ -169,7 +170,9 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             })
             
             if let nm = clientID {
-                self.scene.currentPlayer = scene.playerLayer.childNodeWithName(nm) as! Player?
+                if self.scene.currentPlayer == nil || self.scene.currentPlayer!.name != nm{
+                    self.scene.currentPlayer = scene.playerLayer.childNodeWithName(nm) as! Player?   
+                }
             }
             
             newestBroadcast = nil
@@ -235,12 +238,13 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
             }
             
             print("Connection to server is broken");
-            //dispatch_async(dispatch_get_main_queue(), )
-            let alert = UIAlertController(title: "Error", message: "Connection to the server is broken", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-                self.scene.abortGame()
-            }))
-            self.scene.parentView.presentViewController(alert, animated: true, completion: nil)
+            dispatch_async(dispatch_get_main_queue(), {
+                let alert = UIAlertController(title: "Error", message: "Connection to the server is broken", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Quit Game", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+                    self.scene.abortGame()
+                }))
+                self.scene.parentView.presentViewController(alert, animated: true, completion: nil)
+            })
         }
     }
 }

@@ -95,6 +95,7 @@ class GameScene: SKScene {
         playerLayer.removeAllChildren()
         
         self.removeAllActions()
+        self.background.removeAllActions()
     }
     
     func start(gameMode : GameMode = GameMode.SP) {
@@ -255,9 +256,11 @@ class GameScene: SKScene {
             ])
         }
         
-        if gameMode == GameMode.SP && currentPlayer != nil { // Only put self score into leaderboard
-            self.parentView.leaderboard.updateRank([["name" : currentPlayer!.displayName,
-                "score": currentPlayer!.totalMass()]])
+        if gameMode == GameMode.SP { // Only put self score into leaderboard
+            if currentPlayer != nil {
+                self.parentView.leaderboard.updateRank([["name" : currentPlayer!.displayName,
+                    "score": currentPlayer!.totalMass()]])
+            }
         } else {
             self.parentView.leaderboard.updateRank(rank)
         }
@@ -371,8 +374,8 @@ class GameScene: SKScene {
         }
         
         if currentPlayer != nil && currentPlayer!.isDead() {
-            currentPlayer = nil
             self.gameOver()
+            currentPlayer = nil
         }
         
         for p in playerLayer.children as! [Player] {

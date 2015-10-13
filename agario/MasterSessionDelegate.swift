@@ -16,6 +16,9 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
     
     var userDict : Dictionary<MCPeerID, String> = Dictionary<MCPeerID, String>()
     
+    // A hack to improve performance
+    var foodMask : Int = 0
+    
     init(scene : GameScene, session : MCSession) {
         self.scene = scene
         self.session = session
@@ -28,12 +31,15 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
             var json : JSON = ["type": "BROADCAST"]
             
-            // Food
-            var foodArray : [JSON] = []
-            for f in self.scene.foodLayer.children as! [Food] {
-                foodArray.append(f.toJSON())
+            // Food & a hack to improve performance
+            if self.foodMask == 0 {
+                var foodArray : [JSON] = []
+                for f in self.scene.foodLayer.children as! [Food] {
+                    foodArray.append(f.toJSON())
+                }
+                json["foods"] = JSON(foodArray)
             }
-            json["foods"] = JSON(foodArray)
+            self.foodMask = (self.foodMask + 1) % 4
             
             // Players & Balls
             var playerArray : [JSON] = []
@@ -73,24 +79,35 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
         let json = JSON(data: data)
         //print("Got something in master\n", json)
         if json["type"].stringValue == "SPAWN" {
-            //print("Sending back spawn info", [peerID])
-            // TODO: Check whether or not he is dead
-            //let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: randomPosition())
-            let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: CGPoint(x: 0, y: 0))
-            let response : JSON = ["type": "SPAWN", "ID": p.name!]
-            userDict[peerID] = p.name!
-            do {
-                try self.session.sendData(response.rawData(), toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable)
-            } catch let e as NSError {
-                print("Something wrong when sending SPAWN info back", e)
-            }
+            dispatch_async(dispatch_get_main_queue(), {
+                let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: randomPosition())
+                let response : JSON = ["type": "SPAWN", "ID": p.name!]
+                self.userDict[peerID] = p.name!
+                do {
+                    try self.session.sendData(response.rawData(), toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable)
+                } catch let e as NSError {
+                    print("Something wrong when sending SPAWN info back", e)
+                }
+            })
+
+//            let p = Player(playerName: json["name"].stringValue, parentNode: self.scene.playerLayer, initPosition: randomPosition())
+//            let response : JSON = ["type": "SPAWN", "ID": p.name!]
+//            userDict[peerID] = p.name!
+//            do {
+//                try self.session.sendData(response.rawData(), toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable)
+//            } catch let e as NSError {
+//                print("Something wrong when sending SPAWN info back", e)
+//            }
         }
         if json["type"].stringValue == "MOVE" {
             let p : CGPoint = CGPoint(x: json["x"].doubleValue, y: json["y"].doubleValue)
             if let nm = userDict[peerID] {
                 if let nd = scene.playerLayer.childNodeWithName(nm) {
                     let player = nd as! Player
-                    player.move(p)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        player.move(p)
+                    })
+                    //player.move(p)
                 }
             }
         }
@@ -98,7 +115,10 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
             if let nm = userDict[peerID] {
                 if let nd = scene.playerLayer.childNodeWithName(nm) {
                     let player = nd as! Player
-                    player.floating()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        player.floating()
+                    })
+                    //player.floating()
                 }
             }
         }
@@ -106,7 +126,10 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
             if let nm = userDict[peerID] {
                 if let nd = scene.playerLayer.childNodeWithName(nm) {
                     let player = nd as! Player
-                    player.split()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        player.split()
+                    })
+                    //player.split()
                 }
             }
         }
