@@ -26,6 +26,7 @@ class GameScene: SKScene {
     var playerLayer : SKNode!
     var hudLayer : Hud!
     var background : SKSpriteNode!
+    var defaultBackgroundColor : UIColor!
     
     var currentPlayer: Player? = nil
     var rank : [Dictionary<String, Any>] = []
@@ -37,6 +38,7 @@ class GameScene: SKScene {
     var motionManager : CMMotionManager!
     var motionDetectionIsEnabled = false
     var soundDetector : SoundController!
+    var soundDetectionIsEnabled = false
     
     // Menus
     var pauseMenu : PauseView!
@@ -63,6 +65,7 @@ class GameScene: SKScene {
         barrierLayer = world.childNodeWithName("barrierLayer")
         playerLayer = world.childNodeWithName("playerLayer")
         background = world.childNodeWithName("//background") as! SKSpriteNode
+        defaultBackgroundColor = background.color
         
         /* Setup your scene here */
         world.position = CGPoint(x: CGRectGetMidX(frame),
@@ -95,6 +98,8 @@ class GameScene: SKScene {
     }
     
     func start(gameMode : GameMode = GameMode.SP) {
+        // set background to default color
+        self.background.color = self.defaultBackgroundColor
         
         self.gameMode = gameMode
         
@@ -102,11 +107,6 @@ class GameScene: SKScene {
         
         scheduleRunRepeat(self, time: Double(GlobalConstants.LeaderboardUpdateInterval)) { () -> Void in
             self.updateLeaderboard()
-        }
- 
-        scheduleRunRepeat(self, time: Double(GlobalConstants.SoundUpateInterval)) { () -> Void in
-            let db = self.soundDetector.update()
-            self.changeBackground(db)
         }
         
         scheduleRunRepeat(self, time: Double(GlobalConstants.PersistentLeaderboardUpdateInterval)) { () -> Void in
@@ -148,6 +148,19 @@ class GameScene: SKScene {
             if gameMode == GameMode.MPClient {
                 session.delegate = clientDelegate
                 clientDelegate.requestSpawn()
+            }
+        }
+        
+        // Start recording if sound detection is enabled
+        if soundDetectionIsEnabled {
+            soundDetector.startRecording()
+            print("recording")
+        }
+
+        scheduleRunRepeat(self, time: Double(GlobalConstants.SoundUpateInterval)) { () -> Void in
+            if self.soundDetectionIsEnabled {
+                let db = self.soundDetector.update()
+                self.changeBackground(db)
             }
         }
         
@@ -215,8 +228,7 @@ class GameScene: SKScene {
     }
     
     func changeBackground(db: Float) {
-        print(db)
-        if db < GlobalConstants.minumDecibel {
+        if db < -GlobalConstants.minumDecibel {
             background.runAction(SKAction.colorizeWithColor(UIColor(hex:0x30393b), colorBlendFactor: 1.0, duration: 3.0))
         } else {
             let r = background.color.components.red
@@ -228,7 +240,7 @@ class GameScene: SKScene {
     }
     
     func dbMapToColor(db: Float, color: CGFloat) -> CGFloat{
-        return (1 - color) * CGFloat(db - (-GlobalConstants.minumDecibel) / (-GlobalConstants.minumDecibel)) + color
+        return (1 - color) * CGFloat((db + GlobalConstants.minumDecibel) / GlobalConstants.minumDecibel) + color
     }
     
     func updateLeaderboard() {

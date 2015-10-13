@@ -30,6 +30,7 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
     
     var mainMenuView : Menu!
     var settings : Settings!
+    var lbView : LeaderboardView!
     var gameView : SKView!
     var scene : GameScene!
     
@@ -55,7 +56,7 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         mainMenuView.startBtn.addTarget(self, action: "startSingle", forControlEvents: .TouchUpInside)
         mainMenuView.multiPlayerBtn.addTarget(self, action: "startMultiple", forControlEvents: .TouchUpInside)
         mainMenuView.scoreBtn.addTarget(self, action: "showLeaderboard", forControlEvents: .TouchUpInside)
-        mainMenuView.settingBtn.addTarget(self, action: "openSetting", forControlEvents: .TouchUpInside)
+        mainMenuView.settingBtn.addTarget(self, action: "showSetting", forControlEvents: .TouchUpInside)
         mainMenuView.nameField.delegate = self
         self.view.addSubview(mainMenuView)
         
@@ -63,8 +64,16 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         settings = Settings(frame: UIScreen.mainScreen().bounds)
         settings.exitBtn.addTarget(self, action: "exitSetting", forControlEvents: .TouchUpInside)
         settings.motionDetectSwitch.addTarget(self, action: Selector("checkMotionDetectStatus:"), forControlEvents: UIControlEvents.ValueChanged)
+        settings.soundDetectSwitch.addTarget(self, action: Selector("checkSoundDetectStatus:"), forControlEvents: UIControlEvents.ValueChanged)
         settings.hidden = true
+        
+        // Leaderboard view set up
+        lbView = LeaderboardView(frame: UIScreen.mainScreen().bounds)
+        lbView.exitBtn.addTarget(self, action: "exitLeaderboard", forControlEvents: .TouchUpInside)
+        lbView.hidden = true
+        
         mainMenuView.addSubview(settings)
+        mainMenuView.addSubview(lbView)
         
         // Game view set up
         self.gameView = SKView(frame: UIScreen.mainScreen().bounds)
@@ -131,11 +140,6 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    func showLeaderboard() {
-        let l = leaderboard.getRank()
-        print(l)
-    }
-    
     func browserViewControllerDidFinish(browserViewController: MCBrowserViewController) {
         self.mainMenuView.hidden = true
         self.scene.start(GameScene.GameMode.MPClient)
@@ -147,12 +151,23 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         browserViewController.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    func openSetting() {
+    func showSetting() {
         settings.hidden = false
     }
     
     func exitSetting() {
         settings.hidden = true
+    }
+
+    func showLeaderboard() {
+        lbView.hidden = false
+        let l = leaderboard.getRank()
+        lbView.setLeaderboardContent(l)
+        print(l)
+    }
+    
+    func exitLeaderboard() {
+        lbView.hidden = true
     }
     
     func checkMotionDetectStatus(mdswitch: UISwitch) {
@@ -162,6 +177,14 @@ class GameViewController: UIViewController, UITextFieldDelegate, MCBrowserViewCo
         } else {
             self.scene.motionManager.stopDeviceMotionUpdates()
             self.scene.motionDetectionIsEnabled = false
+        }
+    }
+    
+    func checkSoundDetectStatus(sdswitch: UISwitch) {
+        if sdswitch.on {
+            self.scene.soundDetectionIsEnabled = true
+        } else {
+            self.scene.soundDetectionIsEnabled = false
         }
     }
     

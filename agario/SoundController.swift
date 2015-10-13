@@ -37,7 +37,9 @@ class SoundController : AVAudioRecorder, AVAudioRecorderDelegate {
             soundRecorder.meteringEnabled = true
         } catch {
         }
-        
+    }
+    
+    func startRecording(){
         if !soundRecorder.recording {
             soundRecorder.record()
             let audioSession = AVAudioSession.sharedInstance()
@@ -73,7 +75,7 @@ class SoundController : AVAudioRecorder, AVAudioRecorderDelegate {
     }
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
-        print(soundRecorder.deleteRecording())
+        soundRecorder.deleteRecording()
         print("recording cache removed")
     }
 
