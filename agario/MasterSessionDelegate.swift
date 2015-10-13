@@ -84,6 +84,7 @@ class MasterSessionDelegate : NSObject, MCSessionDelegate {
                 let response : JSON = ["type": "SPAWN", "ID": p.name!]
                 self.userDict[peerID] = p.name!
                 do {
+                    print("Sending spawn info to ", peerID, "info: ", response["ID"].stringValue)
                     try self.session.sendData(response.rawData(), toPeers: [peerID], withMode: MCSessionSendDataMode.Reliable)
                 } catch let e as NSError {
                     print("Something wrong when sending SPAWN info back", e)

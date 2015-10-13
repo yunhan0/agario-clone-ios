@@ -217,9 +217,10 @@ class ClientSessionDelegate : NSObject, MCSessionDelegate {
         let json = JSON(data: data)
         //print("Got something in client: ", json)
         if json["type"].stringValue == "SPAWN" {
-            // TODO: Check whether or not he is dead
             print("Got feedback: ", json["ID"].stringValue)
-            self.clientID = json["ID"].stringValue
+            if json["ID"].stringValue != "" {
+                self.clientID = json["ID"].stringValue
+            }
         }
         if json["type"].stringValue == "BROADCAST" {
             newestBroadcast = json
