@@ -235,16 +235,16 @@ class GameScene: SKScene {
         if db < -GlobalConstants.minumDecibel {
             background.runAction(SKAction.colorizeWithColor(UIColor(hex:0x30393b), colorBlendFactor: 1.0, duration: 3.0))
         } else {
-            let r = background.color.components.red
-            let g = background.color.components.green
-            let b = background.color.components.blue
+            let r = defaultBackgroundColor.components.red
+            let g = defaultBackgroundColor.components.green
+            let b = defaultBackgroundColor.components.blue
             let color = UIColor(red: dbMapToColor(db, color: r), green: dbMapToColor(db, color: g), blue: dbMapToColor(db, color: b),alpha: 1)
             background.runAction(SKAction.colorizeWithColor(color, colorBlendFactor: 1.0, duration: 2.0))
         }
     }
     
     func dbMapToColor(db: Float, color: CGFloat) -> CGFloat{
-        return (1 - color) * CGFloat((db + GlobalConstants.minumDecibel) / GlobalConstants.minumDecibel) + color
+        return color * CGFloat((db + GlobalConstants.minumDecibel) / GlobalConstants.minumDecibel)
     }
     
     func updateLeaderboard() {
